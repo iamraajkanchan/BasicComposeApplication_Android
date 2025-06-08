@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.HomeApplicationTheme" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.ChildApplicationTheme" parent="Theme.AppCompat.NoActionBar" />
+</resources>

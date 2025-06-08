@@ -1,0 +1,36 @@
+# Here is the list of all the basic composable used in Jetpack Compose
+
+- Text & Input
+  - Text() : Used to display text.
+  - TextField() : Allows user input.
+  - OutlinedTextField() : A bordered text input field.
+- Buttons & Clickables
+  - Button() : Standard button.
+  - OutlinedButton() : Button with an outline.
+  - TextButton(): Button with Text stying.
+  - IconButton(): Button with an Icon.
+- Layouts & Containers
+  - Column() : Arranges elements vertically.
+  - Row() : Arranges elements horizontally.
+  - Box() : Overlays elements.
+  - LazyColumn() : Optimized Vertical List.
+  - LazyRow() : Optimized Horizontal List.
+  - Scaffold() : Provides a basic app structure.
+- Selection & Toggles
+  - Checkbox() : A checkbox for selection.
+  - Switch() : A toggle switch.
+  - RadioButton() : A radio button for selection.
+- Cards & Lists
+  - Card() : Displays content in a card format.
+  - ListItem() : Represents an item in a list.
+- Progress & Indicators
+  - CircularProgressIndicator() : Circular loading Indicator.
+  - LinearProgressIndicator() : Linear loading bar.
+- Dialogs & Popups
+  - AlertDialog() : Displays an alert dialog.
+  - Snackbar() : Shows a brief message.
+- Images and Icons
+  - Image() : Displays an image.
+  - Icon() : Displays an icon.
+- Modifiers & Styling
+  - Modifier() : Used to style and position elements.

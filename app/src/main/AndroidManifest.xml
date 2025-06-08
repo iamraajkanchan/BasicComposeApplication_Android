@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.HomeApplicationTheme"
+        tools:targetApi="31">
+        <!--
+        Note: Add this theme to every activity if the customized theme for the activity doesn't work.
+        android:theme="@style/Theme.AppCompat.DayNight"
+        -->
+        <activity
+            android:name=".activities.AlertDialogDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.BoxDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ButtonDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.CardDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.CheckboxDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.CircularProgressIndicatorDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ColumnDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.IconButtonDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.IconDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.LazyColumnDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.LazyRowDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.LinearProgressIndicatorDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ListItemDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ModifierDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.OutlinedButtonDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.OutlinedTextFieldDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.RadioButtonDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.RowDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.ScaffoldDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SnackbarDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SwitchDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.TextButtonDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.TextFieldDemoActivity"
+            android:exported="false"
+            android:theme="@style/Theme.ChildApplicationTheme"
+            />
+        <activity
+            android:name=".activities.TextDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.HomeApplicationTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
