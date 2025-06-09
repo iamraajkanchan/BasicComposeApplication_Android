@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -20,9 +21,12 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardColors
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -71,9 +75,9 @@ class BoxDemoActivity : ComponentActivity() {
             Spacer(modifier = Modifier.height(20.dp))
             ProfileBox()
             Spacer(modifier = Modifier.height(20.dp))
-            ChatBubble(true)
+            ChatBubble( "Hello Ivy", "9:10 AM",true)
             Spacer(modifier = Modifier.height(20.dp))
-            ChatBubble(false)
+            ChatBubble( "I still hate you!", "6:30 PM",false)
         }
     }
 
@@ -137,25 +141,20 @@ class BoxDemoActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun ChatBubble(isFromMe: Boolean) {
+    private fun ChatBubble(
+        message: String,
+        timestamp: String,
+        isFromMe: Boolean
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 4.dp)
-        )
-        {
+        ) {
             Card(
                 modifier = Modifier
                     .align(if (isFromMe) Alignment.CenterEnd else Alignment.CenterStart)
-                    .widthIn(280.dp)
-                    .clip(
-                        RoundedCornerShape(
-                            topStart = 16.dp,
-                            topEnd = 16.dp,
-                            bottomStart = if (isFromMe) 16.dp else 4.dp,
-                            bottomEnd = if (isFromMe) 4.dp else 16.dp
-                        )
-                    ),
+                    .widthIn(max = 280.dp), // ✅ Fixed: added 'max ='
                 shape = RoundedCornerShape(
                     topStart = 16.dp,
                     topEnd = 16.dp,
@@ -163,29 +162,48 @@ class BoxDemoActivity : ComponentActivity() {
                     bottomEnd = if (isFromMe) 4.dp else 16.dp
                 ),
                 colors = CardDefaults.cardColors(
-                    containerColor = if (isFromMe) ApplicationColor.Orange else ApplicationColor.Green
-                ),
+                    containerColor = if (isFromMe)
+                        ApplicationColor.Orange
+                    else
+                        ApplicationColor.Green
+                )
             ) {
                 Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(12.dp)
+                    modifier = Modifier.padding(12.dp) // ✅ Removed unnecessary fillMaxWidth()
                 ) {
                     Text(
-                        "Hello, How are you?",
-                        color = if (isFromMe) ApplicationColor.White else ApplicationColor.Black
+                        text = message,
+                        color = if (isFromMe)
+                            ApplicationColor.White
+                        else
+                            ApplicationColor.Black
                     )
-                    Box(
-                        contentAlignment = if (isFromMe) Alignment.CenterStart else Alignment.CenterEnd // ✅ Moves text to the right
-                    ) {
-                        Text(
-                            text = "5:30 PM",
-                            color = if (isFromMe) ApplicationColor.White else ApplicationColor.Black,
-                            style = MaterialTheme.typography.bodyMedium,
-                            textAlign = if (isFromMe) TextAlign.Start else TextAlign.End, // ✅ Text aligns properly
-                        )
-                    }
+
+                    Text(
+                        text = timestamp,
+                        color = if (isFromMe)
+                            ApplicationColor.White.copy(alpha = 0.7f)
+                        else
+                            ApplicationColor.Black.copy(alpha = 0.6f),
+                        style = MaterialTheme.typography.bodySmall, // ✅ Smaller text for timestamp
+                        modifier = Modifier
+                            .align(Alignment.End) // ✅ Much simpler alignment
+                            .padding(top = 4.dp)
+                    )
                 }
+            }
+
+            // ✅ Optional: Add message status indicator
+            if (isFromMe) {
+                Icon(
+                    imageVector = Icons.Default.Done,
+                    contentDescription = "Sent",
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .offset(x = (-4).dp, y = (-4).dp)
+                        .size(16.dp),
+                    tint = ApplicationColor.Orange
+                )
             }
         }
     }
