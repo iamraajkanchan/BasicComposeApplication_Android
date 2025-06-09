@@ -12,6 +12,7 @@ object ApplicationColor {
     val Pink40 = Color(0xFF7D5260)
     val Orange = Color(0xFFFF9800)
     val White = Color(0xFFFFFFFF)
+    val Black = Color(0xFF000000)
     val Blue = Color(0xFF0AA2FA)
     val Green = Color(0xFF2AFA0A)
     val Transparent = Color(0x00000000)
