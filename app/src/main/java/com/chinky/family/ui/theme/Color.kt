@@ -14,4 +14,5 @@ object ApplicationColor {
     val White = Color(0xFFFFFFFF)
     val Blue = Color(0xFF0AA2FA)
     val Green = Color(0xFF2AFA0A)
+    val Transparent = Color(0x00000000)
 }
