@@ -349,6 +349,16 @@ class MainActivity : ComponentActivity() {
                 ) {
                     Text("Text Button")
                 }
+                Button(
+                    modifier = leftButtonModifier,
+                    onClick = {
+                        val textActivityIntent =
+                            Intent(this@MainActivity, TextButtonDemoActivity::class.java)
+                        startActivity(textActivityIntent)
+                    }
+                ) {
+                    Text("Drop Down Menu")
+                }
             }
         }
     }
