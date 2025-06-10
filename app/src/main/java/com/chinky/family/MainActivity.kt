@@ -67,7 +67,7 @@ class MainActivity : ComponentActivity() {
                         startActivity(textActivityIntent)
                     }
                 ) {
-                    Text("Text Composable")
+                    Text("Text")
                 }
 
                 Button(
@@ -78,7 +78,7 @@ class MainActivity : ComponentActivity() {
                         startActivity(textActivityIntent)
                     }
                 ) {
-                    Text("TextField Composable")
+                    Text("TextField")
                 }
             }
             Row {
@@ -90,7 +90,7 @@ class MainActivity : ComponentActivity() {
                         startActivity(textActivityIntent)
                     }
                 ) {
-                    Text("Alert Dialog Composable")
+                    Text("Alert Dialog")
                 }
 
                 Button(
@@ -101,7 +101,7 @@ class MainActivity : ComponentActivity() {
                         startActivity(textActivityIntent)
                     }
                 ) {
-                    Text("Box Composable")
+                    Text("Box")
                 }
             }
             Row {
@@ -113,7 +113,7 @@ class MainActivity : ComponentActivity() {
                         startActivity(textActivityIntent)
                     }
                 ) {
-                    Text("Button Composable")
+                    Text("Button")
                 }
 
                 Button(
@@ -124,7 +124,7 @@ class MainActivity : ComponentActivity() {
                         startActivity(textActivityIntent)
                     }
                 ) {
-                    Text("Card Composable")
+                    Text("Card")
                 }
             }
             Row {
@@ -136,7 +136,7 @@ class MainActivity : ComponentActivity() {
                         startActivity(textActivityIntent)
                     }
                 ) {
-                    Text("Checkbox Composable")
+                    Text("Checkbox ")
                 }
 
                 Button(
@@ -149,7 +149,7 @@ class MainActivity : ComponentActivity() {
                         startActivity(textActivityIntent)
                     }
                 ) {
-                    Text("Circular Progress Indicator Composable")
+                    Text("Circular Progress")
                 }
             }
         }
