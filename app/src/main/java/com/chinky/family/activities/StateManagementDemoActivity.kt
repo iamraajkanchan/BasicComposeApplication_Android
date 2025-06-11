@@ -3,28 +3,25 @@ package com.chinky.family.activities
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.chinky.family.ui.theme.ApplicationTheme
 
-class TextButtonDemoActivity : ComponentActivity() {
+class StateManagementDemoActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
-            ApplicationTheme.ChildApplicationTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
-                    displayVariousTextOptions()
-                }
+            Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
+                ExampleOfStateManagementOfTextField(padding)
             }
         }
     }
 
     @Composable
-    private fun displayVariousTextOptions() {
+    private fun ExampleOfStateManagementOfTextField(paddingValues: PaddingValues) {
 
     }
 }

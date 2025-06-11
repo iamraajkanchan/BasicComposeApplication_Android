@@ -1,4 +1,4 @@
-package com.chinky.family.activities
+package com.chinky.family.activities.Composable
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.chinky.family.ui.theme.ApplicationTheme
 
-class IconDemoActivity : ComponentActivity() {
+class RowDemoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
