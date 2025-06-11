@@ -9,6 +9,13 @@
   - OutlinedButton() : Button with an outline.
   - TextButton(): Button with Text stying.
   - IconButton(): Button with an Icon.
+  - FilledIconButton(): Button with a filled icon.
+  - FilledTonalIconButton(): Button with a tonal filled icon.
+  - OutlinedIconButton(): Button with an outlined icon.
+  - IconToggleButton(): Button with an icon toggle.
+  - FloatingActionButton(): A floating action button.
+  - ElevatedButton(): A button with a filled background.
+  - FilledTonalButton(): A button with a tonal filled background.
 - Layouts & Containers
   - Column() : Arranges elements vertically.
   - Row() : Arranges elements horizontally.

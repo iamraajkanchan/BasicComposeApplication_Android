@@ -28,6 +28,7 @@ import com.chinky.family.activities.CardDemoActivity
 import com.chinky.family.activities.CheckboxDemoActivity
 import com.chinky.family.activities.CircularProgressIndicatorDemoActivity
 import com.chinky.family.activities.ColumnDemoActivity
+import com.chinky.family.activities.DropDownMenuDemoActivity
 import com.chinky.family.activities.IconButtonDemoActivity
 import com.chinky.family.activities.IconDemoActivity
 import com.chinky.family.activities.ImageDemoActivity
@@ -353,7 +354,7 @@ class MainActivity : ComponentActivity() {
                     modifier = leftButtonModifier,
                     onClick = {
                         val textActivityIntent =
-                            Intent(this@MainActivity, TextButtonDemoActivity::class.java)
+                            Intent(this@MainActivity, DropDownMenuDemoActivity::class.java)
                         startActivity(textActivityIntent)
                     }
                 ) {
