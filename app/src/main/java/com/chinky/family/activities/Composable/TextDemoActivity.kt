@@ -32,14 +32,14 @@ class TextDemoActivity : ComponentActivity() {
         setContent {
             ApplicationTheme.ChildApplicationTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
-                    displayVariousTextOptions(padding)
+                    DisplayVariousTextOptions(padding)
                 }
             }
         }
     }
 
     @Composable
-    private fun displayVariousTextOptions(padding: PaddingValues) {
+    private fun DisplayVariousTextOptions(padding: PaddingValues) {
         // Note: You can only find LocalContext.current in a composable and this is the only way to declare and define a context.
         // In a ComponentActivity, you won't find context in onCreate, onStart, onResume, onPause, onStop and onDestroy overridden methods.
         //
