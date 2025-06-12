@@ -71,6 +71,7 @@
 - rememberGraphicsLayer()
 
 ## Core Animation States
+
 ### Basic animation States
 - animateFloatAsState() - Animates a single float value.
 - animateIntAsState() - Animates a single integer value.
@@ -81,11 +82,15 @@
 - animateSizeAsState() - Animates Size values.
 - animateIntOffsetAsState() - Animates IntOffset values.
 - animateIntSizeAsState() - Animates IntSize values.
+
 ### Multi value animation states
+
 - updateTransition() - Creates a transition for multiple animated values.
 - rememberInfiniteTransition() - For infinitely repeating animations
 - animateValueAsState() - Generic animation for any animatable type
+  
 ### Transition - Based States
+
 - Transition.animateFloat() - Float animation within a transition.
 - Transition.animateColor() - Color animation within a transition.
 - Transition.animateDp() - Dp animation within a transition.
@@ -93,11 +98,15 @@
 - Transition.animateRect() - Rect animation within a transition.
 - Transition.animateSize() - Size animation within a transition.
 - Transition.animateValue() - Generic animation within a transition.
+
 ### Infinite Animation States
+
 - InfiniteTransition.animateFloat() - Float animation with infinite duration.
 - InfiniteTransition.animateColor() - Color animation with infinite duration.
 - InfiniteTransition.animateValue() - Value animation with infinite duration.
+
 ### Decay and Physics Based Animations
+
 - rememberSplineBasedDecay() - Spline based decay animation state.
 - DecayAnimationSpec - For decay animations
 - SpringSpec - Spring-based animation specifications.
@@ -106,12 +115,16 @@
 - RepeatableSpec - Repeatable animation specifications.
 - InfiniteRepeatableSpec - Infinite repeatable animation specifications.
 - SnapSpec - Instant snap animation specifications.
+
 ### Layout Animation States
+
 - Animatable - Animates any value.
 - AnimationState - Holds animation state information.
 - AnimationScope - Scope for animation operations.
 - VectorizedAnimationSpec - For vectorized animations.
+
 ### Layout animation states
+
 - AnimatedVisibility - Built-in enter/exit animations.
 - AnimatedContent - Content Switching animations.
 - Crossfade - Cross-fade between content.
@@ -122,16 +135,22 @@
 - expandIn/shrinkOut - Expand/Shrink animations
 - expandHorizontally/shrinkHorizontally - Horizontal expand/shrink animations.
 - expandVertically/shrinkVertically - Vertical expand/shrink animations.
+
 ### Navigation Animation States
+
 - AnimatedNavHost - Navigation with animations.
 - enterTransition/exitTransition - Navigation transition states.
 - popEnterTransition/popExitTransition - Pop navigation transitions.
+
 ### Custom Animation States
+
 - AnimatableVector - For vector-based animations.
 - TwoWayConverter - Converts between types for animation.
 - AnimationVector - Base class for animation vectors.
 - AnimationSpec - Base interface for animation specifications.
+
 ### Specialized Animation Statess
+
 - rememberScrollState() - With animated scrolling capabilities
 - LazyListState - With animateScrollToItem() and animateItemPlacement()
 - PagerState - With animateScrollToPage()
