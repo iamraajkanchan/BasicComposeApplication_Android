@@ -50,6 +50,9 @@
             android:name=".activities.Composable.IconDemoActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.Composable.ImageDemoActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.Composable.LazyColumnDemoActivity"
             android:exported="false" />
         <activity
