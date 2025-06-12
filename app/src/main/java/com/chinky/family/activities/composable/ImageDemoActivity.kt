@@ -1,4 +1,4 @@
-package com.chinky.family.activities.Composable
+package com.chinky.family.activities.composable
 
 import android.content.Context
 import android.os.Bundle

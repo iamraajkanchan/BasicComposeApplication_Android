@@ -23,6 +23,8 @@
   - LazyColumn() : Optimized Vertical List.
   - LazyRow() : Optimized Horizontal List.
   - Scaffold() : Provides a basic app structure.
+  - ModalNavigationDrawer() : Used to show drawer
+  - TopAppBar() : Displays a top app bar.
 - Selection & Toggles
   - Checkbox() : A checkbox for selection.
   - Switch() : A toggle switch.
@@ -41,6 +43,7 @@
   - Icon() : Displays an icon.
 - Modifiers & Styling
   - Modifier() : Used to style and position elements.
+
 
 # State Management Options
 

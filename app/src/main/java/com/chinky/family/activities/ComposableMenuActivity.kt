@@ -17,30 +17,32 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.chinky.family.activities.Composable.AlertDialogDemoActivity
-import com.chinky.family.activities.Composable.BoxDemoActivity
-import com.chinky.family.activities.Composable.ButtonDemoActivity
-import com.chinky.family.activities.Composable.CardDemoActivity
-import com.chinky.family.activities.Composable.CheckboxDemoActivity
-import com.chinky.family.activities.Composable.CircularProgressIndicatorDemoActivity
-import com.chinky.family.activities.Composable.ColumnDemoActivity
-import com.chinky.family.activities.Composable.DropDownMenuDemoActivity
-import com.chinky.family.activities.Composable.IconButtonDemoActivity
-import com.chinky.family.activities.Composable.IconDemoActivity
-import com.chinky.family.activities.Composable.ImageDemoActivity
-import com.chinky.family.activities.Composable.LazyColumnDemoActivity
-import com.chinky.family.activities.Composable.LazyRowDemoActivity
-import com.chinky.family.activities.Composable.ModifierDemoActivity
-import com.chinky.family.activities.Composable.OutlinedButtonDemoActivity
-import com.chinky.family.activities.Composable.OutlinedTextFieldDemoActivity
-import com.chinky.family.activities.Composable.RadioButtonDemoActivity
-import com.chinky.family.activities.Composable.RowDemoActivity
-import com.chinky.family.activities.Composable.ScaffoldDemoActivity
-import com.chinky.family.activities.Composable.SnackbarDemoActivity
-import com.chinky.family.activities.Composable.SwitchDemoActivity
-import com.chinky.family.activities.Composable.TextButtonDemoActivity
-import com.chinky.family.activities.Composable.TextDemoActivity
-import com.chinky.family.activities.Composable.TextFieldDemoActivity
+import com.chinky.family.activities.composable.AlertDialogDemoActivity
+import com.chinky.family.activities.composable.BoxDemoActivity
+import com.chinky.family.activities.composable.ButtonDemoActivity
+import com.chinky.family.activities.composable.CardDemoActivity
+import com.chinky.family.activities.composable.CheckboxDemoActivity
+import com.chinky.family.activities.composable.CircularProgressIndicatorDemoActivity
+import com.chinky.family.activities.composable.ColumnDemoActivity
+import com.chinky.family.activities.composable.DropDownMenuDemoActivity
+import com.chinky.family.activities.composable.IconButtonDemoActivity
+import com.chinky.family.activities.composable.IconDemoActivity
+import com.chinky.family.activities.composable.ImageDemoActivity
+import com.chinky.family.activities.composable.LazyColumnDemoActivity
+import com.chinky.family.activities.composable.LazyRowDemoActivity
+import com.chinky.family.activities.composable.ModalNavigationDrawerDemoActivity
+import com.chinky.family.activities.composable.ModifierDemoActivity
+import com.chinky.family.activities.composable.OutlinedButtonDemoActivity
+import com.chinky.family.activities.composable.OutlinedTextFieldDemoActivity
+import com.chinky.family.activities.composable.RadioButtonDemoActivity
+import com.chinky.family.activities.composable.RowDemoActivity
+import com.chinky.family.activities.composable.ScaffoldDemoActivity
+import com.chinky.family.activities.composable.SnackbarDemoActivity
+import com.chinky.family.activities.composable.SwitchDemoActivity
+import com.chinky.family.activities.composable.TextButtonDemoActivity
+import com.chinky.family.activities.composable.TextDemoActivity
+import com.chinky.family.activities.composable.TextFieldDemoActivity
+import com.chinky.family.activities.composable.TopBarDemoActivity
 
 class ComposableMenuActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -357,6 +359,31 @@ class ComposableMenuActivity : ComponentActivity() {
                     }
                 ) {
                     Text("Drop Down Menu")
+                }
+            }
+            Row {
+                Button(
+                    modifier = leftButtonModifier,
+                    onClick = {
+                        val textActivityIntent =
+                            Intent(this@ComposableMenuActivity, ModalNavigationDrawerDemoActivity::class.java)
+                        startActivity(textActivityIntent)
+                    }
+                ) {
+                    Text("Modal Navigation Drawer")
+                }
+                Button(
+                    modifier = leftButtonModifier,
+                    onClick = {
+                        val textActivityIntent =
+                            Intent(
+                                this@ComposableMenuActivity,
+                                TopBarDemoActivity::class.java
+                            )
+                        startActivity(textActivityIntent)
+                    }
+                ) {
+                    Text("TopBar")
                 }
             }
         }

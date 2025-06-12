@@ -1,4 +1,4 @@
-package com.chinky.family.activities.Composable
+package com.chinky.family.activities.composable
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.chinky.family.ui.theme.ApplicationTheme
 
-class LazyColumnDemoActivity : ComponentActivity() {
+class OutlinedTextFieldDemoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
