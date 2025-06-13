@@ -119,8 +119,8 @@ class IconDemoActivity : ComponentActivity() {
             contentDescription = "User Profile",
             modifier = Modifier
                 .clickable(
-                    indication = rememberRipple(color = ApplicationColor.Orange), // Change ripple color here
-                    interactionSource = remember { MutableInteractionSource() }
+                    // indication = rememberRipple(color = ApplicationColor.Orange), // Change ripple color here
+                    // interactionSource = remember { MutableInteractionSource() }
                 ) {
                     Toast.makeText(context, "You clicked icon with click!", Toast.LENGTH_SHORT)
                         .show()

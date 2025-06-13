@@ -1,12 +1,20 @@
 package com.chinky.family.activities.composable
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.chinky.family.ui.theme.ApplicationTheme
 
@@ -17,14 +25,26 @@ class LazyColumnDemoActivity : ComponentActivity() {
         setContent {
             ApplicationTheme.ChildApplicationTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
-                    displayVariousTextOptions()
+                    DisplayVariousLazyColumnOptions(padding)
                 }
             }
         }
     }
 
     @Composable
-    private fun displayVariousTextOptions() {
-
+    private fun DisplayVariousLazyColumnOptions(padding: PaddingValues) {
+        Column(
+            modifier = Modifier
+                .padding(padding)
+                .fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Button(onClick = {
+                val intent = Intent(this@LazyColumnDemoActivity, BasicLazyColumnDemoActivity::class.java)
+                startActivity(intent)
+            }) {
+                Text("Basic Lazy Column")
+            }
+        }
     }
 }
