@@ -13,6 +13,7 @@ material = "1.12.0"
 activity = "1.10.1"
 constraintlayout = "1.1.1"
 glide = "1.0.0-alpha.1"
+paging = "3.3.6"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -34,6 +35,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintlayout" }
 glide-compose = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glide" }
+pagination-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
 
 
 [plugins]

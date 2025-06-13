@@ -57,6 +57,12 @@ class LazyColumnDemoActivity : ComponentActivity() {
             }) {
                 Text("Lazy Column With Search")
             }
+            Button(onClick = {
+                val intent = Intent(this@LazyColumnDemoActivity, LazyColumnWithPaginationDemoActivity::class.java)
+                startActivity(intent)
+            }) {
+                Text("Lazy Column With Pagination")
+            }
         }
     }
 }

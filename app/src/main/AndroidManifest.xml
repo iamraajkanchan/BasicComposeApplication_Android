@@ -67,10 +67,13 @@
             android:name=".activities.composable.LazyColumnBasicDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.LazyColumnWithSelectionDemoActivity"
+            android:name=".activities.composable.LazyColumnWithPaginationDemoActivity"
             android:exported="false" />
         <activity
             android:name=".activities.composable.LazyColumnWithSearchDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.composable.LazyColumnWithSelectionDemoActivity"
             android:exported="false" />
         <activity
             android:name=".activities.composable.LazyRowDemoActivity"
