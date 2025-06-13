@@ -40,7 +40,7 @@ class LazyColumnDemoActivity : ComponentActivity() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Button(onClick = {
-                val intent = Intent(this@LazyColumnDemoActivity, BasicLazyColumnDemoActivity::class.java)
+                val intent = Intent(this@LazyColumnDemoActivity, LazyColumnBasicDemoActivity::class.java)
                 startActivity(intent)
             }) {
                 Text("Basic Lazy Column")

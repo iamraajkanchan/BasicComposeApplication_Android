@@ -9,9 +9,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -28,7 +29,7 @@ import com.chinky.family.activities.model.Item
 import com.chinky.family.ui.theme.ApplicationColor
 import com.chinky.family.ui.theme.ApplicationTheme
 
-class BasicLazyColumnDemoActivity : ComponentActivity() {
+class LazyRowBasicDemoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -44,12 +45,12 @@ class BasicLazyColumnDemoActivity : ComponentActivity() {
     @Composable
     private fun DisplayLazyColumn(padding: PaddingValues) {
         val programmingItems = getProgrammingItems()
-        LazyColumn(
+        LazyRow(
             modifier = Modifier
                 .padding(padding)
-                .fillMaxSize(),
+                .fillMaxWidth(),
             contentPadding = PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
             content = {
                 items(programmingItems.size) { index ->
                     ItemRowLayout(padding, programmingItems[index])
@@ -63,7 +64,7 @@ class BasicLazyColumnDemoActivity : ComponentActivity() {
     private fun ItemRowLayout(padding: PaddingValues, item: Item) {
         Card(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth(.7f)
                 .padding(10.dp),
             colors = CardDefaults.cardColors(
                 containerColor = ApplicationColor.White

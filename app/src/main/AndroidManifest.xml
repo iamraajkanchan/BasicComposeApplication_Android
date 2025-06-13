@@ -64,7 +64,7 @@
             android:name=".activities.composable.LazyColumnDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.BasicLazyColumnDemoActivity"
+            android:name=".activities.composable.LazyColumnBasicDemoActivity"
             android:exported="false" />
         <activity
             android:name=".activities.composable.LazyColumnWithSelectionDemoActivity"
@@ -74,6 +74,15 @@
             android:exported="false" />
         <activity
             android:name=".activities.composable.LazyRowDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.composable.LazyRowBasicDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.composable.LazyRowWithSelectionDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.composable.LazyRowWithSearchDemoActivity"
             android:exported="false" />
         <activity
             android:name=".activities.composable.LinearProgressIndicatorDemoActivity"
