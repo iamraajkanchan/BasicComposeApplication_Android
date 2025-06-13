@@ -45,6 +45,18 @@ class LazyColumnDemoActivity : ComponentActivity() {
             }) {
                 Text("Basic Lazy Column")
             }
+            Button(onClick = {
+                val intent = Intent(this@LazyColumnDemoActivity, LazyColumnWithSelectionDemoActivity::class.java)
+                startActivity(intent)
+            }) {
+                Text("Lazy Column With Selection")
+            }
+            Button(onClick = {
+                val intent = Intent(this@LazyColumnDemoActivity, LazyColumnWithSearchDemoActivity::class.java)
+                startActivity(intent)
+            }) {
+                Text("Lazy Column With Search")
+            }
         }
     }
 }
