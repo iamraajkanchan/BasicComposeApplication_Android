@@ -15,123 +15,123 @@
         android:theme="@style/Theme.HomeApplicationTheme"
         tools:targetApi="31">
         <activity
-            android:name=".activities.StateManagementDemoActivity"
+            android:name=".statemanagement.activities.StateManagementDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.ComposableMenuActivity"
+            android:name=".composable.activities.ComposableMenuActivity"
             android:exported="false" />
         <!--
         Note: Add this theme to every activity if the customized theme for the activity doesn't work.
         android:theme="@style/Theme.AppCompat.DayNight"
         -->
         <activity
-            android:name=".activities.composable.AlertDialogDemoActivity"
+            android:name=".composable.activities.AlertDialogDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.BoxDemoActivity"
+            android:name=".composable.activities.BoxDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.ButtonDemoActivity"
+            android:name=".composable.activities.ButtonDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.CardDemoActivity"
+            android:name=".composable.activities.CardDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.CheckboxDemoActivity"
+            android:name=".composable.activities.CheckboxDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.CircularProgressIndicatorDemoActivity"
+            android:name=".composable.activities.CircularProgressIndicatorDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.ColumnDemoActivity"
+            android:name=".composable.activities.ColumnDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.IconButtonDemoActivity"
+            android:name=".composable.activities.IconButtonDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.IconDemoActivity"
+            android:name=".composable.activities.IconDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.ModalNavigationDrawerDemoActivity"
+            android:name=".composable.activities.ModalNavigationDrawerDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.TopBarDemoActivity"
+            android:name=".composable.activities.TopBarDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.ImageDemoActivity"
+            android:name=".composable.activities.ImageDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.LazyColumnDemoActivity"
+            android:name=".composable.activities.LazyColumnDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.LazyColumnBasicDemoActivity"
+            android:name=".composable.activities.LazyColumnBasicDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.LazyColumnWithPaginationDemoActivity"
+            android:name=".composable.activities.LazyColumnWithPaginationDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.LazyColumnWithSearchDemoActivity"
+            android:name=".composable.activities.LazyColumnWithSearchDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.LazyColumnWithSelectionDemoActivity"
+            android:name=".composable.activities.LazyColumnWithSelectionDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.LazyRowDemoActivity"
+            android:name=".composable.activities.LazyRowDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.LazyRowBasicDemoActivity"
+            android:name=".composable.activities.LazyRowBasicDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.LazyRowWithSelectionDemoActivity"
+            android:name=".composable.activities.LazyRowWithSelectionDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.LazyRowWithSearchDemoActivity"
+            android:name=".composable.activities.LazyRowWithSearchDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.LinearProgressIndicatorDemoActivity"
+            android:name=".composable.activities.LinearProgressIndicatorDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.ListItemDemoActivity"
+            android:name=".composable.activities.ListItemDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.ModifierDemoActivity"
+            android:name=".composable.activities.ModifierDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.OutlinedButtonDemoActivity"
+            android:name=".composable.activities.OutlinedButtonDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.OutlinedTextFieldDemoActivity"
+            android:name=".composable.activities.OutlinedTextFieldDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.RadioButtonDemoActivity"
+            android:name=".composable.activities.RadioButtonDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.RowDemoActivity"
+            android:name=".composable.activities.RowDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.ScaffoldDemoActivity"
+            android:name=".composable.activities.ScaffoldDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.SnackbarDemoActivity"
+            android:name=".composable.activities.SnackbarDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.SwitchDemoActivity"
+            android:name=".composable.activities.SwitchDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.TextButtonDemoActivity"
+            android:name=".composable.activities.TextButtonDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.TextFieldDemoActivity"
+            android:name=".composable.activities.TextFieldDemoActivity"
             android:exported="false"
             android:theme="@style/Theme.ChildApplicationTheme" />
         <activity
-            android:name=".activities.composable.TextDemoActivity"
+            android:name=".composable.activities.TextDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.composable.DropDownMenuDemoActivity"
+            android:name=".composable.activities.DropDownMenuDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.HomeApplicationTheme">
