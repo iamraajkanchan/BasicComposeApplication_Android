@@ -14,6 +14,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HomeApplicationTheme"
         tools:targetApi="31">
+        <service
+            android:name=".services.services.DemoBoundService"
+            android:exported="false" />
+
+        <activity
+            android:name=".services.activities.BoundServiceDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".services.activities.ServiceMenuActivity"
+            android:exported="false" />
         <activity
             android:name=".statemanagement.activities.StateManagementDemoActivity"
             android:exported="false" />

@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.chinky.family.composable.activities.ComposableMenuActivity
+import com.chinky.family.services.activities.ServiceMenuActivity
 import com.chinky.family.statemanagement.activities.StateManagementDemoActivity
 import com.chinky.family.ui.theme.ApplicationTheme
 
@@ -60,6 +61,15 @@ class MainActivity : ComponentActivity() {
                 }) {
                     Text("State Management")
                 }
+            }
+            Row {
+                Button(onClick = {
+                    val intent = Intent(this@MainActivity, ServiceMenuActivity::class.java)
+                    startActivity(intent)
+                }) {
+                    Text("Services")
+                }
+                Spacer(modifier = Modifier.width(20.dp))
             }
         }
     }

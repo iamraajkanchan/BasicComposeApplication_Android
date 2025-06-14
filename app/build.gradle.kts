@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.glide.compose)
     implementation(libs.pagination.compose)
+    implementation(libs.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
