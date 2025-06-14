@@ -82,7 +82,7 @@
 - animateSizeAsState() - Animates Size values.
 - animateIntOffsetAsState() - Animates IntOffset values.
 - animateIntSizeAsState() - Animates IntSize values.
-
+  
 ### Multi value animation states
 
 - updateTransition() - Creates a transition for multiple animated values.
