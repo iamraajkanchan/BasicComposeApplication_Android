@@ -19,6 +19,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+// Todo Application Notes: If by remember is not working, use the following import method
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -40,17 +42,19 @@ class BoundServiceDemoActivity : ComponentActivity() {
     @Composable
     private fun DisplayUI(padding: PaddingValues) {
         val context = LocalContext.current
-        var valueFromService = remember { mutableStateOf<String?>(null) }
-        val demoBoundService = remember { mutableStateOf<DemoBoundService?>(null) }
+        var valueFromService by remember { mutableStateOf<String?>(null) }
+        var demoBoundService by remember { mutableStateOf<DemoBoundService?>(null) }
+
         val demoBoundServiceConnection = remember {
             object : ServiceConnection {
                 override fun onServiceConnected(component: ComponentName?, binder: IBinder?) {
-                    demoBoundService.value =
+                    demoBoundService =
                         (binder as DemoBoundService.DemoBoundServiceBinder).getDemoBoundService()
+                    demoBoundService?.setActivityData("Hello from activity!") // Move here
                 }
 
                 override fun onServiceDisconnected(p0: ComponentName?) {
-                    demoBoundService.value = null
+                    demoBoundService = null
                 }
             }
         }
@@ -58,7 +62,7 @@ class BoundServiceDemoActivity : ComponentActivity() {
         DisposableEffect(Unit) {
             val intent = Intent(context, DemoBoundService::class.java)
             context.bindService(intent, demoBoundServiceConnection, BIND_AUTO_CREATE)
-            demoBoundService.value?.setActivityData("Hello from activity!")
+
             onDispose {
                 context.unbindService(demoBoundServiceConnection)
             }
@@ -71,11 +75,11 @@ class BoundServiceDemoActivity : ComponentActivity() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Button(onClick = {
-                valueFromService = mutableStateOf(demoBoundService.value?.getActivityData())
+                valueFromService = demoBoundService?.getActivityData() // Correct update
             }) {
                 Text("Fetch Data from Demo Bound Service")
             }
-            Text(text = valueFromService.value ?: "Service connection Error!")
+            Text(text = valueFromService ?: "Please connect!")
         }
     }
 }
