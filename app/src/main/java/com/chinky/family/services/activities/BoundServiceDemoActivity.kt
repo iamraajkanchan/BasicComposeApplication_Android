@@ -44,13 +44,13 @@ class BoundServiceDemoActivity : ComponentActivity() {
         val context = LocalContext.current
         var valueFromService by remember { mutableStateOf<String?>(null) }
         var demoBoundService by remember { mutableStateOf<DemoBoundService?>(null) }
-
+        var fetchDataCount by remember { mutableIntStateOf(0) }
         val demoBoundServiceConnection = remember {
             object : ServiceConnection {
                 override fun onServiceConnected(component: ComponentName?, binder: IBinder?) {
                     demoBoundService =
                         (binder as DemoBoundService.DemoBoundServiceBinder).getDemoBoundService()
-                    demoBoundService?.setActivityData("Hello from activity!") // Move here
+                   demoBoundService?.setActivityData("${fetchDataCount++} : Hello from activity!") // Move here
                 }
 
                 override fun onServiceDisconnected(p0: ComponentName?) {
@@ -75,6 +75,7 @@ class BoundServiceDemoActivity : ComponentActivity() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Button(onClick = {
+                demoBoundService?.setActivityData("${fetchDataCount++} : Hello from activity!")
                 valueFromService = demoBoundService?.getActivityData() // Correct update
             }) {
                 Text("Fetch Data from Demo Bound Service")
