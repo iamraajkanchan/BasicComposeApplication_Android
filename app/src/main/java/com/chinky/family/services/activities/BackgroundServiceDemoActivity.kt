@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,41 +15,39 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.chinky.family.services.services.DemoBackgroundService
 import com.chinky.family.ui.theme.ApplicationTheme
+import com.chinky.family.utils.ApplicationConstant
 
-class ServiceMenuActivity : ComponentActivity() {
+class BackgroundServiceDemoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             ApplicationTheme.ChildApplicationTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { padding ->
-                    DisplayServiceMenu(padding)
+                    DisplayUI(padding)
                 }
             }
         }
     }
 
     @Composable
-    private fun DisplayServiceMenu(padding: PaddingValues) {
+    private fun DisplayUI(padding: PaddingValues) {
         Column(
             modifier = Modifier
-                .padding(padding)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .padding(padding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Button(onClick = {
-                val intent = Intent(this@ServiceMenuActivity, BoundServiceDemoActivity::class.java)
-                startActivity(intent)
-            }) {
-                Text("Bound Service")
-            }
-            Button(onClick = {
-                val intent = Intent(this@ServiceMenuActivity, BackgroundServiceDemoActivity::class.java)
-                startActivity(intent)
-            }) {
-                Text("Background Service")
-            }
+                val intent =
+                    Intent(this@BackgroundServiceDemoActivity, DemoBackgroundService::class.java)
+                intent.putExtra(
+                    ApplicationConstant.ARGUMENT_DEMO_BACKGROUND_SERVICE_MAIN_DATA,
+                    "Hello from activity!"
+                )
+                startService(intent)
+            }) { Text("Start Service") }
         }
     }
 }
