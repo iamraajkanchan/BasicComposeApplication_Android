@@ -104,14 +104,11 @@
 
 # Permissions
 1. What are permissions in Android, and why are they needed?
-
 Permissions allow an application to access restricted system features and user data. Permissions provide security by preventing unauthorised access.
 2. Explain the difference between normal and dangerous permissions?
-
 - Normal Permissions: The permissions which are automatically granted. e.g. INTERNET
 - Dangerous Permissions: The permissions which require user approval. e.g. READ_CONTACTS
 3. How does Android handle permissions before and after API level 23 (Android 6.0)?
-
 Before API level 23 (Android 6.0), permissions were granted at install time. After API level 23 (Android 6.0) dangerous permissions require runtime approval.
 4. What is the role of the AndroidManifest.xml file in declaring permissions?
 5. How can an application check if a permission has already been granted?
