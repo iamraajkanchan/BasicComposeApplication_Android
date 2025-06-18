@@ -113,7 +113,7 @@ Before API level 23 (Android 6.0), permissions were granted at install time. Aft
 4. What is the role of the AndroidManifest.xml file in declaring permissions?
 AndroidManifest.xml file defines required permission using the required-permission tag.
 5. How can an application check if a permission has already been granted?
-Use the following method to check if a permission is already granted. 'ContextCompat.checkSelfPermission(Context, Permission)'
+Use the following method to check if a permission is already granted. '''ContextCompat.checkSelfPermission(Context, Permission)'''
 6. What are runtime permissions, and why where they introduced in Android 6.0?
 7. How do you request runtime permissions in an Android app?
 8. What is the shouldShowRequestPermissionRationale() method, and when should it be used?
