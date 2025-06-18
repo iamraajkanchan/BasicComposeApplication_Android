@@ -58,11 +58,77 @@
 19. Describe how you would implement a hierarchical navigation structure between activities using Intents and the Up button.
 20. How do you handle runtime permissions in Android Activities and why is this an important consideration for modern Android applications.
 
+#Fragments
+Source https://interviewprep.org/android-fragments-interview-questions/
+
+1. What are Android Fragments and why they are introduced in Android Development?
+2. Explain the Fragment Lifecycle and how it differs from an Activity Lifecycle.
+3. Can you discuss the best practices for handling communication between an Activity and its Fragments?
+4. What is the benefit of using a FragmentPagerAdapter over a FragmentStatePagerAdapter?
+5. How would you handle screen orientation changes in an application that utilizes Fragments?
+6. What is the purpose of having a default constructor for a Fragment and why it is important?
+7. Explain the difference between FragmentManager and ChildFragmentManager.
+8. How do you handle Fragment back stack management to ensure proper navigation flow?
+9. What are the key differences between using a DialogFragment and a simple Dialog?
+10. Explain the process of dynamically adding, removing and replacing Fragments in an Activity Layout.
+11. How do you handle onSaveInstanceState method in a Fragment?
+12. What is the major difference between using Fragment.onAttach() and Fragment.onActivityCreated()
+13. How do you ensure that data is persisted across Fragment transactions?
+14. Describe a scenario where using nested Fragments would be beneficial, and how to implement them properly.
+15. How do you handle memory leaks in an application that uses Fragments extensively?
+16. What is the role of a Loader in loading data for a Fragment, and how does it differ from AsyncTask?
+17. Explain the use case of setRetainInstance(true) in a Fragment, and how it works.
+18. How do you handle configuration changes in a Fragment without recreating the entire Activity?
+19. What are some common pitfalls developers face when working with Fragments, and how can they be avoided?
+    - Common pitfalls when working with Fragments include:
+      - ***Improper handling of lifecycle events***: To avoid this, familiarize yourself with Fragment's lifecycle and use appropriate callbacks like onResume(), onPause(), etc.
+      - ***Retaining instances across configuration changes***: Use setRetainInstance(true) to retain data during rotation or other configuration changes.
+      - ***Inefficient communication between Fragments***: Implement interfaces for inter Fragment communication instead of directly accessing methods or variables.
+      - ***Overusing Fragments***: Avoid using too many Fragments in a Single Activity; consider alternative patterns like ViewModels or custom views.
+      - ***Nested Fragment issues***: Be cautious when nesting Fragments as it can lead to complex hierarchies and difficult-to-manage code. Prefer childFragmentManager over fragmentManager.
+      - ***Memory leaks***: Unregister listeners, release resources, and nullify references in onDestroyView() to prevent memory leaks.
+20. Explain how to add a Fragment to an Activity using XML layout programmatically.
+    - To add a Fragment to an Activity using XML layout, follow these steps.
+      - Create a Fragment class extending ```androidx.fragment.app.Fragment``` and override onCreateView() method.
+      - Define the Fragment's layout in an XML file withing the res/layout directory.
+      - In the Activity's XML layout, use the ```<fragment>``` tag with attributes like android:name specifying the Fragment class, and ```android:id``` for identification.
+21. How would you implement a master/detail flow using Fragments?
+    - To implement a master / detail flow using Fragments, follow these steps:
+      - Create two Fragment classes: MasterFragment and DetailFragment
+      - Define layouts for both fragments in XML files.
+      - In the activity's layout file, include both fragment containers (FrameLayout) with unique IDs.
+      - In the activity's onCreate method, check if it's in single or dual-pane mode by checking if the detail container is present.
+      - If in single-pane mode, add MasterFragment to the master container using FragmentManager and FragmentTransaction.
+      - Implement an interface in MasterFragment to communicate item selection events to the activity.
+      - In the activity, handle the item selection event by either replacing MasterFragment with DetailFragment (single-pane) or updating DetailFragment directly (dual-pane).
+22. What is the use of Android Jetpack's Navigation component in managing Fragment transactions?
+    - Android Jetpack's Navigation component simplifies Fragment transactions by handling navigation logic, providing a visual representation of the application's navigation flow, and ensuring consistent behavior across different devices. It automates back stack management, handles deep linking, and supports transitions/animations between Fragments.
+23. How do you handle deep linking in an application that uses Fragments?
+    - To handle deep linking in an application using Fragments, follow these steps:
+      - ***Define intent filters***: In the AndroidManifest.xml file, add intent filters for the activity hosting the fragments with action.View
+      - ***Parse incoming intents***: In the host activity's onCreate() method, parse the incoming intent to extract the deep link information.
+      - ***Create fragment instances***: Based on the extracted deep link information, create instances of the required fragments.
+      - ***Perform navigation***: Use FragmentManager and FragmentTransaction to replace or add the created fragment instances to the container view in the host activity.
+      - ***Update back stack***: If necessary, manage the back stack by calling addToBackStack() during the fragment transaction.
+      - ***Handle configuration changes***: Save and restore the deep link state during configuration changes using onSaveInstanceState() and onRestoreInstanceState()
+24. Explain the concept of a headless Fragment and outline some practical use cases.
+    - A headless Fragment is a fragment that doesn't have a UI and  retains its state across configuration changes, such as screen rotations. It's used for handling background tasks or retaining data without being tied to an activity's lifecycle.
+    - Practical use cases include:
+      - **Managing network requests**: Headless Fragments can handle API calls and deliver results to the UI when ready, ensuring smooth user experience.
+      - **Retaining complex data structures**: When dealing with large datasets, headless Fragments help maintain data integrity during configuration changes.
+      - **Background Operations** - Tasks like file downloads or database updates can be managed by headless Fragments, preventing interruptions due to activity lifecycle events.
+      - **Event bus implementation** - A headless Fragment can act as an event bus, facilitating communication between different components of an application.
+      - **Centralized permission handling** - By delegating permission requests and responses to a headless Fragment, you can simplify and centralize permission management in your application.
+25. How does the introduction of Android Architecture component, such as ViewModel and LiveData, affect the way we handle data and communication between Fragments and their associated Activities?
+    - Android Architecture Components, specifically ViewModel and LiveData, significantly improve data handling and communication between Fragments and Activities. ViewModel allows for efficient management of UI-related data by surviving configuration changes, thus preventing redundant data calls and ensuring consistent user experience. It also promotes separation of concerns by keeping the UI logic in the Fragment and business logic in the ViewModel.
+    - LiveData, an observable data holder class, enables automatic updates to UI components when underlying data changes. This simplifies synchronization between data sources and UI elements while adhering to the lifecycle-aware nature of Android components. LiveData's observability ensures that only active Fragments or Activities receive updates, reducing resource consumption and potential memory leaks.
+    - Together, ViewModel and LiveData facilitate a more robust, maintainable, and testable architecture by decoupling data handling from UI components and promoting reactive programming patterns.
+
 # Broadcast Receivers
 1. What is an Android Broadcast Receivers, and what are its primary use cases.
-2. Explain how the BroadcastReceiver class fits within the Android application components heirarchy.
+2. Explain how the BroadcastReceiver class fits within the Android application components hierarchy.
 3. Can you implement BroadcastReceiver in a separate process? If so, what are the advantages and disadvantages of doing this?
-4. Describe the different ways to register a BroadcastReceiver in an Android application, and the prons and cons of each approach.
+4. Describe the different ways to register a BroadcastReceiver in an Android application, and the pros and cons of each approach.
 5. How can an application use BroadcastReceiver to respond to system events, such as changes in network connectivity, battery level, or screen orientation?
 6. What is the role of intent filters in BroadcastReceiver? Explain the importance of action, category and data elements in an IntentFilter.
 7. Describe the difference between LocalBroadcastManagers and BroadcastReceivers. When should one be used over the other?
