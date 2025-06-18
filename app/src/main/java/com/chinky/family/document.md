@@ -29,6 +29,8 @@
   - Checkbox() : A checkbox for selection.
   - Switch() : A toggle switch.
   - RadioButton() : A radio button for selection.
+  - Slider()
+  - RangeSlider()
 - Cards & Lists
   - Card() : Displays content in a card format.
   - ListItem() : Represents an item in a list.
