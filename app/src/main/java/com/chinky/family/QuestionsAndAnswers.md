@@ -74,4 +74,52 @@
 13. Explain the role of Context and Intent in the onReceive() method of BroadcastReceiver.
 14. What are some best practices to follow while implementing Android BroadcastReceivers for optimal performance and reliability?
 15. How can you handle situations where multiple BroadcastReceivers are registered for the same broadcast intent? What is the purpose of priorities in Intent Filters?
-16. How do you unregister a BroadcastReceiver, and why is it important to do so
+16. How do you unregister a BroadcastReceiver, and why is it important to do so?
+17. Describe the difference between using PendingIntent for starting an activity, a service or a BroadcastReceiver.
+18. Explain how to use BroadcastReceiver to handle app notifications across different Android Versions.
+19. Describe how to use a BroadcastReceiver to interact with other application components using implicit intents.
+20. How can you debug or test a BroadcastReceiver in an Android application? What tools or techniques can be used?
+21. What is the use of WakefulBroadcastReceiver in ensuring the execution of a long-running background task after receiving a broadcast?
+22. Can a BroadcastReceiver be used to communicate between applications? If so, explain the process and any security considerations.
+23. What is the impact of system wide broadcasts on battery life, and how can it be minimized using efficient BroadcastReceiver implementations?
+24. How do Android.Manifest elements like action and category affect BroadcastReceiver functionality, and when should a custom manifest element be used?
+25. Explain how would you ensure backward compatibility in responding to broadcasts across different Android SDK versions using BroadcastReceiver?
+
+# SQLite
+1. What is SQLite, and how does it differ from other databases?
+2. What are the key features of SQLite?
+3. How does SQLite hand transactions?
+4. What are the advantages and limitations of using SQLite in Android?
+5. What are SQLite storage classes?
+6. How do you create and manage a SQLite database in an Android application?
+7. What is the role of SQLiteOpenHelper in Android?
+8. How do you perform CRUD (Create-Read-Update-Delete) operations in SQLite?
+9. How do you handle database version upgrades in SQLite?
+10. What is the difference between SQL and SQLite?
+11. How do you optimize SQLite queries for better performance?
+12. What are SQLite indexes and when should they be used?
+13. How do you implement database encryption in SQLite?
+14. How do you handle concurrency in SQLite?
+15. What are the best practices for managing large datasets in SQLite?
+
+# Permissions
+1. What are permissions in Android, and why are they needed?
+2. Explain the difference between normal and dangerous permissions?
+3. How does Android handle permissions before and after API level 23 (Android 6.0)?
+4. What is the role of the AndroidManifest.xml file in declaring permissions?
+5. How can an application check if a permission has already been granted?
+6. What are runtime permissions, and why where they introduced in Android 6.0?
+7. How do you request runtime permissions in an Android app?
+8. What is the shouldShowRequestPermissionRationale() method, and when should it be used?
+9. How do you handle the result of a permission request in an Android app?
+10. What happens if a user denies a permission request multiple times?
+11. How can an app guide users to enable permissions manually from settings?
+12. What are the best practices for requesting runtime permissions to improve user experience?
+13. How do you handle permissions in background service?
+14. What are special permissions like SYSTEM_ALERT_WINDOW and WRITE_SETTINGS, and how are they requested?
+15. How does Android handle permissions for accessing external storage?
+16. What are foreground service permissions, and how do they differ from normal permissions?
+17. How do permission work in Android 11 and later, especially regarding scoped storage?
+18. How can an application request multiple permissions at once?
+19. What are permission groups and how do they affect permission requests?
+20. How do you handle permission revocation when an application is updated or reinstalled?
