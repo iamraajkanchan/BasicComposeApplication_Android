@@ -104,19 +104,19 @@
 
 # Permissions
 1. How does Android handle permissions before and after API level 23 (Android 6.0)?
-    Before API level 23 (Android 6.0), permissions were granted at install time. After API level 23 (Android 6.0) dangerous permissions require runtime approval.
+   - Before API level 23 (Android 6.0), permissions were granted at install time. After API level 23 (Android 6.0) dangerous permissions require runtime approval.
 2. What is the role of the AndroidManifest.xml file in declaring permissions? 
-    AndroidManifest.xml file defines required permission using the required-permission tag.
+    - AndroidManifest.xml file defines required permission using the required-permission tag.
 3. How can an application check if a permission has already been granted?
-    Use the following method to check if a permission is already granted.
+    - Use the following method to check if a permission is already granted.
    `ContextCompat.checkSelfPermission(Context, Permission)`
 4. What are runtime permissions, and why where they introduced in Android 6.0?
-    Runtime permissions are used to grant access to permissions dynamically, which improves security and user control.
+    - Runtime permissions are used to grant access to permissions dynamically, which improves security and user control.
 5. How do you request runtime permissions in an Android app?
-    Use the following method to request runtime permissions
+    - Use the following method to request runtime permissions
     `ActivityCompat.requestPermission(Context, ArrayOf(permission), requestCode)`
 6. What is the shouldShowRequestPermissionRationale() method, and when should it be used?
-    This method is used to check if an application should explain if a permission is needed before requesting that permission.
+    - This method is used to check if an application should explain if a permission is needed before requesting that permission.
 7. How do you handle the result of a permission request in an Android app?
 8. What happens if a user denies a permission request multiple times?
 9. How can an app guide users to enable permissions manually from settings?
@@ -130,7 +130,7 @@
 17. What are permission groups and how do they affect permission requests?
 18. How do you handle permission revocation when an application is updated or reinstalled?
 19. What are permissions in Android, and why are they needed?
-    Permissions allow an application to access restricted system features and user data. Permissions provide security by preventing unauthorized access.
+    - Permissions allow an application to access restricted system features and user data. Permissions provide security by preventing unauthorized access.
 20. Explain the difference between normal and dangerous permissions
     - Normal Permissions: The permissions which are automatically granted. e.g. INTERNET
     - Dangerous Permissions: The permissions which require user approval. e.g. READ_CONTACTS
