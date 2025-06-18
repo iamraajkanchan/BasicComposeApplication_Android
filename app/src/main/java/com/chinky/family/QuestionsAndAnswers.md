@@ -103,34 +103,36 @@
 15. What are the best practices for managing large datasets in SQLite?
 
 # Permissions
-1. What are permissions in Android, and why are they needed?
-Permissions allow an application to access restricted system features and user data. Permissions provide security by preventing unauthorised access.
-2. Explain the difference between normal and dangerous permissions?
-- Normal Permissions: The permissions which are automatically granted. e.g. INTERNET
-- Dangerous Permissions: The permissions which require user approval. e.g. READ_CONTACTS
-3. How does Android handle permissions before and after API level 23 (Android 6.0)?
-Before API level 23 (Android 6.0), permissions were granted at install time. After API level 23 (Android 6.0) dangerous permissions require runtime approval.
-4. What is the role of the AndroidManifest.xml file in declaring permissions?
-AndroidManifest.xml file defines required permission using the required-permission tag.
-5. How can an application check if a permission has already been granted?
-Use the following method to check if a permission is already granted. '''ContextCompat.checkSelfPermission(Context, Permission)'''
-6. What are runtime permissions, and why where they introduced in Android 6.0?
-Runtime permissions are used to grant access to permissons dynamically, which improves security and user control.
-7. How do you request runtime permissions in an Android app?
-Use the following method to request runtime permissions
-ActivityCompat.requestPermission(Context, Array of(permission), requestCode)
-8. What is the shouldShowRequestPermissionRationale() method, and when should it be used?
-This method is used to check if an application should explain if a permission is needed before requesting that permission.
-9. How do you handle the result of a permission request in an Android app?
+1. How does Android handle permissions before and after API level 23 (Android 6.0)?
+   Before API level 23 (Android 6.0), permissions were granted at install time. After API level 23 (Android 6.0) dangerous permissions require runtime approval.
+2. What is the role of the AndroidManifest.xml file in declaring permissions? 
+   AndroidManifest.xml file defines required permission using the required-permission tag.
+3. How can an application check if a permission has already been granted? 
+   Use the following method to check if a permission is already granted.
+   ```ContextCompat.checkSelfPermission(Context, Permission)```
+4. What are runtime permissions, and why where they introduced in Android 6.0?
+   Runtime permissions are used to grant access to permissions dynamically, which improves security and user control.
+5. How do you request runtime permissions in an Android app?
+    Use the following method to request runtime permissions
+    ```ActivityCompat.requestPermission(Context, ArrayOf(permission), requestCode)```
+6. What is the shouldShowRequestPermissionRationale() method, and when should it be used?
+    This method is used to check if an application should explain if a permission is needed before requesting that permission.
+7. How do you handle the result of a permission request in an Android app?
+8. What happens if a user denies a permission request multiple times?
+9. How can an app guide users to enable permissions manually from settings?
+10. What are the best practices for requesting runtime permissions to improve user experience?
+11. How do you handle permissions in background service?
+12. What are special permissions like SYSTEM_ALERT_WINDOW and WRITE_SETTINGS, and how are they requested?
+13. How does Android handle permissions for accessing external storage?
+14. What are foreground service permissions, and how do they differ from normal permissions?
+15. How do permission work in Android 11 and later, especially regarding scoped storage?
+16. How can an application request multiple permissions at once?
+17. What are permission groups and how do they affect permission requests?
+18. How do you handle permission revocation when an application is updated or reinstalled?
+19. What are permissions in Android, and why are they needed?
+    Permissions allow an application to access restricted system features and user data. Permissions provide security by preventing unauthorized access.
+20. Explain the difference between normal and dangerous permissions
+    - Normal Permissions: The permissions which are automatically granted. e.g. INTERNET
+    - Dangerous Permissions: The permissions which require user approval. e.g. READ_CONTACTS
 
-10. What happens if a user denies a permission request multiple times?
-11. How can an app guide users to enable permissions manually from settings?
-12. What are the best practices for requesting runtime permissions to improve user experience?
-13. How do you handle permissions in background service?
-14. What are special permissions like SYSTEM_ALERT_WINDOW and WRITE_SETTINGS, and how are they requested?
-15. How does Android handle permissions for accessing external storage?
-16. What are foreground service permissions, and how do they differ from normal permissions?
-17. How do permission work in Android 11 and later, especially regarding scoped storage?
-18. How can an application request multiple permissions at once?
-19. What are permission groups and how do they affect permission requests?
-20. How do you handle permission revocation when an application is updated or reinstalled?
+#
