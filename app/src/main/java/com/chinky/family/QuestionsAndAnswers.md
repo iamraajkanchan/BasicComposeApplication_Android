@@ -115,9 +115,14 @@ AndroidManifest.xml file defines required permission using the required-permissi
 5. How can an application check if a permission has already been granted?
 Use the following method to check if a permission is already granted. '''ContextCompat.checkSelfPermission(Context, Permission)'''
 6. What are runtime permissions, and why where they introduced in Android 6.0?
+Runtime permissions are used to grant access to permissons dynamically, which improves security and user control.
 7. How do you request runtime permissions in an Android app?
+Use the following method to request runtime permissions
+ActivityCompat.requestPermission(Context, Array of(permission), requestCode)
 8. What is the shouldShowRequestPermissionRationale() method, and when should it be used?
+This method is used to check if an application should explain if a permission is needed before requesting that permission.
 9. How do you handle the result of a permission request in an Android app?
+
 10. What happens if a user denies a permission request multiple times?
 11. How can an app guide users to enable permissions manually from settings?
 12. What are the best practices for requesting runtime permissions to improve user experience?
