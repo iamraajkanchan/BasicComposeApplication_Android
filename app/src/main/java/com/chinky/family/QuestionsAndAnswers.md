@@ -1,7 +1,6 @@
 # Compilation of Android Interview Questions.
 
-
-# Activity
+# Miscellaneous 
 1. What is IntentService and how it is different from Foreground and Background Service?
     IntentService is a subclass of Service that handles asynchronous task in the background.
     IntentService processes each intent sequentially and stops itself once all the tasks are completed.
@@ -22,7 +21,9 @@
     be saved and reused when the activity is recreated.
     Non Transient data: This data sticks around even the application is closed or restarted. It can be saved and reused with the help
     of SharedPreferences, Databases and Files feature. 
-4. What is the difference between Serialized and Parcelized data in Android?
+
+# Activity
+1. What is the difference between Serialized and Parcelized data in Android?
     Serializable:
     - It is a built-in Java interface
     - Slower: Because it uses reflection and creates more temporary objects, which can affect the application performance.
@@ -33,7 +34,7 @@
     - Faster: It is more efficient than Serializable because it avoids reflection and minimizes object creation.
     - Manual Implementation: You need to override writeToParcel() method and use a CREATOR object.
     - Less flexible: Doesn't support full class hierarchies as easily.
-5. Can you explain the Android Activity LifeCycle and the significance of each lifeCycle method in detail?
+2. Can you explain the Android Activity LifeCycle and the significance of each lifeCycle method in detail?
     - Activity Lifecycle are the states of an Activity. There are seven lifecycle methods
         1. onCreate() - 
         2. onStart() - 
@@ -42,21 +43,21 @@
         5. onStop()
         6. onDestroy()
         7. onRestart()
-6. What is the difference between a Service and an Activity? When would you choose to use a Service instead of an activity?
-7. Describe the distance between onSaveInstanceState() and onRestoreInstanceState() methods in Android activities. When are these methods called?
-8. In what scenarios would you use the launch modes: "standard", "singleTop", "singleTask" and "singleInstance"? Explain their significance and 
-9. How would like to handle screen orientation changes in an Android activity, and why it is so important to manage such changes?
-10. Explain the difference between startActivityForResult() and startActivity() overridden methods. When would you use one over the other?
-11. Describe how would you use fragments in your Android Activity to optimize a multi-pane layout for different screen sizes or device orientations.
-12. Explain the role of Intent objects in communication between Android components, especially between Activities and provide examples of different Intent types.
-13. What is the purpose of persisting an Activity state and how do you use the SharedPreferences class to store data across configuration changes?
-14. How do you ensure that a sensitive or resource-intensive operation is not performed while your activity is in the background or is partially obscured?
-15. What is the significance of the onActivityResult() method and when it is called?
-16. Can you explain how deep linking works in Android Activities, and how you would implement it in your application?
-17. What are the best practices for managing application memory and battery usage when working with Activities and their lifecycle?
-18. Explain the concept of task affinity and its impact on the behaviour of Android Activities.
-19. Describe how you would implement a hierarchical navigation structure between activities using Intents and the Up button.
-20. How do you handle runtime permissions in Android Activities and why is this an important consideration for modern Android applications.
+3. What is the difference between a Service and an Activity? When would you choose to use a Service instead of an activity?
+4. Describe the distance between onSaveInstanceState() and onRestoreInstanceState() methods in Android activities. When are these methods called?
+5. In what scenarios would you use the launch modes: "standard", "singleTop", "singleTask" and "singleInstance"? Explain their significance and 
+6. How would like to handle screen orientation changes in an Android activity, and why it is so important to manage such changes?
+7. Explain the difference between startActivityForResult() and startActivity() overridden methods. When would you use one over the other?
+8. Describe how would you use fragments in your Android Activity to optimize a multi-pane layout for different screen sizes or device orientations.
+9. Explain the role of Intent objects in communication between Android components, especially between Activities and provide examples of different Intent types.
+10. What is the purpose of persisting an Activity state and how do you use the SharedPreferences class to store data across configuration changes?
+11. How do you ensure that a sensitive or resource-intensive operation is not performed while your activity is in the background or is partially obscured?
+12. What is the significance of the onActivityResult() method and when it is called?
+13. Can you explain how deep linking works in Android Activities, and how you would implement it in your application?
+14. What are the best practices for managing application memory and battery usage when working with Activities and their lifecycle?
+15. Explain the concept of task affinity and its impact on the behaviour of Android Activities.
+16. Describe how you would implement a hierarchical navigation structure between activities using Intents and the Up button.
+17. How do you handle runtime permissions in Android Activities and why is this an important consideration for modern Android applications.
 
 #Fragments
 Source https://interviewprep.org/android-fragments-interview-questions/
@@ -73,9 +74,64 @@ Source https://interviewprep.org/android-fragments-interview-questions/
 10. Explain the process of dynamically adding, removing and replacing Fragments in an Activity Layout.
 11. How do you handle onSaveInstanceState method in a Fragment?
 12. What is the major difference between using Fragment.onAttach() and Fragment.onActivityCreated()
+    - The major difference between Fragment.onAttach() and Fragment.onActivityCreated() lies in their lifecycle stages. Fragment.onAttach() is called when a fragment is associated with its host activity, ensuring the context is available for use. Fragment.onActivityCreated() occurs after on onCreateView(), indicating that the fragment's view hierarchy has been created and initialized.
+    - In onAttach(), you can initialize resources or components that rely on the host activity's context. In onActivityCreated(), you can perform actions related to the fragment's views, such as setting up event listeners or modifying UI elements, since the view hierarchy is guaranteed to be ready at this stage.
 13. How do you ensure that data is persisted across Fragment transactions?
+    - To persist data across Fragment transactions, use a combination of ViewModel and onSaveInstanceState. ViewModel stores UI-related data, surviving configuration changes while onSaveInstanceState handles unexpected termination.
+      - Create a ViewModel class extending androidx.lifecycle.ViewModel
+      - In the ViewModel, store LiveData or MutualLiveData for each data element.
+      - In the Fragment, obtain an instance of ViewModel using ViewModelProvider. 
+      - Observe LiveData in the ViewModel to update UI when data changes.
+      - Override onSaveInstanceStata(Bundle) in the Fragment to save state before destruction.
+      - Restore saved state in onCreateView or onViewCreated by checking savedInstanceState Bundle.
+`
+    public class MyViewModel extends ViewModel {
+     private MutableLiveData<string> textData;
+     public LiveData<string> getTextData() { 
+      return textData; 
+     }
+     public void setTextData(String value) { 
+     textData.setValue(value); 
+     }
+    }
+    public class MyFragment extends Fragment {
+      private MyViewModel viewModel;
+      @Override
+      public void onCreate(@Nullable Bundle savedInstanceState) {
+      super.onCreate(savedInstanceState);
+      viewModel = new ViewModelProvider(this).get(MyViewModel.class);
+      }
+      @Override
+      public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+       if (savedInstanceState != null) {
+       viewModel.setTextData(savedInstanceState.getString("text_key"));
+       }
+      // Inflate layout and setup views...
+      }
+      @Override
+      public void onSaveInstanceState(@NonNull Bundle outState) {
+      super.onSaveInstanceState(outState);
+      outState.putString("text_key", viewModel.getTextData().getValue();
+      }
+      }
+`
 14. Describe a scenario where using nested Fragments would be beneficial, and how to implement them properly.
+    - Nested Fragments are beneficial in complex UI designs, such as a tablet app with multiple panels. For example, an email app where the left panel displays a list of emails and the right panel shows the selected email's content. The left panel can be a parent Fragment containing nested child Fragments for each email category (inbox, sent, drafts).
+    - To implement nested Fragment properly.
+      - Use getChildFragmentManager() instead of getFragmentManager() to manage child Fragments.
+      - Add child Fragments using transactions
+      - Handling communication between parent and child Fragments through interfaces or ViewModel.
+      - Ensure proper lifecycle management by calling super methods in overridden lifecycle callbacks.
+      - Retain instance state during configuration changes using setRetainInstance(true) if necessary.
+      - Be cautious about memory leaks; use WeakReferences when referencing context.
 15. How do you handle memory leaks in an application that uses Fragments extensively?
+    - To handle memory leaks in an application using Fragments extensively, follow these steps:
+      - Use WeakReferences for non-essential objects and listeners to allow garbage collection.
+      - Avoid static references to Fragments or their Views, as they can cause leaks when configuration changes occur.
+      - Utilize Android profiler to monitor memory usage and detect potential leaks.
+      - Implement Lifecycle-aware components to manage resources properly during Fragment lifecycle events.
+      - Use LeakCanary library to automatically detect and report memory leaks during development.
+      - Unregister any broadcast receivers, observers or callbacks in the Fragment's onDestroy() method.
 16. What is the role of a Loader in loading data for a Fragment, and how does it differ from AsyncTask?
     - A Loader's role in loading data for a Fragment is to efficiently manage background tasks, ensuring smooth UI performance and handling configuration changes. It differs from an AsyncTask in several ways:
       - ***Lifecycle awareness***: Loaders are aware of the Fragment or Activity lifecycle, preventing memory leads and crashes due to unfinished tasks.
