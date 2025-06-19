@@ -95,6 +95,7 @@ Source https://interviewprep.org/android-fragments-interview-questions/
 
       Below is the example
       - In the Fragment
+      
       `@Override
       public void onCreate(Bundle savedInstanceState) 
       {
@@ -107,6 +108,7 @@ Source https://interviewprep.org/android-fragments-interview-questions/
       }
       `
       - In the parent Activity
+      
       `@Override
       public void onAttachFragment(Fragment fragment) 
       {
