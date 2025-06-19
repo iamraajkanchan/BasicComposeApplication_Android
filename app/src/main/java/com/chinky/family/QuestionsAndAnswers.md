@@ -77,8 +77,43 @@ Source https://interviewprep.org/android-fragments-interview-questions/
 14. Describe a scenario where using nested Fragments would be beneficial, and how to implement them properly.
 15. How do you handle memory leaks in an application that uses Fragments extensively?
 16. What is the role of a Loader in loading data for a Fragment, and how does it differ from AsyncTask?
+    - A Loader's role in loading data for a Fragment is to efficiently manage background tasks, ensuring smooth UI performance and handling configuration changes. It differs from an AsyncTask in several ways:
+      - ***Lifecycle awareness***: Loaders are aware of the Fragment or Activity lifecycle, preventing memory leads and crashes due to unfinished tasks.
+      - ***Configuration change handling***: Loaders automatically retain their data during configuration changes, such as screen rotations, without duplicating work.
+      - ***Automatic restarts***: Loaders can detect when underlying data has changed and automatically restart the loading process.
+      - ***Threading management***: Loaders handle thread creation and management internally, simplifying code and reducing potential errors.
+    - AsyncTask, on the other hand, lacks these features, requiring manual implementation of lifecycle management, configuration change handling, and threading. This makes it less efficient and more error-prone compared to using a loader.
 17. Explain the use case of setRetainInstance(true) in a Fragment, and how it works.
+    - SetRetainInstance(true) is used in Fragments to retain their state during configuration changes, such as screen rotations. By default, a Fragment's instance is destroyed and recreated during these changes, causing potential data loss or UI inconsistencies. When setRetainInstance(true) is called on a Fragment, it informs the Android system not to destroy the Fragment during configuration changes. Instead, the Fragment instance is retained across Activity recreations, preserving its current state, including member variables and references to resources like AsyncTask objects.
+    - This method is particularly useful for handling long-running background tasks or maintaining complex UI states that are expensive to recreate. However, it should e used judiciously, as retaining large amounts of data can lead to memory leaks or performance issues.
+    - It is important to note that only non-UI related data should be retained using this method, as Views and other UI components are still destroyed and recreated during configuration changes. To hande UI updates, developers should use onSaveInstanceState() and onViewStateRestored() methods.
 18. How do you handle configuration changes in a Fragment without recreating the entire Activity?
+    - To handle configuration changes in a Fragment without recreating the entire Activity, follow these steps:
+      - Set the retainInstance property of the Fragment to true using setRetainInstance(true) method in the onCreate() lifecycle callback.
+      - Override the onConfigurationChanged(Configuration newConfig) method in the Fragment and update UI elements bases on the new configuration.
+      - In the parent Activity, override onAttachFragment(Fragment fragment) method to reattach Fragment instance after configuration change.
+
+      Below is the example
+      - In the Fragment
+      `@Override
+      public void onCreate(Bundle savedInstanceState) 
+      {
+      super.onCreate(savedInstanceState);
+      setRetainInstance(true);
+      }
+      @Override
+      public void onConfigurationChanged(Configuration newConfig) {
+      super.onConfigurationChanged(newConfig);// Update UI elements based on new configuration
+      }
+      `
+      - In the parent Activity
+      `@Override
+      public void onAttachFragment(Fragment fragment) 
+      {
+      super.onAttachFragment(fragment);
+      if (fragment instanceof RetainedFragment) {
+      // Reattach retained Fragment instance}
+      }`
 19. What are some common pitfalls developers face when working with Fragments, and how can they be avoided?
     - Common pitfalls when working with Fragments include:
       - ***Improper handling of lifecycle events***: To avoid this, familiarize yourself with Fragment's lifecycle and use appropriate callbacks like onResume(), onPause(), etc.
