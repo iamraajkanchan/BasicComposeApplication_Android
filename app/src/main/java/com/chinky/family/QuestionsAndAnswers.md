@@ -20,21 +20,21 @@
     Transient data: This data is temporary which by the help of onSaveInstanceState() and onRestoreState() overriding methods can 
     be saved and reused when the activity is recreated.
     Non Transient data: This data sticks around even the application is closed or restarted. It can be saved and reused with the help
-    of SharedPreferences, Databases and Files feature. 
-
-# Activity
-1. What is the difference between Serialized and Parcelized data in Android?
-    Serializable:
+    of SharedPreferences, Databases and Files feature.
+4. What is the difference between Serialized and Parcelized data in Android?
+   - Serializable:
     - It is a built-in Java interface
     - Slower: Because it uses reflection and creates more temporary objects, which can affect the application performance.
     - Easy to implement
     - More flexible: Supports class hierarchies and is easier to maintain.
-   Parcelable:
-    - It is Android specific, designed for high performance inter-process-communication
-    - Faster: It is more efficient than Serializable because it avoids reflection and minimizes object creation.
-    - Manual Implementation: You need to override writeToParcel() method and use a CREATOR object.
-    - Less flexible: Doesn't support full class hierarchies as easily.
-2. Can you explain the Android Activity LifeCycle and the significance of each lifeCycle method in detail?
+   - Parcelable:
+     - It is Android specific, designed for high performance inter-process-communication
+     - Faster: It is more efficient than Serializable because it avoids reflection and minimizes object creation.
+     - Manual Implementation: You need to override writeToParcel() method and use a CREATOR object.
+     - Less flexible: Doesn't support full class hierarchies as easily.
+
+# Activity [(Source)](https://interviewprep.org/android-activity-interview-questions/)
+1. Can you explain the Android Activity LifeCycle and the significance of each lifeCycle method in detail?
     - Activity Lifecycle are the states of an Activity. There are seven lifecycle methods
         1. onCreate() - Called when the activity is first created, it initializes UI components and sets up data structures. It’s where you inflate layout files and bind views.
         2. onStart() - Invoked just before the activity becomes visible to users. Here, register listeners or start animations to prepare for user interaction.
@@ -43,7 +43,7 @@
         5. onStop() - Completely hidden from view, release resources not needed while in the background, such as location updates or broadcast receivers.
         6. onDestroy() - Called before the activity is destroyed, either due to system constraints or user action. Perform final cleanup, like closing database connections or stopping services.
         7. onRestart() - Occurs when an activity moves from stopped to started state, typically after being in the background. Reinitialize components released during onStop().
-3. What is the difference between a Service and an Activity? When would you choose to use a Service instead of an activity?
+2. What is the difference between a Service and an Activity? When would you choose to use a Service instead of an activity?
     - A Service is a background component that performs long-running tasks without user interaction, while an Activity represents a single screen with a user interface. Services are used for operations like network transactions or playing music, whereas Activities handle UI-related tasks.
     - Choose a Service when:
       - Task execution doesn’t require user input.
@@ -53,26 +53,26 @@
       - User interaction is necessary.
       - Task completion depends on user input.
       - Visual feedback is essential during task execution.
-4. Describe the distance between onSaveInstanceState() and onRestoreInstanceState() methods in Android activities. When are these methods called?
+3. Describe the distance between onSaveInstanceState() and onRestoreInstanceState() methods in Android activities. When are these methods called?
    - onSaveInstanceState() and onRestoreInstanceState() are methods in Android Activities that handle the preservation and restoration of an Activity’s state during configuration changes or when the system kills the process.
    - onSaveInstanceState() is called before the Activity is destroyed, allowing you to save its current state into a Bundle. This method is typically invoked when the device undergoes a configuration change (e.g., screen rotation) or when the system decides to kill the Activity due to low memory. It is not called when the user explicitly closes the Activity.
    - onRestoreInstanceState() is called after onStart() and before onResume(), enabling you to restore the saved state from the Bundle provided by onSaveInstanceState(). This method is only called if there was a previous saved state; otherwise, it won’t be triggered.
-5. In what scenarios would you use the launch modes: "standard", "singleTop", "singleTask" and "singleInstance"? Explain their significance and how they impact the back stack of activities.
+4. In what scenarios would you use the launch modes: "standard", "singleTop", "singleTask" and "singleInstance"? Explain their significance and how they impact the back stack of activities.
    - “singleTop” is used when an activity should only have one instance at the top of the back stack. If it’s already on top, a new instance won’t be created; instead, onNewIntent() will be called. This prevents duplicate instances and conserves resources.
    - “singleTask” creates a new task with the activity as its root if no existing tasks hold an instance. If there’s an existing instance in another task, that task comes to the foreground, clearing activities above it. Useful for navigation or clearing unrelated activities.
    - “singleInstance” behaves like “singleTask” but doesn’t allow other activities within the same task. It ensures the activity remains separate from others, useful for modal dialogs or floating windows.
    - These launch modes impact the back stack by controlling how activities are organized, preventing duplicates, and managing task transitions.
-6. How would like to handle screen orientation changes in an Android activity, and why it is so important to manage such changes?
+5. How would like to handle screen orientation changes in an Android activity, and why it is so important to manage such changes?
    - Handling screen orientation changes in an Android Activity involves overriding the onSaveInstanceState() and onRestoreInstanceState() methods, or using ViewModel to store UI data. Additionally, you can lock the orientation by setting android:screenOrientation in the manifest file.
    - Overriding onSaveInstanceState() allows saving the current state of the activity before it’s destroyed due to configuration changes. The saved state is passed as a Bundle to onRestoreInstanceState(), where the previous state can be restored.
    - Using ViewModel helps retain UI-related data across configuration changes without requiring manual handling of onSaveInstanceState(). ViewModel survives configuration changes, allowing data persistence.
    - Managing orientation changes is crucial for providing seamless user experience, preventing loss of user input, and avoiding resource-intensive operations like network requests from being executed repeatedly during such changes.
-7. Explain the difference between startActivityForResult() and startActivity() overridden methods. When would you use one over the other?
+6. Explain the difference between startActivityForResult() and startActivity() overridden methods. When would you use one over the other?
     - startActivity() initiates a new activity without expecting any result, while startActivityForResult() starts an activity and expects a result back. Use startActivity() for simple navigation between activities, and startActivityForResult() when you need data from the launched activity.
     - For example, use startActivityForResult() when opening a contact picker to select a contact, then return the selected contact’s information to the calling activity. In contrast, use startActivity() when navigating from a login screen to a home screen, as no data needs to be returned.
     - To handle results in the calling activity, override onActivityResult() method, which receives requestCode, resultCode, and Intent containing result data.
     - 
-8. Describe how would you use fragments in your Android Activity to optimize a multi-pane layout for different screen sizes or device orientations.
+7. Describe how would you use fragments in your Android Activity to optimize a multi-pane layout for different screen sizes or device orientations.
    - To optimize a multi-pane layout using fragments in an Android Activity, follow these steps:
      - Create reusable fragment classes for each pane, encapsulating their UI and logic.
      - Define layouts for different screen sizes or orientations, using resource qualifiers (e.g., “layout-sw600dp” for larger screens).
@@ -80,21 +80,21 @@
      - In your Activity's onCreate method, use FragmentManager to manage fragments based ono the current configuration.
      - Use setRetainInstance(true) in fragments if needed, to preserve state during configuration changes.
      - Implement communication between fragments via interfaces/callbacks, with the Activity as mediator.
-9. Explain the role of Intent objects in communication between Android components, especially between Activities and provide examples of different Intent types.
+8. Explain the role of Intent objects in communication between Android components, especially between Activities and provide examples of different Intent types.
    - Intent objects facilitate communication between Android components, primarily Activities. They enable navigation and data transfer within an application or to external apps.
    - Two Intent types exist: explicit and implicit. Explicit Intents target specific components by specifying their class names, while implicit Intents rely on the system to find suitable components based on action, category, and data.
-10. What is the purpose of persisting an Activity state and how do you use the SharedPreferences class to store data across configuration changes?
-11. How do you ensure that a sensitive or resource-intensive operation is not performed while your activity is in the background or is partially obscured?
+9. What is the purpose of persisting an Activity state and how do you use the SharedPreferences class to store data across configuration changes?
+10. How do you ensure that a sensitive or resource-intensive operation is not performed while your activity is in the background or is partially obscured?
     - To ensure sensitive or resource-intensive operations are not performed while an activity is in the background or partially obscured, utilize Android’s Activity Lifecycle methods. Specifically, perform these operations within onResume() and onPause(). Start the operation in onResume(), as it is called when the activity becomes visible and active. Pause or stop the operation in onPause(), which is invoked when the activity loses focus or visibility.
     - For long-running tasks, consider using a Service to handle them independently of the activity lifecycle. This ensures that even if the activity is destroyed, the task continues running in the background.
-12. What is the significance of the onActivityResult() method and when it is called?
+11. What is the significance of the onActivityResult() method and when it is called?
     - The onActivityResult() method is significant in managing data returned from activities started by startActivityForResult(). It’s called when the launched activity finishes, returning result code and intent containing additional data. This enables communication between activities, ensuring proper handling of results.
-13. Can you explain how deep linking works in Android Activities, and how you would implement it in your application?
+12. Can you explain how deep linking works in Android Activities, and how you would implement it in your application?
     - Deep-linking in Android Activities allows users to navigate directly to specific content within an app, bypassing the main screen. It enhances user experience by providing shortcuts and improving discoverability.
     - To implement deep-linking
       - Define intent filters: In your activity’s manifest file, add an intent filter with action “android.intent.action.VIEW” and category “android.intent.category.DEFAULT”, “android.intent.category.BROWSABLE”. Specify data URI scheme, host, and path pattern.
       - Handle incoming intents: In the target activity, override the onNewIntent() method or handle getIntent() in onCreate(). Extract data from the intent and display relevant content.
-14. What are the best practices for managing application memory and battery usage when working with Activities and their lifecycle?
+13. What are the best practices for managing application memory and battery usage when working with Activities and their lifecycle?
     - To optimize memory and battery usage in Android activities, follow these best practices:
       - Utilize Activity lifecycle methods: Implement onPause(), onStop(), and onDestroy() to release resources when the activity is no longer visible or needed.
       - Avoid long-running tasks: Use background services or WorkManager for lengthy operations to prevent blocking the UI thread and draining battery.
@@ -103,44 +103,109 @@
       - Handle configuration changes: Retain fragments or ViewModel to preserve data during orientation changes, avoiding redundant resource loading.
       - Monitor memory leaks: Utilize tools like LeakCanary to detect and fix memory leaks caused by unhandled references.
       - Employ Battery optimizations: Adhere to Doze mode guidelines, schedule non-urgent tasks using JobScheduler, and minimize wake locks.
-15. Explain the concept of task affinity and its impact on the behaviour of Android Activities.
+14. Explain the concept of task affinity and its impact on the behaviour of Android Activities.
     - Task affinity refers to the relationship between activities and tasks in Android. It determines which task an activity should belong to when launched, affecting the back stack and navigation behavior.
     - By default, all activities within an app share the same affinity, causing them to reside in a single task. However, developers can modify this by setting the “taskAffinity” attribute in the AndroidManifest.xml file. This allows for custom grouping of activities into separate tasks or even mixing activities from different apps.
     - Changing task affinity impacts user experience as it alters the order in which activities are presented when navigating through the back stack. For instance, if two activities have different affinities, pressing the back button may not return to the previous activity but instead switch to another task.
-16. Describe how you would implement a hierarchical navigation structure between activities using Intents and the Up button.
+15. Describe how you would implement a hierarchical navigation structure between activities using Intents and the Up button.
     - To implement a hierarchical navigation structure between activities using Intents and the Up button, follow these steps:
       - Define parent-child relationships in AndroidManifest.xml by adding android:parentActivityName attribute to each child activity.
       - Enable Up button in the app bar of child activities by calling setDisplayHomeAsUpEnabled(true) in onCreate() method.
       - Override onOptionsItemSelected() in child activities to handle Up button clicks by creating an Intent with the parent activity class and calling navigateUpTo().
-17. How do you handle runtime permissions in Android Activities and why is this an important consideration for modern Android applications.
+16. How do you handle runtime permissions in Android Activities and why is this an important consideration for modern Android applications.
     - Runtime permissions in Android Activities are handled using the ActivityCompat.requestPermissions() method and overriding onRequestPermissionsResult(). This process involves checking if a permission is granted with ContextCompat.checkSelfPermission(), requesting it if necessary, and handling the user’s response.
     - Modern Android applications must consider runtime permissions due to changes introduced in Android 6.0 (API level 23), where users grant permissions at runtime instead of during app installation. This approach enhances user privacy and control over their data while ensuring apps function correctly when accessing sensitive resources.
-18. What is the difference between Parcelable and Serializable and when is it appropriate to use each in the context of an Android activity?
+17. What is the difference between Parcelable and Serializable and when is it appropriate to use each in the context of an Android activity?
     - Parcelable and Serializable are both interfaces in Android for object serialization. The key difference lies in their performance and implementation.
     - Parcelable is specifically designed for Android, offering better performance due to its optimized binary format. It requires manual implementation of the Parcelable interface, defining how data is serialized and deserialized. Use Parcelable when passing objects between Activities or Fragments via Intents or Bundles, as it’s more efficient for inter-process communication.
     - Serializable, part of Java standard library, uses reflection, making it slower and less efficient than Parcelable. It’s easier to implement since classes only need to implement the Serializable interface without additional methods. However, this convenience comes at a cost of increased memory usage and reduced speed.
-19. How does Android manage the back stack of activities when navigating through an application, and what are the implications of using the onBackPressed() method.
-20. What is the significance of using the onTrimMemory() method in activities, and how can you utilize it to reduce memory usage in your application?
-21. Can you explain how you would use onSaveInstanceState() and viewModel to preserve UI state and data during configuration changes, like screen rotations?
-22. Describe the difference between implicit and explicit intents and provide examples of each in the context of starting an Activity.
-23. What are some common issue developers face when dealing with orientation changes in Android Activities, and how do you prevent or resolve them?
-24. Explain the role of the onNewIntent() method in activities and provide an example of when you would need to override this method.
-25. How do you ensure that your activities are accessible to users with special needs, like those using screen readers or alternative input devices?
+18. How does Android manage the back stack of activities when navigating through an application, and what are the implications of using the onBackPressed() method.
+    - Android manages the back stack using a last-in, first-out (LIFO) data structure called Task. When navigating through an application, each new Activity is added to the top of the stack. Pressing the back button removes the current Activity and reveals the previous one.
+    - The onBackPressed() method allows developers to override the default behavior when the back button is pressed. By overriding this method, custom actions can be performed before finishing the current Activity or even preventing it from being removed from the stack.
+    - However, improper use of onBackPressed() may lead to unexpected navigation behavior, memory leaks, or app crashes. It’s crucial to consider user experience and ensure that overridden behavior aligns with Android design guidelines and user expectations.
+19. What is the significance of using the onTrimMemory() method in activities, and how can you utilize it to reduce memory usage in your application?
+    - The onTrimMemory() method is significant in managing an app’s memory usage, as it helps developers handle low-memory situations. It gets called when the system determines that memory should be reclaimed to free up resources for other apps or processes.
+    - To utilize onTrimMemory(), override this method in your activity and implement appropriate actions based on different memory levels passed as a parameter (TRIM_MEMORY_* constants).
+      - TRIM_MEMORY_RUNNING_LOW: Reduce cache size or release objects consuming memory.
+      - TRIM_MEMORY_UI_HIDDEN: Release UI-related resources like bitmaps since the user interface is not visible.
+      - TRIM_MEMORY_BACKGROUND/TRIM_MEMORY_MODERATE/TRIM_MEMORY_COMPLETE: Free up more resources depending on the severity of the situation.
+    - By responding to these memory level hints, you can optimize your app’s performance and reduce its memory footprint, ensuring smooth operation even under constrained conditions.
+20. Can you explain how you would use onSaveInstanceState() and viewModel to preserve UI state and data during configuration changes, like screen rotations?
+    - To preserve UI state and data during configuration changes, use onSaveInstanceState() and ViewModel together. First, create a ViewModel class extending Android’s ViewModel to store UI-related data. Override onCleared() if necessary for cleanup.
+    - In the Activity, initialize the ViewModel using ViewModelProvider. For transient UI state (e.g., scroll position), save it in onSaveInstanceState(). In onCreate(), restore this state from savedInstanceState Bundle.
+    - For non-transient data (e.g., user input), store it in LiveData objects within ViewModel. Observe these LiveData objects in the Activity, updating UI accordingly. This ensures data survives configuration changes without manual saving/restoring.
+21. Describe the difference between implicit and explicit intents and provide examples of each in the context of starting an Activity.
+22. What are some common issue developers face when dealing with orientation changes in Android Activities, and how do you prevent or resolve them?
+23. Explain the role of the onNewIntent() method in activities and provide an example of when you would need to override this method.
+24. How do you ensure that your activities are accessible to users with special needs, like those using screen readers or alternative input devices?
 
-#Fragments
-Source https://interviewprep.org/android-fragments-interview-questions/
+# Fragments [Source](https://interviewprep.org/android-fragments-interview-questions/)
 
 1. What are Android Fragments and why they are introduced in Android Development?
+    - Android Fragments are modular, reusable UI components introduced in Android 3.0 (Honeycomb) to address the growing variety of screen sizes and resolutions. They enable developers to create flexible, adaptive user interfaces that work well on both phones and tablets.
+    - Fragments were introduced to tackle challenges like screen orientation changes, multi-pane layouts for larger screens, and reusing code across different activities. If we break down complex UIs into smaller, self-contained units, and create fragments, we can simplify development and maintenance while improving app performance and responsiveness.
 2. Explain the Fragment Lifecycle and how it differs from an Activity Lifecycle.
+    - Fragments and Activities share similarities in their lifecycles, but Fragments have additional lifecycle methods due to their dynamic nature. The main differences are:
+      - onAttach(): Called when a Fragment is associated with an Activity.
+      - onCreateView(): Inflates the Fragment’s layout.
+      - onViewCreated(): Initializes UI components after layout inflation.
+      - onActivityCreated(): Ensures the host Activity has completed its onCreate() method.
+      - onDestroyView(): Cleans up resources tied to the view hierarchy.
+      - onDetach(): Detaches the Fragment from its host Activity.
+    - While both have onCreate(), onStart(), onResume(), onPause(), onStop(), and onDestroy() methods, Fragments don’t directly handle user input or back stack navigation like Activities do.
 3. Can you discuss the best practices for handling communication between an Activity and its Fragments?
+    - To ensure efficient communication between an Activity and its Fragments, follow these best practices:
+      - Define a listener interface in the Fragment to handle events.
+      - Implement the listener interface in the hosting Activity.
+      - Attach the listener during onAttach() lifecycle method of the Fragment.
+      - Detach the listener during onDetach() lifecycle method to avoid memory leaks.
+      - Use getArguments() and setArguments() methods for passing data while creating Fragments.
+      - Avoid direct references to the Activity or other Fragments; use interfaces instead.
 4. What is the benefit of using a FragmentPagerAdapter over a FragmentStatePagerAdapter?
+    - FragmentPagerAdapter is beneficial over FragmentStatePagerAdapter when dealing with a limited number of fragments, as it retains all active fragments in memory. This results in faster navigation and reduced overhead for fragment creation and destruction. However, for larger sets of fragments, FragmentStatePagerAdapter is more efficient due to its on-demand loading and unloading of fragments.
 5. How would you handle screen orientation changes in an application that utilizes Fragments?
+    - To handle screen orientation changes in an application using Fragments, follow these steps:
+      - Set the configChanges attribute for the activity in AndroidManifest.xml to include “orientation” and “screenSize”. This prevents the system from recreating the activity on orientation change.
+      - Override onConfigurationChanged() method in the activity containing the Fragment. This method is called when the device configuration changes while your activity is running.
+      - In onConfigurationChanged(), use FragmentManager to replace or update the current Fragment based on the new orientation. Use different layouts for landscape and portrait modes if necessary.
+      - Save any important data before the orientation change by overriding onSaveInstanceState() in the Fragment. Store data in a Bundle object.
+      - Restore saved data after the orientation change by checking savedInstanceState in onCreateView() or onViewCreated() methods of the Fragment.
+    - By following these steps, you can efficiently handle screen orientation changes without losing user data or causing unnecessary recreation of activities and fragments.
 6. What is the purpose of having a default constructor for a Fragment and why it is important?
+   - A default constructor for a Fragment is crucial as it ensures proper instantiation by the Android system during configuration changes or process restoration. Without a default constructor, the system may fail to recreate the Fragment, leading to potential crashes and loss of user data.
+   - When the Android system needs to restore a Fragment, it calls the default constructor to create a new instance. Then, it restores the saved state using methods like onCreate() and onCreateView(). If there’s no default constructor, this process fails, causing issues in the app’s functionality.
 7. Explain the difference between FragmentManager and ChildFragmentManager.
+   - FragmentManager manages fragments within an activity, handling transactions and back stack. ChildFragmentManager is used for managing nested fragments within a parent fragment. It operates independently from the activity’s FragmentManager, allowing better encapsulation and modularization of fragment hierarchies.
 8. How do you handle Fragment back stack management to ensure proper navigation flow?
+   - To handle Fragment back stack management for proper navigation flow, follow these steps:
+     - Use FragmentManager to perform transactions like add, replace, or remove fragments.
+     - Utilize addToBackStack() method during transaction to save fragment state in the back stack.
+     - Implement onBackPressed() in the hosting activity to manage custom back navigation behavior.
+     - Use popBackStack() and popBackStackImmediate() methods to navigate through the back stack programmatically.
+     - Set a BackStackChangedListener to monitor changes in the back stack and update UI accordingly.
+     - Consider using Navigation Component library for simplified handling of back stack and navigation.
 9. What are the key differences between using a DialogFragment and a simple Dialog?
+   - DialogFragment and simple Dialog differ in several aspects:
+     - ***Lifecycle management***: DialogFragment is a part of the Fragment lifecycle, ensuring proper handling during configuration changes like screen rotations. Simple Dialog lacks this integration, leading to potential issues.
+     - ***Reusability***: DialogFragment can be reused across different activities or parent fragments, while simple Dialog is tied to its specific context.
+     - ***Customization***: DialogFragment allows for more customization options, such as custom layouts and animations. Simple Dialog has limited customization capabilities.
+     - ***Back stack management***: DialogFragment can be added to the back stack, enabling users to navigate through dialog history. Simple Dialog does not support back stack management.
+     - ***Accessibility***: DialogFragment automatically handles accessibility features, whereas developers must manually implement these for simple Dialogs.
 10. Explain the process of dynamically adding, removing and replacing Fragments in an Activity Layout.
+    - To dynamically add, remove, or replace Fragments in an Activity layout, follow these steps:
+      - Define a container: In the Activity’s XML layout file, create a FrameLayout as a container for holding Fragments.
+      - Create Fragment instances: Instantiate the required Fragment classes using their constructors or factory methods.
+      - Begin a transaction: Use getSupportFragmentManager().beginTransaction() to initiate a FragmentTransaction.
+      - Add, remove, or replace: Utilize the add(), remove(), and replace() methods of FragmentTransaction to manipulate Fragments within the container. For example:
+      - Manage back stack (optional): Call addToBackStack(null) on the FragmentTransaction if you want the user to navigate back through previous states using the back button.
+      - Commit the transaction: Invoke commit() on the FragmentTransaction to apply changes.
+      - Handle configuration changes: Implement onSaveInstanceState(Bundle) in your Activity and Fragment to save and restore state during configuration changes like screen rotations.
 11. How do you handle onSaveInstanceState method in a Fragment?
+    - To handle onSaveInstanceState in a Fragment, follow these steps:
+      - Override the onSaveInstanceState method within your Fragment class.
+      - Call super.onSaveInstanceState(outState) to ensure proper saving of default state data.
+      - Use the provided Bundle (outState) to store custom key-value pairs representing the current state of your Fragment.
+      - In onCreateView or onViewCreated, check if savedInstanceState is non-null; if so, restore the saved state using the retrieved Bundle.
 12. What is the major difference between using Fragment.onAttach() and Fragment.onActivityCreated()
     - The major difference between Fragment.onAttach() and Fragment.onActivityCreated() lies in their lifecycle stages. Fragment.onAttach() is called when a fragment is associated with its host activity, ensuring the context is available for use. Fragment.onActivityCreated() occurs after on onCreateView(), indicating that the fragment's view hierarchy has been created and initialized.
     - In onAttach(), you can initialize resources or components that rely on the host activity's context. In onActivityCreated(), you can perform actions related to the fragment's views, such as setting up event listeners or modifying UI elements, since the view hierarchy is guaranteed to be ready at this stage.
