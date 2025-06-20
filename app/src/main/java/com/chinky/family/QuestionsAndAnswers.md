@@ -36,28 +36,96 @@
     - Less flexible: Doesn't support full class hierarchies as easily.
 2. Can you explain the Android Activity LifeCycle and the significance of each lifeCycle method in detail?
     - Activity Lifecycle are the states of an Activity. There are seven lifecycle methods
-        1. onCreate() - 
-        2. onStart() - 
-        3. onResume()
-        4. onPause()
-        5. onStop()
-        6. onDestroy()
-        7. onRestart()
+        1. onCreate() - Called when the activity is first created, it initializes UI components and sets up data structures. It’s where you inflate layout files and bind views.
+        2. onStart() - Invoked just before the activity becomes visible to users. Here, register listeners or start animations to prepare for user interaction.
+        3. onResume() - The activity enters the foreground and starts interacting with users. Resume paused tasks like video playback or sensor updates.
+        4. onPause() - Partially obscured by another activity, this method saves unsaved changes and stops CPU-intensive tasks to conserve resources.
+        5. onStop() - Completely hidden from view, release resources not needed while in the background, such as location updates or broadcast receivers.
+        6. onDestroy() - Called before the activity is destroyed, either due to system constraints or user action. Perform final cleanup, like closing database connections or stopping services.
+        7. onRestart() - Occurs when an activity moves from stopped to started state, typically after being in the background. Reinitialize components released during onStop().
 3. What is the difference between a Service and an Activity? When would you choose to use a Service instead of an activity?
+    - A Service is a background component that performs long-running tasks without user interaction, while an Activity represents a single screen with a user interface. Services are used for operations like network transactions or playing music, whereas Activities handle UI-related tasks.
+    - Choose a Service when:
+      - Task execution doesn’t require user input.
+      - Operation should continue even if the app isn't visible.
+      - Resource consumption is minimal to avoid affecting other applications.
+    - Use an Activity when:
+      - User interaction is necessary.
+      - Task completion depends on user input.
+      - Visual feedback is essential during task execution.
 4. Describe the distance between onSaveInstanceState() and onRestoreInstanceState() methods in Android activities. When are these methods called?
-5. In what scenarios would you use the launch modes: "standard", "singleTop", "singleTask" and "singleInstance"? Explain their significance and 
+   - onSaveInstanceState() and onRestoreInstanceState() are methods in Android Activities that handle the preservation and restoration of an Activity’s state during configuration changes or when the system kills the process.
+   - onSaveInstanceState() is called before the Activity is destroyed, allowing you to save its current state into a Bundle. This method is typically invoked when the device undergoes a configuration change (e.g., screen rotation) or when the system decides to kill the Activity due to low memory. It is not called when the user explicitly closes the Activity.
+   - onRestoreInstanceState() is called after onStart() and before onResume(), enabling you to restore the saved state from the Bundle provided by onSaveInstanceState(). This method is only called if there was a previous saved state; otherwise, it won’t be triggered.
+5. In what scenarios would you use the launch modes: "standard", "singleTop", "singleTask" and "singleInstance"? Explain their significance and how they impact the back stack of activities.
+   - “singleTop” is used when an activity should only have one instance at the top of the back stack. If it’s already on top, a new instance won’t be created; instead, onNewIntent() will be called. This prevents duplicate instances and conserves resources.
+   - “singleTask” creates a new task with the activity as its root if no existing tasks hold an instance. If there’s an existing instance in another task, that task comes to the foreground, clearing activities above it. Useful for navigation or clearing unrelated activities.
+   - “singleInstance” behaves like “singleTask” but doesn’t allow other activities within the same task. It ensures the activity remains separate from others, useful for modal dialogs or floating windows.
+   - These launch modes impact the back stack by controlling how activities are organized, preventing duplicates, and managing task transitions.
 6. How would like to handle screen orientation changes in an Android activity, and why it is so important to manage such changes?
+   - Handling screen orientation changes in an Android Activity involves overriding the onSaveInstanceState() and onRestoreInstanceState() methods, or using ViewModel to store UI data. Additionally, you can lock the orientation by setting android:screenOrientation in the manifest file.
+   - Overriding onSaveInstanceState() allows saving the current state of the activity before it’s destroyed due to configuration changes. The saved state is passed as a Bundle to onRestoreInstanceState(), where the previous state can be restored.
+   - Using ViewModel helps retain UI-related data across configuration changes without requiring manual handling of onSaveInstanceState(). ViewModel survives configuration changes, allowing data persistence.
+   - Managing orientation changes is crucial for providing seamless user experience, preventing loss of user input, and avoiding resource-intensive operations like network requests from being executed repeatedly during such changes.
 7. Explain the difference between startActivityForResult() and startActivity() overridden methods. When would you use one over the other?
+    - startActivity() initiates a new activity without expecting any result, while startActivityForResult() starts an activity and expects a result back. Use startActivity() for simple navigation between activities, and startActivityForResult() when you need data from the launched activity.
+    - For example, use startActivityForResult() when opening a contact picker to select a contact, then return the selected contact’s information to the calling activity. In contrast, use startActivity() when navigating from a login screen to a home screen, as no data needs to be returned.
+    - To handle results in the calling activity, override onActivityResult() method, which receives requestCode, resultCode, and Intent containing result data.
+    - 
 8. Describe how would you use fragments in your Android Activity to optimize a multi-pane layout for different screen sizes or device orientations.
+   - To optimize a multi-pane layout using fragments in an Android Activity, follow these steps:
+     - Create reusable fragment classes for each pane, encapsulating their UI and logic.
+     - Define layouts for different screen sizes or orientations, using resource qualifiers (e.g., “layout-sw600dp” for larger screens).
+     - In the layouts, use tags to reference your fragment classes, specifying unique IDs for each instance.
+     - In your Activity's onCreate method, use FragmentManager to manage fragments based ono the current configuration.
+     - Use setRetainInstance(true) in fragments if needed, to preserve state during configuration changes.
+     - Implement communication between fragments via interfaces/callbacks, with the Activity as mediator.
 9. Explain the role of Intent objects in communication between Android components, especially between Activities and provide examples of different Intent types.
+   - Intent objects facilitate communication between Android components, primarily Activities. They enable navigation and data transfer within an application or to external apps.
+   - Two Intent types exist: explicit and implicit. Explicit Intents target specific components by specifying their class names, while implicit Intents rely on the system to find suitable components based on action, category, and data.
 10. What is the purpose of persisting an Activity state and how do you use the SharedPreferences class to store data across configuration changes?
 11. How do you ensure that a sensitive or resource-intensive operation is not performed while your activity is in the background or is partially obscured?
+    - To ensure sensitive or resource-intensive operations are not performed while an activity is in the background or partially obscured, utilize Android’s Activity Lifecycle methods. Specifically, perform these operations within onResume() and onPause(). Start the operation in onResume(), as it is called when the activity becomes visible and active. Pause or stop the operation in onPause(), which is invoked when the activity loses focus or visibility.
+    - For long-running tasks, consider using a Service to handle them independently of the activity lifecycle. This ensures that even if the activity is destroyed, the task continues running in the background.
 12. What is the significance of the onActivityResult() method and when it is called?
+    - The onActivityResult() method is significant in managing data returned from activities started by startActivityForResult(). It’s called when the launched activity finishes, returning result code and intent containing additional data. This enables communication between activities, ensuring proper handling of results.
 13. Can you explain how deep linking works in Android Activities, and how you would implement it in your application?
+    - Deep-linking in Android Activities allows users to navigate directly to specific content within an app, bypassing the main screen. It enhances user experience by providing shortcuts and improving discoverability.
+    - To implement deep-linking
+      - Define intent filters: In your activity’s manifest file, add an intent filter with action “android.intent.action.VIEW” and category “android.intent.category.DEFAULT”, “android.intent.category.BROWSABLE”. Specify data URI scheme, host, and path pattern.
+      - Handle incoming intents: In the target activity, override the onNewIntent() method or handle getIntent() in onCreate(). Extract data from the intent and display relevant content.
 14. What are the best practices for managing application memory and battery usage when working with Activities and their lifecycle?
+    - To optimize memory and battery usage in Android activities, follow these best practices:
+      - Utilize Activity lifecycle methods: Implement onPause(), onStop(), and onDestroy() to release resources when the activity is no longer visible or needed.
+      - Avoid long-running tasks: Use background services or WorkManager for lengthy operations to prevent blocking the UI thread and draining battery.
+      - Minimize network requests: Cache data locally and use efficient APIs like Retrofit with appropriate caching strategies.
+      - Optimize layouts: Flatten view hierarchies, use ConstraintLayout, and avoid overdraw by eliminating unnecessary backgrounds.
+      - Handle configuration changes: Retain fragments or ViewModel to preserve data during orientation changes, avoiding redundant resource loading.
+      - Monitor memory leaks: Utilize tools like LeakCanary to detect and fix memory leaks caused by unhandled references.
+      - Employ Battery optimizations: Adhere to Doze mode guidelines, schedule non-urgent tasks using JobScheduler, and minimize wake locks.
 15. Explain the concept of task affinity and its impact on the behaviour of Android Activities.
+    - Task affinity refers to the relationship between activities and tasks in Android. It determines which task an activity should belong to when launched, affecting the back stack and navigation behavior.
+    - By default, all activities within an app share the same affinity, causing them to reside in a single task. However, developers can modify this by setting the “taskAffinity” attribute in the AndroidManifest.xml file. This allows for custom grouping of activities into separate tasks or even mixing activities from different apps.
+    - Changing task affinity impacts user experience as it alters the order in which activities are presented when navigating through the back stack. For instance, if two activities have different affinities, pressing the back button may not return to the previous activity but instead switch to another task.
 16. Describe how you would implement a hierarchical navigation structure between activities using Intents and the Up button.
+    - To implement a hierarchical navigation structure between activities using Intents and the Up button, follow these steps:
+      - Define parent-child relationships in AndroidManifest.xml by adding android:parentActivityName attribute to each child activity.
+      - Enable Up button in the app bar of child activities by calling setDisplayHomeAsUpEnabled(true) in onCreate() method.
+      - Override onOptionsItemSelected() in child activities to handle Up button clicks by creating an Intent with the parent activity class and calling navigateUpTo().
 17. How do you handle runtime permissions in Android Activities and why is this an important consideration for modern Android applications.
+    - Runtime permissions in Android Activities are handled using the ActivityCompat.requestPermissions() method and overriding onRequestPermissionsResult(). This process involves checking if a permission is granted with ContextCompat.checkSelfPermission(), requesting it if necessary, and handling the user’s response.
+    - Modern Android applications must consider runtime permissions due to changes introduced in Android 6.0 (API level 23), where users grant permissions at runtime instead of during app installation. This approach enhances user privacy and control over their data while ensuring apps function correctly when accessing sensitive resources.
+18. What is the difference between Parcelable and Serializable and when is it appropriate to use each in the context of an Android activity?
+    - Parcelable and Serializable are both interfaces in Android for object serialization. The key difference lies in their performance and implementation.
+    - Parcelable is specifically designed for Android, offering better performance due to its optimized binary format. It requires manual implementation of the Parcelable interface, defining how data is serialized and deserialized. Use Parcelable when passing objects between Activities or Fragments via Intents or Bundles, as it’s more efficient for inter-process communication.
+    - Serializable, part of Java standard library, uses reflection, making it slower and less efficient than Parcelable. It’s easier to implement since classes only need to implement the Serializable interface without additional methods. However, this convenience comes at a cost of increased memory usage and reduced speed.
+19. How does Android manage the back stack of activities when navigating through an application, and what are the implications of using the onBackPressed() method.
+20. What is the significance of using the onTrimMemory() method in activities, and how can you utilize it to reduce memory usage in your application?
+21. Can you explain how you would use onSaveInstanceState() and viewModel to preserve UI state and data during configuration changes, like screen rotations?
+22. Describe the difference between implicit and explicit intents and provide examples of each in the context of starting an Activity.
+23. What are some common issue developers face when dealing with orientation changes in Android Activities, and how do you prevent or resolve them?
+24. Explain the role of the onNewIntent() method in activities and provide an example of when you would need to override this method.
+25. How do you ensure that your activities are accessible to users with special needs, like those using screen readers or alternative input devices?
 
 #Fragments
 Source https://interviewprep.org/android-fragments-interview-questions/
