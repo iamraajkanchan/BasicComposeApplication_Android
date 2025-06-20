@@ -32,6 +32,17 @@
      - Faster: It is more efficient than Serializable because it avoids reflection and minimizes object creation.
      - Manual Implementation: You need to override writeToParcel() method and use a CREATOR object.
      - Less flexible: Doesn't support full class hierarchies as easily.
+5. What steps do you follow to support deep links that opened specific product pages inside the application even if the application wasn't installed yet. If the app is installed, Open the product detail page; If not, Redirect to Play Store -> After install, open that same product page.
+   - Follow the following steps
+     - Use Firebase Dynamic Links to generate and handle smart links
+     - Implement Deferred Deep Linking to retain context after fresh installs.
+     - Parsed dynamic parameters from the deep link using Kotlin.
+     - Integrated with the Navigation Component to route the user properly.
+     - Handled edge cases like
+       - Opening from browser vs application
+       - Cold start vs application in background
+       - Invalid or expired product IDs.
+6. New Question
 
 # Activity [(Source)](https://interviewprep.org/android-activity-interview-questions/)
 1. Can you explain the Android Activity LifeCycle and the significance of each lifeCycle method in detail?
