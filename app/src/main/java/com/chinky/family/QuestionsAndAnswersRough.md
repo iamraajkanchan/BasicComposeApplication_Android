@@ -76,18 +76,26 @@
     - Android Studio is built on IntelliJ Idea
     - Android Studio has the following components that interact with each other to streamline app development
       - Gradle build system
-        - Automates
+        - Integrated with IDE
+        - Interacts with the IDE for seamless project synchronization and efficient builds.
+        - Automates the following tasks
           - Building
           - Testing
-          - Deployment tasks
+          - Deployment
         - Enables dependency management
         - Enables custom build configuration
-        - Interacts with the IDE for seamless project synchronization and efficient builds.
       - Android Emulator
+        - Integrated with IDE
+        - You can change the configuration of a virtual device.
+        - Allows a developer to test applications without using a physical device.
         - Enables quick debugging
         - Enables performance profiling
       - Lint code 
+        - Integrated with IDE
+        - Analyzes code for potential issues for accessibility, localization and performance.
+        - Provides realtime feedback and suggestions
       - Analysis tool
+        - Integrated with IDE
         - Various tools are available that enhances Android application development
           - Layout Editor
           - Navigation Editor
@@ -95,26 +103,80 @@
           - Debugger
           - Profiler
           - App Inspector
-          - Control Version Tool
-    - The Android Emulator simulates various device configurations, allowing developers to test apps without physical devices. Integrated with the IDE, it enables quick debugging and performance profiling.
-    - Lint analyzes code for potential issues like accessibility, localization, and performance. It integrates with the editor, providing real-time feedback and suggestions for improvements.
-    - Android Studio’s design tools include Layout Editor, Navigation Editor, and Resource Manager. They facilitate UI creation and resource management, interacting with XML files and visual representations.
-    - The integrated debugger and profiler tools enable efficient identification of bugs and performance bottlenecks. They communicate with the emulator or connected devices, providing insights into app behavior.
+          - Version control tools.
+          - Terminal
+          - App Quality Insights
+          - Logcat
 2. Explain the role of Gradle in Android Studio, and its role in managing dependencies, build configuration and generating APK file.
-   - Gradle is a build automation tool integrated into Android Studio, responsible for managing dependencies, build configurations, and generating APK files. It streamlines the development process by automating tasks like downloading libraries, compiling code, and packaging resources.
-   - Gradle uses Groovy-based DSL to define project configurations in build.gradle files. These files specify dependencies, plugins, and other settings required for building an app. The top-level build file configures project-wide settings, while module-specific files handle individual modules’ configurations.
-   - Dependency management involves declaring external libraries needed for the app’s functionality. Gradle automatically downloads these libraries from repositories like Maven or JCenter, ensuring consistent versions across the project.
-   - Build configuration allows customization of various aspects such as signing configs, build types (debug/release), and product flavors (different app variants). This enables developers to create multiple app versions with different features or target audiences.
-   - Generating APK files is the final step in the build process. Gradle compiles Java/Kotlin code, merges resources, processes manifest files, and packages everything into an APK file ready for distribution.
+   - Gradle 
+     - A build automation tool.
+     - Integrated into Android Studio.
+     - Responsible for:
+       - Managing dependencies:
+         - Declare External Libraries
+         - Download these libraries from the one of the following repositories
+           - Maven
+           - JCenter
+       - Managing build configurations
+         - Signing configs
+         - Build types (debug/releases)
+         - Product flavors (different application variants)
+       - Generating APK files for the distribution.
+         - Compile Java/Kotlin code
+         - Merge Resources
+         - Process Manifest Files
+         - Package everything into the APK file
+     - Automates the following task to streamline development process:
+       - Downloading libraries
+       - Compiling code
+       - Packaging resources.
+     - Gradle uses Groovy-based DSL to define project configurations in build.gradle files. 
+     - You can specify the following aspects in build.gradle files:
+       - Dependencies
+       - Plugins
+       - Settings required for building an application. 
+     - You can create two types of build.gradle files:
+       - Project wise
+       - Module wise
+     - This enables developers to create multiple app versions with different features or target audiences.
 3. Describe the Android Application Components (Activities, Services, Broadcast Receivers, Content Providers) and their lifecycle methods.
    - Android Application Components are essential building blocks, each serving a distinct purpose:
-     - Activities: Represent a single screen with a user interface (UI). Key lifecycle methods include onCreate(), onStart(), onResume(), onPause(), onStop(), onDestroy(), and onRestart().
-     - Services: Perform background tasks without UI. Lifecycle methods comprise onCreate(), onStartCommand(), onBind(), onUnbind(), and onDestroy(). Two types exist: Started (long-running) and Bound (interact with other components).
-     - Broadcast Receivers: Respond to system-wide events or app-specific events. Implement the onReceive() method for handling incoming broadcasts.
-     - Content Providers: Manage shared data between apps using CRUD operations. Important methods encompass onCreate(), query(), insert(), update(), delete(), and getType().
-   - Understanding component lifecycles ensures proper resource management and seamless user experience.
+     - Activities: 
+       - Represent a single screen with a user interface (UI). 
+       - Have the following lifecycle:
+         1. onCreate()
+         2. onStart()
+         3. onResume()
+         4. onPause()
+         5. onStop()
+         6. onDestroy()
+         7. onRestart()
+     - Services: 
+       - Perform background tasks without a user interface (UI). 
+       - Have the following lifecycle methods: 
+         1. onCreate()
+         2. onStartCommand()
+         3. onBind()
+         4. onUnbind()
+         5. onDestroy(). 
+       - Two types of Services : 
+         - Started (long-running)
+         - Bound (interact with other components).
+     - Broadcast Receivers: 
+       - Responds to system-wide events or app-specific events. 
+       - Implement the onReceive() method to handle incoming broadcasts.
+     - Content Providers: 
+       - Manage shared data between apps using CRUD operations. 
+       - Have the following important methods
+         - onCreate()
+         - query()
+         - insert()
+         - update()
+         - delete()
+         - getType().
+   - Understanding the above component lifecycles ensure proper resource management and seamless user experience.
 4. Can you explain the difference between ConstraintLayout and RelativeLayout, and the advantages of using ConstraintLayout in Android Studio?
-   - ConstraintLayout and RelativeLayout are both ViewGroup subclasses in Android Studio, used for designing UI layouts. The key difference lies in their approach to positioning child views.
+   - ConstraintLayout and RelativeLayout are both the subclasses of ViewGroup and used to design user interface (UI) layouts. The key difference lies in their approach to positioning child views.
    - RelativeLayout positions views relative to each other or the parent container, using attributes like layout_above, layout_below, etc. However, it may require nested layouts for complex designs, leading to performance issues.
    - ConstraintLayout, introduced in 2016, offers a more flexible and flat structure by defining constraints between views and parent containers. It uses anchors and guidelines to position elements, enabling better control over design and reducing view hierarchy depth.
    - Advantages of ConstraintLayout:
@@ -124,7 +186,7 @@
      - Better support for different screen sizes and orientations.
      - Integration with Android Studio’s Layout Editor for visual editing.
 5. Explain the concept of MVVM architecture. How would you implement the MVVM design pattern in Android Studio project?
-   - MVVM (Model-View-ViewModel) architecture is a design pattern that separates an application’s data, user interface, and logic into three interconnected components. This promotes maintainability, testability, and scalability.
+   - MVVM (Model-View-ViewModel) architecture is a design pattern that separates an application’s data (saved in model), user interface (view), and logic into three interconnected components (ViewModel). This promotes maintainability, testability, and scalability.
      - Model: Represents data and business logic. It communicates with databases or APIs to fetch/store data.
      - View: Displays the data from ViewModel. It observes changes in ViewModel and updates UI accordingly.
      - ViewModel: Acts as a bridge between Model and View. It exposes data for View and handles user interactions.
@@ -136,12 +198,12 @@
      - In Activity/Fragment, initialize ViewModel using ‘ViewModelProvider’, observe LiveData, and set up data binding.
      - Handle user interactions in ViewModel by exposing methods for click events or other actions.
 6. Explain the difference between onSaveInstanceState and onRestoreInstanceState methods, and when method is called in the Activity Lifecycle.
-   - onSaveInstanceState and onRestoreInstanceState are methods used to manage an Activity’s state during configuration changes or when the system kills the app.
-   - onSaveInstanceState is called before the activity is destroyed, allowing you to save data in a Bundle. This method is invoked when the OS needs to reclaim resources or during orientation change. It ensures that important UI states persist across these events.
+   - onSaveInstanceState and onRestoreInstanceState are methods used to manage the stage of Activity during configuration changes or when the system kills the app.
+   - onSaveInstanceState is called before the activity is destroyed, allowing you to save data in a Bundle. This OS kills an application when the it needs to reclaim resources or during orientation change. It ensures that important UI states persist across these changes.
    - onRestoreInstanceState is called after onStart() if there’s saved instance state. It restores the saved data from the Bundle provided by onSaveInstanceState. Use this method to restore UI states rather than onCreate(), as it guarantees the restored state is available even if the activity was killed.
 7. How do you handle multiple screen sizes and resolutions in Android Studio to ensure your app works on various devices?
    - To handle multiple screen sizes and resolutions in Android Studio, follow these steps:
-     - Use density-independent units (dp or dip) for dimensions instead of pixels.
+     - Use density-independent units (dp) for dimensions instead of pixels.
      - Implement responsive layouts using ConstraintLayout, RelativeLayout, or LinearLayout with weights to adapt UI elements’ positions and sizes.
      - Create alternative layout files for different screen orientations (landscape/portrait) and sizes (small/normal/large/xlarge).
      - Utilize the “smallest width” resource qualifier (swdp) to target specific device widths.
