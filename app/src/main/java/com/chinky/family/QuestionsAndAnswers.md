@@ -21,7 +21,7 @@
     be saved and reused when the activity is recreated.
     Non Transient data: This data sticks around even the application is closed or restarted. It can be saved and reused with the help
     of SharedPreferences, Databases and Files feature.
-4. What is the difference between Serialized and Parcelized data in Android?
+4. What is the difference between Serialized and Parcelable data in Android?
    - Serializable:
      - It is a built-in Java interface
      - Slower: Because it uses reflection and creates more temporary objects, which can affect the application performance.
@@ -42,7 +42,20 @@
        - Opening from browser vs application
        - Cold start vs application in background
        - Invalid or expired product IDs.
-6. New Question
+6. What is the difference between StateFlow and LiveData
+    - SateFlow
+        - Part of Kotlin Coroutines state flow api.
+        - Always has a value.
+        - Not lifecycle aware by default, but can be made.
+        - Only emits when value actually changes (distinctUntilChanged behaviour).
+        - A full range of Flow operations like map, flatMapContent, zip, etc are available.
+    - LiveData
+        - Part of Android Architecture.
+        - Can have null values.
+        - Lifecycle are by default.
+        - Emits updates to active observers even if the value hasn't changed.
+        - Only basic transformations like map, etc are available.
+7. New Question
 
 # Android Studio
 ## [Source](https://interviewprep.org/android-studio-interview-questions/)
