@@ -186,15 +186,17 @@
      - Better support for different screen sizes and orientations.
      - Integration with Android Studio’s Layout Editor for visual editing.
 5. Explain the concept of MVVM architecture. How would you implement the MVVM design pattern in Android Studio project?
-   - MVVM (Model-View-ViewModel) architecture is a design pattern that separates an application’s data (saved in model), user interface (view), and logic into three interconnected components (ViewModel). This promotes maintainability, testability, and scalability.
-     - Model: Represents data and business logic. It communicates with databases or APIs to fetch/store data.
+   - MVVM (Model-View-ViewModel) architecture is a design pattern
+   - Separates an application’s data (saved in model), user interface (view), and logic into three interconnected components (ViewModel).
+   - Promotes maintainability, testability, and scalability.
+     - Model: Represents data and model based business logic. It communicates with databases or APIs to fetch/store data.
      - View: Displays the data from ViewModel. It observes changes in ViewModel and updates UI accordingly.
      - ViewModel: Acts as a bridge between Model and View. It exposes data for View and handles user interactions.
    - To implement MVVM in Android Studio:
      - Add required dependencies (LiveData, ViewModel, DataBinding) in build.gradle file.
      - Create a Model class representing your data and any necessary repository classes for API/database communication.
      - Implement a ViewModel extending ‘androidx.lifecycle.ViewModel’. Use LiveData to expose data from Model to View.
-     - Enable data binding in build.gradle and create XML layout files using ‘‘ as root element. Bind ViewModel to View using ‘data’ and ‘variable’ tags.
+     - Enable data binding in build.gradle and create XML layout files using ‘‘ as root element. Bind ViewModel to View using ‘data’ and ‘variable’ tags in the xml file.
      - In Activity/Fragment, initialize ViewModel using ‘ViewModelProvider’, observe LiveData, and set up data binding.
      - Handle user interactions in ViewModel by exposing methods for click events or other actions.
 6. Explain the difference between onSaveInstanceState and onRestoreInstanceState methods, and when method is called in the Activity Lifecycle.
