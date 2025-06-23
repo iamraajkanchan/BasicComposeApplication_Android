@@ -1377,6 +1377,115 @@
       - For multi-threading, use Executions or Dispatchers to manage background threads.
       - Optimize queries by indexing columns and limiting fetched data with pagination techniques.
 
+# Content Provider
+## [Source](https://interviewprep.org/android-content-provider-interview-questions/)
+1. Can you explain the concept of Android Content Providers and their role in data sharing between Android applications?
+2. How would you design a custom Content Provider in an Android application? What are the essential component you would consider?
+3. What's the significance of the URI in Android Content Providers? Can you explain how URI patterns work and how they are constructed?
+4. Which IPC (Inter Process Communication) mechanism does Content Provider use for communication between applications? Explain the choices behind this mechanism?
+5. How do you ensure that data access to your Content Provider is restricted only to authorized applications? Can you walk me through the steps involved in securing Content Provider access?
+6. Can you explain the role of the 'ContentResolver' in Android Content Providers? How does it enable communication between applications?
+7. What are the four major CRUD operations available in Android Content Providers and how are they implemented using ContentResolver?
+8. What are the benefits of implementing a ContentObserver for your Content Provider? Explain with an example use case.
+9. Can you discuss Android Content Provider's threading model and how the framework handles concurrency issues when more than one application accesses the data simultaneously?
+10. How would you design a File-based Content Provider to provide access to the contents of media files, such as images and videos, stored in your application?
+11. What is the role of the ContentValues class in Android Content Providers? How is it used in conjunction with CRUD operations?
+12. What is the significance of the notifyChange() method in Content Provider implementations? Explain with an example?
+13. How would you handle transactions if you want to perform batch insert, update and delete operations in an Android Content Provider?
+14. How does the LoaderManager help in managing your Content Provider results? Explain its advantages over traditional AsyncTask for this purpose.
+15. How would you design a custom query language or syntax for your Content Provider to support complex search scenarios? Discuss both URI matching and clause-writing approaches.
+16. What are contract classes in Android Content Providers, and how do they help streamline Content Provider development?
+    - Contract classes in Android Content Providers are centralized definitions of URIs, column names, MIME types, and other metadata related to the provider. They streamline development by:
+      - Encapsulating schema information: Ensuring consistency across different parts of the app accessing the data.
+      - Simplifying URI handling: Defining constants for URIs makes it easier to build and parse them.
+      - Enhancing maintainability: Changes in the schema or URIs only need updates in one place.
+      `
+      public final class MyContract {
+      public static final String CONTENT_AUTHORITY = "com.example.app";public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+      private MyContract() {}
+      public static final class MyEntry implements BaseColumns {
+      public static final String TABLE_NAME = "my_table";
+      public static final String COLUMN_NAME_TITLE = "title";
+      public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, TABLE_NAME);
+      public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.com.example.app.my_table";
+      }
+      }
+      `
+17. How would you implement efficient multi-table join operations in your Content Provider? Provide an example of such a scenario.
+    - To implement efficient multi-table join operations in a Content Provider, use SQLiteQueryBuilder and its setTables() method. This allows you to specify multiple tables with their respective aliases and join conditions.
+    - Example scenario: An app that displays contact information along with the associated company details. The database has two tables – ‘contacts’ and ‘companies’. We want to retrieve all contacts with their corresponding company data.
+      - Define URIs for joined data using UriMatcher.
+      - In your ContentProvider’s query() method, handle the new URI case.
+      - Create an instance of SQLiteQueryBuilder.
+      - Use setTables() to define the join operation:
+      `queryBuilder.setTables("contacts LEFT JOIN companies ON (contacts.company_id = companies._id)");`
+      - Call queryBuilder.query() with appropriate selection, projection, sortOrder, etc.
+      - Return the resulting Cursor.
+      - Here's the code snippet:
+      `@Override
+      public Cursor query(Uri uri, String[] projection, String selection,String[] selectionArgs, String sortOrder) {
+      SQLiteDatabase db = dbHelper.getReadableDatabase();SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();switch (uriMatcher.match(uri)) {
+      case CONTACTS_WITH_COMPANIES:queryBuilder.setTables("contacts LEFT JOIN companies ON (contacts.company_id = companies._id)");break;// Other cases...}
+      Cursor cursor = queryBuilder.query(db, projection, selection, selectionArgs, null, null, sortOrder);
+      cursor.setNotificationUri(getContext().getContentResolver(), uri);
+      return cursor;
+      }`
+18. Can you explain the difference between using 'null' vs 'NO_UPDATE_URI' when calling the ContentResolver's notifyChange() method?
+    - Using ‘null’ in notifyChange() method informs all registered observers of the change, regardless of their specific URI. This can lead to unnecessary updates and performance issues.
+    - Using ‘NO_UPDATE_URI’, on the other hand, prevents any observer from being notified about the change. It is useful when you want to avoid triggering updates for certain operations or improve performance by reducing redundant notifications.
+19. How would you implement data caching in your Content Provider to improve query performance for frequently accessed data?
+    - To implement data caching in a Content Provider, follow these steps:
+    - Create an in-memory cache: Utilize a data structure like LruCache or ConcurrentHashMap to store frequently accessed data in memory.
+    - Cache initialization: Initialize the cache during Content Provider’s onCreate() method, setting its size based on available memory and desired performance.
+    - Query interception: Override query() method in your Content Provider. Before querying the underlying data source (e.g., SQLite database), check if the requested data is already present in the cache.
+    - Cache population: If the data isn’t in the cache, fetch it from the data source, add it to the cache, and return the result.
+    - Cache eviction: Implement an eviction strategy to remove least-recently-used or less important data when the cache reaches its maximum size.
+    - Data consistency: Ensure that any changes made to the data source are reflected in the cache. Override insert(), update(), and delete() methods to update the cache accordingly.
+    - Optional – Expiration: For time-sensitive data, consider adding expiration logic to invalidate cached entries after a certain period.
+20. How can you use the applyBatch method of ContentResolver to improve the performance of bulk operations in an Android Content Provider?
+    - The applyBatch method of ContentResolver can significantly improve the performance of bulk operations in an Android Content Provider by allowing multiple insert, update, and delete operations to be executed simultaneously. Instead of performing each operation individually, which could lead to slow performance and increased overhead, applyBatch groups them into a single transaction.
+    - To use applyBatch, create an ArrayList of ContentProviderOperation objects representing the desired operations. Each object specifies the type of operation (insert, update, or delete) and necessary data (URI, ContentValues, selection criteria). Then, call ContentResolver’s applyBatch method with the authority of the target Content Provider and the ArrayList of operations as arguments.
+    `
+    ArrayList<ContentProviderOperation> ops = new ArrayList<>();
+    ops.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI).withValue(ContactsContract.RawContacts.ACCOUNT_TYPE, accountType).withValue(ContactsContract.RawContacts.ACCOUNT_NAME, accountName).build());
+    ops.add(ContentProviderOperation.newInsert(ContactsContract.Data.CONTENT_URI).withValueBackReference(ContactsContract.Data.RAW_CONTACT_ID, 0).withValue(ContactsContract.Data.MIMETYPE, ContactsContract.CommonDataKinds.Phone.CONTENT_ITEM_TYPE).withValue(ContactsContract.CommonDataKinds.Phone.NUMBER, phoneNumber).build());
+    getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
+    `
+    - This approach reduces the number of database transactions, resulting in better performance for bulk operations.
+21. How would you diagnose and address performance concerns when using Android Content Providers?
+    - To diagnose and address performance concerns with Android Content Providers, follow these steps:
+      1. Analyze: Use tools like Systrace, Traceview, or Android Profiler to identify bottlenecks in your app’s performance.
+      2.  Optimize Queries: Ensure efficient queries by using projection, selection, and sortOrder arguments effectively. Avoid SELECT * and use LIMIT when possible.
+      3. Batch Operations: Use applyBatch() for bulk insertions, updates, or deletions to minimize database transactions.
+      4. Indexing: Create indexes on frequently queried columns to speed up query execution.
+      5. Threading: Perform operations asynchronously using loaders, AsyncTask, or RxJava to avoid blocking the UI thread.
+      6. Caching: Cache data locally if it is frequently accessed and rarely changed, reducing the need for repeated queries.
+      7. Pagination: Load data incrementally as needed instead of loading all at once.
+22. Can you discuss the process of integrating your custom Content Provider with Android's global search feature?
+    - To integrate a custom Content Provider with Android’s global search, follow these steps:
+      - Define searchable configuration: Create an XML file in the res/xml directory containing a element to specify searchable metadata.
+      - Reference configuration in manifest: In AndroidManifest.xml, add a meta-data tag within your Content Provider’s declaration referencing the searchable configuration using android:name=”android.app.searchable” and android:resource=”@xml/your_searchable_config”.
+      - Implement query() method: In your custom Content Provider, override the query() method to handle search queries by parsing the URI and performing database searches accordingly.
+      - Add suggestions functionality (optional): To provide search suggestions, create a table for storing suggestions, update it as needed, and modify the query() method to return suggestion results when appropriate.
+      - Enable global search: In AndroidManifest.xml, add an intent filter to your Activity that handles search results, specifying the action “android.intent.action.SEARCH” and category “android.intent.category.DEFAULT”.
+      - Handle search intents: In the Activity handling search results, implement onNewIntent() to receive search intents, extract the query from the intent, and display the results using your Content Provider.
+23. How can you leverage Android's built-in Content Providers, and hwo they provide access to common data types like contacts, calendar events and media files?
+    - Leveraging Android’s built-in Content Providers involves using their exposed APIs to access and manipulate common data types. To do this, follow these steps:
+      - Declare required permissions in the AndroidManifest.xml file, such as READ_CONTACTS or WRITE_CAL
+24. Explain the role of 'sync adapters' in conjunction with Android Content Providers and how they help in maintaining synchronization between the app's local data and server-side data.
+    - Sync adapters work alongside Android Content Providers to maintain data synchronization between an app’s local storage and server-side data. They handle background data transfer, minimizing battery usage and network strain. Sync adapters also manage retries in case of connectivity issues.
+    - Content Providers expose the app’s data for CRUD operations while sync adapters perform these operations with server-side data. When changes occur locally or on the server, sync adapters ensure both sides remain consistent by syncing the differences.
+    - To implement a sync adapter, create a subclass of AbstractThreadedSyncAdapter and override the onPerformSync() method. This method contains the logic for synchronizing data between the Content Provider and server. Register the sync adapter using XML metadata and associate it with an account type.
+    - Using requestSync() or addPeriodicSync(), developers can trigger syncs manually or schedule them at regular intervals. The system optimizes sync requests, batching them together when possible, further conserving resources.
+25. How would you perform an efficient full-text search in your Content Provider? Discuss both the SQLite's FTS3/FTS4 extension implementation and externally indexed search approaches.
+    - To perform an efficient full-text search in a Content Provider, consider using SQLite’s FTS3/FTS4 extension or externally indexed search approaches.
+    - SQLite’s FTS3/FTS4 extension provides fast and flexible full-text search capabilities. Implement it by creating a virtual table with the “USING fts3” or “USING fts4” clause. Store searchable data in this table and use MATCH queries for searching. For example:
+    - `CREATE VIRTUAL TABLE my_table USING fts4(content);INSERT INTO my_table (content) VALUES ('searchable text');SELECT * FROM my_table WHERE content MATCH 'search term';`
+    - Advantages include simplicity, native support, and automatic indexing. However, it may increase storage requirements due to additional index tables.
+    - Externally indexed search involves maintaining a separate index structure mapping terms to document IDs. Popular libraries like Lucene or Elasticsearch can be used. Indexing is performed outside of SQLite, requiring synchronization between the main database and the external index. This approach offers more advanced features such as ranking, faceting, and filtering but adds complexity and potential performance overhead.
+    - Choose the appropriate method based on your application’s requirements and constraints.
+
+
 # Permissions
 1. How does Android handle permissions before and after API level 23 (Android 6.0)?
    - Before API level 23 (Android 6.0), permissions were granted at install time. After API level 23 (Android 6.0) dangerous permissions require runtime approval.
