@@ -1477,9 +1477,17 @@
 # Content Provider
 ## [Source](https://interviewprep.org/android-content-provider-interview-questions/)
 1. Can you explain the concept of Android Content Providers and their role in data sharing between Android applications?
-    - Android Content Providers facilitate data sharing between Android applications by acting as an abstraction layer over various data storage mechanisms. They expose a standardized API for querying, inserting, updating, and deleting data, ensuring secure access control through permissions.
-    - Content Providers use Uniform Resource Identifiers (URIs) to uniquely identify data sets, allowing other apps to request specific information without direct access to the underlying storage system. This decouples data management from app logic, promoting modular design and reusability.
-    - To create a custom Content Provider, developers extend the ContentProvider class, implementing methods like query(), insert(), update(), and delete(). Additionally, they define a contract class outlining URIs, MIME types, and column names for easy integration with other components, such as CursorLoaders.
+    - Content Provider
+      - Facilitates data sharing between Android applications 
+      - Acts as an abstraction layer over various data storage mechanisms. 
+      - They have the following standard APIs to ensure secure control through permissions.
+        - querying data, 
+        - inserting data, 
+        - updating data,
+        - deleting data,
+      - Use Uniform Resource Identifiers (URIs) to uniquely identify data sets, 
+      - Allow other apps to request specific information without direct access to the underlying storage system.
+      - To create a custom Content Provider, extend the ContentProvider class, implementing methods like query(), insert(), update(), and delete(). Additionally, they define a contract class outlining URIs, MIME types, and column names for easy integration with other components, such as CursorLoaders.
 2. How would you design a custom Content Provider in an Android application? What are the essential component you would consider?
     - To design a custom Content Provider in an Android application, follow these steps:
         - Define the contract: Create a class extending BaseColumns to define URIs, MIME types, and column names for your data.
@@ -1744,16 +1752,20 @@
 15. How does Android handle permissions for accessing external storage?
     - Android 10+ uses Scoped Storage, restricting direct file access.
 16. What are foreground service permissions, and how do they differ from normal permissions?
-    - Foreground Service require FOREGROUND_SERVICE permission and must display a notification.
+    - Foreground Service require FOREGROUND_SERVICE permission
+    - Must display a notification.
 17. How do permission work in Android 11 and later, especially regarding scoped storage?
-    - Application must use MediaStore APIs and request MANAGE_EXTERNAL_STORAGE permission.
+    - Application must use MediaStore APIs 
+    - Request MANAGE_EXTERNAL_STORAGE permission.
 18. How can an application request multiple permissions at once?
     - Pass multiple permissions in the requestPermissions() method.
 19. What are permission groups and how do they affect permission requests?
-    - These permissions are grouped. Granting one permission will grant all the permissions in the group.
+    - These permissions are grouped. 
+    - If you grant permission to one permission request then, all the permissions in the group are granted.
 20. How do you handle permission revocation when an application is updated or reinstalled?
     - Above Android 11 system automatically revokes unused permission.
-    - Below Android 11 when an application is updated or reinstalled, permissions are generally retained, unless the application undergoes a major change, such as different signature or complete uninstall. There are some key behaviours to consider
+    - Below Android 11 when an application is updated or reinstalled, permissions are generally retained, unless the application undergoes a major change, such as different signature or complete uninstall. 
+    - There are some key behaviours to consider (Below Android 11)
       - App Updates: If the application is updated without being uninstalled, previously granted permissions remain intact.
       - App Re-installation: If the application is uninstalled and then reinstalled, the user must grant permissions again.
       - System-level Changes: Some OEMs or security policies may reset permissions upon updates.
