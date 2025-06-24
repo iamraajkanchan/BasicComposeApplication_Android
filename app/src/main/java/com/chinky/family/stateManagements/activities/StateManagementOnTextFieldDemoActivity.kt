@@ -1,4 +1,4 @@
-package com.chinky.family.statemanagement.activities
+package com.chinky.family.stateManagements.activities
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -21,7 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-class StateManagementDemoActivity : ComponentActivity() {
+class StateManagementOnTextFieldDemoActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +46,9 @@ class StateManagementDemoActivity : ComponentActivity() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(20.dp))
+            Text("Using remember State")
+            Spacer(modifier = Modifier.height(10.dp))
             TextField(value = text.value, onValueChange = { text.value = it })
-            Spacer(modifier = Modifier.height(20.dp))
             Text(text = "Hello ${text.value}")
         }
     }
@@ -62,6 +63,8 @@ class StateManagementDemoActivity : ComponentActivity() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Spacer(modifier = Modifier.height(20.dp))
+            Text("Using rememberSaveable State")
+            Spacer(modifier = Modifier.height(10.dp))
             TextField(value = text.value, onValueChange = { text.value = it })
             Spacer(modifier = Modifier.height(20.dp))
             Text(text = "Hello ${text.value}")

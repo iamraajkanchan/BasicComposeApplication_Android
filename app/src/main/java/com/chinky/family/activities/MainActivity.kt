@@ -22,7 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.chinky.family.composable.activities.ComposableMenuActivity
 import com.chinky.family.services.activities.ServiceMenuActivity
-import com.chinky.family.statemanagement.activities.StateManagementDemoActivity
+import com.chinky.family.stateManagements.activities.StateManagementDemoActivity
 import com.chinky.family.ui.theme.ApplicationTheme
 
 class MainActivity : ComponentActivity() {

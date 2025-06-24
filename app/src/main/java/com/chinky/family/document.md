@@ -154,7 +154,7 @@
 - AnimationVector - Base class for animation vectors.
 - AnimationSpec - Base interface for animation specifications.
 
-### Specialized Animation Statess
+### Specialized Animation States
 
 - rememberScrollState() - With animated scrolling capabilities
 - LazyListState - With animateScrollToItem() and animateItemPlacement()
@@ -163,3 +163,9 @@
 - BottomSheetState - With animated expand/collapse.
 - SwipeableState - For swipeable components
 - DraggableState - For draggable components
+
+
+# State Management
+
+- remember {mutableStateOf()} - Stores state during recomposition. Doesn't survive configuration change.
+- rememberSaveable {mutableStateOf()} - Stores state during recomposition. Survives configuration change.
