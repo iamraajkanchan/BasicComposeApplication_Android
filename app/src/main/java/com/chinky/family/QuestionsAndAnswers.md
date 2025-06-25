@@ -1762,4 +1762,72 @@
     - They define a specific protocol layered on top of WebSocket. They're negotiated during the handshake.
 12. How do you handle binary data in WebSocket?
     - Use ByteString in OkHttp or ByteBuffer in Java-Websocket to send/receive binary payloads.
-#
+# Jetpack Compose
+1. What is Jetpack Compose?
+    - Jetpack Compose is Android's modern, declarative UI toolkit that allows developers to build UIs using Kotlin code instead of XML.
+2. What is a Composable function?
+    - A composable is a Kotlin function annotated with @Composable that defines a piece of UI. It can call other composables and is the building block of Compose UIs.
+3. How does state management work in Compose?
+    - Compose uses remember and mutableStateOf to manage state. When the state changes, Compose automatically recomposes the affected UI.
+4. What is recomposition in Jetpack Compose?
+    - Recomposition is the process where Compose re-executes composable functions when input date changes, updating only the affected parts of the UI.
+5. What are SideEffect APIs in Compose?
+    - LaunchedEffect - Runs suspend functions in response to key changes.
+    - SideEffect: Executes after every successful recomposition.
+    - DisposableEffect: Use for setup and cleanup of side effects.
+6. How do you build a list in Compose?
+    - Use LazyColumn or LazyRow with items of itemsIndexed() to efficiently render scrollable lists.
+7. How does Compose handle theming?
+    - Compose uses MaterialTheme to define colors, typography and shapes. You can customize themes using MaterialTheme()
+8. What is the role of Modifier in Compose?
+    - Modifier is used to decorate or add behavior to composables, such as padding, click listeners or layout constraints.
+9. How do you optimize recomposition?
+    - Use derivedStateOf, key and granular state variables to minimize unnecessary recompositions.
+10. How does Compose interoperate with the View System?
+    - You can embed Views in Compose using AndroidView, and embed Compose in Views using ComposeView.
+11. Can Jetpack compose work with existing Android views?
+    - Yes! Compose is interoperable with View system. You can use ComposeView to embed Compose in XML layouts, and AndroidView to include traditional Views inside Compose.
+12. How do you handle navigation in Jetpack Compose?
+    - Jetpack Compose uses the Navigation component from the androidx.navigation.compose library. You define a NavHost and use composable() routes to manage screen transitions.
+13. How do you test composables?
+    - Use ComposeTestRule with CreateComposeRule() for unit testing. You can assert UI elements using onNodeWithText(), onNodeWithTag(), etc.
+14. What is the purpose of @Preview in Compose?
+    @Preview allows you to visualize composable in Android Studio without running the app. You can customize it with parameters like showBackground, widthDp and heightDp.
+15. What is rememberSaveable and how it is different from remember?
+    - rememberSaveable retains state across configuration changes (like screen rotation) by saving it to a Bundle. remember only survives recomposition.
+16. How do you animate UI in Compose?
+    - Use APIs like animateAsState, updateTransition and AnimatedVisibility for smooth animations. Compose also supports gesture-driven animations.
+17. What is CompositionLocal?
+    - CompositionLocal provides a way to pass data down the composition tree without explicitly passing it through parameters - similar to context in React.
+18. How does Jetpack Compose handle accessibility?
+    - Compose supports accessibility via semantics. Use Modifier.semantics {} and contentDescription to describe UI elements for screen readers.
+19. What is Snapshot in Compose?
+    - A Snapshot is internal mechanism of Compose to track state changes and trigger recompositions efficiently. It ensures thread-safe updates.
+20. How do you handle lifecycle events in Compose?
+    - Use LifecycleOwnerAmbient or DisposableEffect to observe lifecycle changes and clean up resources when composables leave the composition.
+21. What is Recomposer in Jetpack Compose?
+    The Recomposer is the engine that drives recomposition. It tracks changes in state and schedules recomposition of affected composables. It ensures UI updates are efficient and consistent with the current state.
+22. How does Jetpack Compose achieve thread safety with state?
+    - Compose uses a snapshot system (SnapshotState) to manage state changes. It ensures that state reads and writes are isolated and consistent, even across threads, using snapshot isolation and versioning.
+23. What is SubcomposeLayout and when would you use it?
+    - SubcomposeLayout allows you to defer composition of certain UI elements until layout time. It's useful for complex layouts like lazy grids or when you need to measure children before composing them.
+24. How does Compose handle memory and recomposition performance?
+    - Compose avoids unnecessary recompositions by skipping unchanged parts of the UI tree. It uses smart diffing and memoization (remember, derivedStateOf) to optimize rendering.
+25. What are MovableContent and MovableContentOf?
+    - These APIs allow you to define reusable chunks of UI that can be moved across the composition hierarchy without triggering recomposition. Great for performance in dynamic UIs.
+26. How do you structure a large-scale Compose app?
+    - Use a modular architecture with clear separation of concerns:
+        - UI layer (composables)
+        - State holders (ViewModels)
+        - Navigation (NavHost)
+        - Dependency Injection (e.g. Hilt)
+        - Reusable UI components and themes
+27. What is the difference between rememberCoroutineScope() and LaunchedEffect?
+    - rememberCoroutineScope() gives you a coroutine scope tied to the composition lifecycle.
+    - LaunchedEffect launches a coroutine when a key changes and cancels it when the key changes again or the composable leaves the composition.
+28. How do you handle back press in Compose?
+    - Use BackHandler from androidx.activity.compose. It allows you to intercept the back press and perform custom logic within a composable.
+29. What are Modifier.Node and Modifier.Element?
+    - These are part of the new Modifier system. Modifier.Node allows for more efficient modifier chaining and lifecycle-aware behavior.
+30. How do you debug recomposition issues in Compose?
+    - Use tools like Recomposition Highlighter in Android Studio, LogCompositions, and Modifier.debugInspectorInfo to trace recomposition paths and identify unnecessary recompositions.
