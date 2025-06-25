@@ -1210,15 +1210,26 @@
 # Room Database
 ## [Source](https://interviewprep.org/android-room-interview-questions/)
 1. What are the main components of Android Room, and how do they interact with each other?
-    - Android Room has three main components: Database, Entity, and DAO.
+    - Has three main components: Database, Entity, and DAO.
       - ***Database***: It is an abstract class extending RoomDatabase, acting as the main access point for underlying SQLite database connections. Annotated with @Database, it lists all entities and defines a version number.
       - ***Entity***: Represents a table in the SQLite database. A POJO class annotated with @Entity, its fields define columns while primary keys are specified using @PrimaryKey.
       - ***DAO (Data Access Object)***: Interface containing methods to interact with the database. Annotated with @Dao, it includes query, insert, update, and delete operations.
     - Entities are defined within the Database class, which also provides DAO instances. The Room library generates code based on annotations, creating a concrete implementation of the Database class. This implementation manages SQLiteOpenHelper and creates DAO implementations. Clients use these DAOs to perform CRUD operations on entities, ensuring type-safety and compile-time checks.
 2. Can you explain the differences between Room, SQLite and Realm, and when you would use each for Android app development?
-   -  Room, SQLite, and Realm are data persistence solutions for Android app development. Room is an abstraction layer over SQLite, providing a more convenient API and compile-time checks. SQLite is a lightweight relational database management system embedded in the Android framework. Realm is a third-party, object-oriented database with its own storage engine.
+   -  They all are data storage (persistence) solutions for Android app development. 
+   - ***Room***:
+     - An abstraction layer over SQLite. 
+     - Provides a more convenient API and compile-time checks.
+     - Use it when you need a strong, easy-to-use solution that integrates well with other Android components (LiveData, ViewModel).
+   - ***SQLite***:
+     - A lightweight relational database management system embedded in the Android framework.
+     - Use it when you prefer working directly with SQL queries or require fine-grained control over the database.
+   - ***Realm***:
+     - A third-party object-oriented database.
+     - Has its own storage engine.
+     - Use it when you need a high-performance, cross-platform solution not limited to Android.
    - Use Room when you need a robust, easy-to-use solution that integrates well with other Android components (LiveData, ViewModel). It’s suitable for most apps requiring local data storage.
-   - Choose SQLite if you prefer working directly with SQL queries or require fine-grained control over the database. However, it lacks some of the convenience features provided by Room.
+   - Choose SQLite if you prefer working directly with SQL queries or require fine-grained control over the database.
    - Opt for Realm when you need a high-performance, cross-platform solution not limited to Android. It excels in real-time applications and complex data models but may have a steeper learning curve compared to Room.
 3. How can you handle version updates and schema migrations in Android Room?
    -  To handle version updates and schema migrations in Android Room, follow these steps:
@@ -1770,4 +1781,112 @@
       - App Re-installation: If the application is uninstalled and then reinstalled, the user must grant permissions again.
       - System-level Changes: Some OEMs or security policies may reset permissions upon updates.
       - Permissions in Shared Storage: If an application access external storage, permissions may need to be re-requested after reinstalling.
+# Retrofit
+1. What is Retrofit and how does it work in Android?
+    - Retrofit is type-safe HTTP client for Android and Java developed by Square. It simplifies network operations by allowing developers to define REST API calls as Java interfaces using annotations.
+2. How do you define a Retrofit interface for API calls?
+   - You create an interface with methods annotated with HTTP verbs like @GET, @POST, etc. Each method represents an API endpoint.
+3. What are the key annotations used in Retrofit?
+   - @GET("users") - use it for GET requests.
+   - @POST("users/new") - use it for POST requests.
+   - @Path("id") - to replace parts of the URL.
+   - @Query("page") - to add query parameters.
+   - @Body - use it to send a request body.
+4. How do you handle asynchronous vs synchronous requests in Retrofit?
+   - For Asynchronous request: Use Call.enqueue() method that runs on a background thread.
+   - For Synchronous request: Use Call.execute() method that runs on the calling thread (not recommended to call this method on main thread.).
+5. What is the role of OKHttp in Retrofit?
+    - Retrofit used OKHttp as an HTTP client to manage network requests, caching and interceptors.
+6. How do you add interceptors for logging or authentication?
+   - Create interceptor for logging or authentication.
+   - Add them to the client using OkHttpClient.Builder.addInterceptor(interceptor).
+7. How do you handle errors and exceptions in Retrofit?
+   - Use onFailure() and onResponse() in the callback. You can also inspect the HTTP status code and error body.
+8. What is a Converter in Retrofit and which ones have you used (e.g. Gson, Moshi)?
+   - They both are used to serialize / deserialize 
+   - We can add them by using Retrofit.Builder().addConverterFactory()
+9. How do you implement pagination using Retrofit?
+   - Use @Query("page") and @Query("limit") to pass pagination parameters to the API.
+10. How do you cancel a Retrofit request?
+    - Use Call.cancel() to stop the ongoing request.
+11. What are Call, CallAdapter and Callback in Retrofit?
+    - Call<T>: Represents a single request.
+    - Callback<T> : Handles the response.
+    - CallAdapter adapts the Call into another type (e.g. LiveData, RxJava)
+12. How do yo mock Retrofit responses for testing?
+    - Use tools like MockWebServer or create a fake implementation of the API interface for testing.
+13. What's the difference between @Field and @Body in POST requests?
+    - @Field is used with @FormUrlEncoded for form data.
+    - @Body sends the entire object as JSON.
+14. How do you upload files or images using Retrofit?
+    - Use @Multipart and @Part annotations and MultipartBody.Part to upload files.
+      - Define the API interface.
+        `
+        public interface ApiService {
+            @Multipart
+            @POST("upload")
+            Call<ResponseBody> uploadImage(
+            @Part MultipartBody.Part image,
+            @Part("description") RequestBody description
+            );
+        }
+        `
+        - Prepare the File and RequestBody
+        `
+        File file = new File("path_to_your_image.jpg");
+        // Create RequestBody instance from file
+        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
+        // MultipartBody.Part is used to send the actual file name
+        MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+        // Add another part for description
+        RequestBody description = RequestBody.create(MediaType.parse("text/plain"), "Sample image upload");
+        ApiService apiService = retrofit.create(ApiService.class);
+        Call<ResponseBody> call = apiService.uploadImage(body, description);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                Log.d("Upload", "Success!");
+                } else {
+                Log.d("Upload", "Failed with code: " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            Log.e("Upload", "Error: " + t.getMessage());
+            }
+            }
+        );
+        `
+15. How does Retrofit integrate with coroutines or RxJava?
+    - Retrofit supports coroutines via suspend functions and RxJava via CallAdapterFactory
+# Websocket
+1. What is WebSocket?
+   - WebSocket is a communication protocol that provides full-duplex, bidirectional communication over a single TCP connection - ideal for real-time apps like chat or live updates.
+2. How does WebSocket differ from HTTP?
+   - HTTP is a request-response based and unidirectional. WebSocket on the other hand is bidirectional, maintains a persistent connection, allowing both client and server to send messages anytime.
+3. What are the advantages of using WebSocket?
+   - Low Latency.
+   - Real-time communication.
+   - Reduced overhead (no repeated handshakes)
+   - Efficient for frequent data exchange.
+4. Describe the WebSocket handshake process?
+   - It starts as an HTTP request with an Upgrade:websocket header. If the server accepts, it responds with 101 Switching Protocols, and the connection upgrades to WebSocket.
+5. How do you implement WebSocket in Android?
+   - You can use libraries like OkHttp, Java-Websocket or Socket.IO. 
+   - OkHttp's WebSocketListener makes it easy to manage events like onOpen, onMessage, onFailure and onClosing.
+6. How do you handle reconnection in WebSocket?
+   - Implement retry logic with exponential backoff. Monitor onFailure and onClosed callbacks to trigger reconnection.
+7. How do you send and receive messages in Android using WebSocket?
+   - Use websocket.sent("message") to send and override onMessage() to receiver. Messages can be text or binary.
+8. How do you secure a WebSocket connection?
+   - Use wss:// instead of ws:// for encrypted communication. Also, validate origin headers and use authentication tokens.
+9. What are ping/pong frames in WebSocket?
+   - They're used to keep the connection alive and detect broken connections. The client or server can send a ping and the other must respond with a pong.
+10. How do you scale WebSocket applications?
+    - Use message brokers like Redis Pub/Sub or Kafka to distribute messages across multiple WebSocket servers.
+11. What are WebSocket sub protocols?
+    - They define a specific protocol layered on top of WebSocket. They're negotiated during the handshake.
+12. How do you handle binary data in WebSocket?
+    - Use ByteString in OkHttp or ByteBuffer in Java-Websocket to send/receive binary payloads.
 #
