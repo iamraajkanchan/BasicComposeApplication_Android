@@ -20,12 +20,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.chinky.family.composable.activities.ComposableMenuActivity
-import com.chinky.family.services.activities.ServiceMenuActivity
-import com.chinky.family.stateManagements.activities.StateManagementDemoActivity
-import com.chinky.family.ui.theme.ApplicationTheme
+import com.chinky.family.presentation.composableFunctions.activities.ComposableMenuActivity
+import com.chinky.family.presentation.services.activities.ServiceMenuActivity
+import com.chinky.family.presentation.stateManagements.activities.StateManagementDemoActivity
+import com.chinky.family.presentation.ui.theme.ApplicationTheme
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

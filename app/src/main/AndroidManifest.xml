@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".MyApplication"
+        android:name=".activities.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -16,27 +16,27 @@
         android:theme="@style/Theme.HomeApplicationTheme"
         tools:targetApi="31">
         <activity
-            android:name=".services.activities.BackgroundServiceDemoActivity"
+            android:name=".presentation.services.activities.BackgroundServiceDemoActivity"
             android:exported="false" />
 
         <service
-            android:name=".services.services.DemoBoundService"
+            android:name=".presentation.services.services.DemoBoundService"
             android:exported="false" />
         <service
-            android:name=".services.services.DemoBackgroundService"
+            android:name=".presentation.services.services.DemoBackgroundService"
             android:exported="false" />
 
         <activity
-            android:name=".services.activities.BoundServiceDemoActivity"
+            android:name=".presentation.services.activities.BoundServiceDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".services.activities.ServiceMenuActivity"
+            android:name=".presentation.services.activities.ServiceMenuActivity"
             android:exported="false" />
         <activity
-            android:name=".stateManagements.activities.StateManagementDemoActivity"
+            android:name=".presentation.stateManagements.activities.StateManagementDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".stateManagements.activities.StateManagementOnTextFieldDemoActivity"
+            android:name=".presentation.stateManagements.activities.StateManagementOnTextFieldDemoActivity"
             android:exported="false" />
         <activity
             android:name=".composable.activities.ComposableMenuActivity"
@@ -61,7 +61,7 @@
             android:name=".composable.activities.CheckboxDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.CircularProgressIndicatorDemoActivity"
+            android:name=".presentation.composableFunctions.activities.CircularProgressIndicatorDemoActivity"
             android:exported="false" />
         <activity
             android:name=".composable.activities.ColumnDemoActivity"
@@ -70,7 +70,7 @@
             android:name=".composable.activities.IconButtonDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.IconDemoActivity"
+            android:name=".presentation.composableFunctions.activities.IconDemoActivity"
             android:exported="false" />
         <activity
             android:name=".composable.activities.ModalNavigationDrawerDemoActivity"
@@ -91,7 +91,7 @@
             android:name=".composable.activities.LazyColumnWithPaginationDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.LazyColumnWithSearchDemoActivity"
+            android:name=".presentation.composableFunctions.activities.LazyColumnWithSearchDemoActivity"
             android:exported="false" />
         <activity
             android:name=".composable.activities.LazyColumnWithSelectionDemoActivity"
@@ -127,7 +127,7 @@
             android:name=".composable.activities.RadioButtonDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.RowDemoActivity"
+            android:name=".presentation.composableFunctions.activities.RowDemoActivity"
             android:exported="false" />
         <activity
             android:name=".composable.activities.ScaffoldDemoActivity"
