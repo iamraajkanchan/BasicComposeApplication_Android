@@ -24,7 +24,10 @@ import com.chinky.family.composable.activities.ComposableMenuActivity
 import com.chinky.family.services.activities.ServiceMenuActivity
 import com.chinky.family.stateManagements.activities.StateManagementDemoActivity
 import com.chinky.family.ui.theme.ApplicationTheme
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
