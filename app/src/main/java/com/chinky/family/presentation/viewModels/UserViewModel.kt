@@ -1,0 +1,80 @@
+package com.chinky.family.presentation.viewModels
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.chinky.family.data.model.User
+import com.chinky.family.data.repository.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+
+@HiltViewModel
+class UserViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
+    private val _users = MutableLiveData<List<User>>()
+    val users: LiveData<List<User>> = _users
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+    private val _error = MutableLiveData<String?>()
+    val error: LiveData<String?> = _error
+
+    fun loadUsers() {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                val userList = userRepository.getUsers()
+                _users.value = userList
+                _error.value = null
+            } catch (e: Exception) {
+                _error.value = "Exception: ${e.message}"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun createUser(user: User) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                userRepository.createUser(user)
+                loadUsers()
+            } catch (e: Exception) {
+                _error.value = "Exception: ${e.message}"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun updateUser(user: User) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                userRepository.updateUser(user)
+                loadUsers()
+            } catch (e: Exception) {
+                _error.value = "Exception: ${e.message}"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+    fun deleteUser(user: User) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                userRepository.deleteUser(user)
+                loadUsers()
+            } catch (e: Exception) {
+                _error.value = "Exception: ${e.message}"
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
+
+}

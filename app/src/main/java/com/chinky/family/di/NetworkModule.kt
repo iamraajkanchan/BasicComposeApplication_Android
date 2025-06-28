@@ -1,6 +1,8 @@
 package com.chinky.family.di
 
+import com.chinky.family.data.db.UserDao
 import com.chinky.family.data.repository.ApiService
+import com.chinky.family.data.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,6 +46,12 @@ object NetworkModule {
     @Singleton
     fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserRepository(apiService: ApiService, userDao: UserDao): UserRepository {
+        return UserRepository(apiService, userDao)
     }
 
 }

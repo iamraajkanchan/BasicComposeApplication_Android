@@ -1831,3 +1831,16 @@
     - These are part of the new Modifier system. Modifier.Node allows for more efficient modifier chaining and lifecycle-aware behavior.
 30. How do you debug recomposition issues in Compose?
     - Use tools like Recomposition Highlighter in Android Studio, LogCompositions, and Modifier.debugInspectorInfo to trace recomposition paths and identify unnecessary recompositions.
+
+# Hilt
+1. What is SingleTon? What other scoping options do we have in Hilt?
+   - Singleton means only one instance/object of the class will be created during the entire application's lifecycle
+   - These are the following Scoping Options in Hilt
+     - @Singleton - The lifetime of this option is Entire app. Mainly used for Repositories, Retrofit and Room Database
+     - @ActivityRetainedScope - The lifetime of this option is across config changes in Activity. Mainly used for ViewModels and Interacting Classes.
+     - @ActivityScoped - The lifetime of this option is across one activity instance. Mainly used for UI-level stuff tied to screen
+     - @ViewModelScoped - The lifetime of this option is tied to ViewModel lifecycle. Mainly used if you are using @HiltViewModel
+     - @FragmentScoped - The lifetime of this option is tied to One fragment instance. Mainly used for Fragment-specific dependencies 
+     - @ServiceScoped - The lifetime of this option is tied to one service instance. Mainly used for background services or bound services.
+   - You also need to pair each scope with its corresponding @InstallIn() in a @Module unless Hilt auto-detects it (like @Inject Constructor + @SingleTon)
+2. Another question?
