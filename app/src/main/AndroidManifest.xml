@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".activities.MyApplication"
+        android:name=".app.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -16,146 +16,146 @@
         android:theme="@style/Theme.HomeApplicationTheme"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.networkCall.NetworkCallDemoActivity"
+            android:name=".presentation.ui.networkCall.NetworkCallDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.services.activities.BackgroundServiceDemoActivity"
+            android:name=".presentation.ui.services.activities.BackgroundServiceDemoActivity"
             android:exported="false" />
 
         <service
-            android:name=".presentation.services.services.DemoBoundService"
+            android:name=".presentation.ui.services.services.DemoBoundService"
             android:exported="false" />
         <service
-            android:name=".presentation.services.services.DemoBackgroundService"
+            android:name=".presentation.ui.services.services.DemoBackgroundService"
             android:exported="false" />
 
         <activity
-            android:name=".presentation.services.activities.BoundServiceDemoActivity"
+            android:name=".presentation.ui.services.activities.BoundServiceDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.services.activities.ServiceMenuActivity"
+            android:name=".presentation.ui.services.activities.ServiceMenuActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.stateManagements.activities.StateManagementDemoActivity"
+            android:name=".presentation.ui.stateManagements.activities.StateManagementDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.stateManagements.activities.StateManagementOnTextFieldDemoActivity"
+            android:name=".presentation.ui.stateManagements.activities.StateManagementOnTextFieldDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.ComposableMenuActivity"
+            android:name=".presentation.ui.composableFunctions.activities.ComposableMenuActivity"
             android:exported="false" />
         <!--
         Note: Add this theme to every activity if the customized theme for the activity doesn't work.
         android:theme="@style/Theme.AppCompat.DayNight"
         -->
         <activity
-            android:name=".composable.activities.AlertDialogDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.AlertDialogDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.BoxDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.BoxDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.ButtonDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.ButtonDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.CardDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.CardDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.CheckboxDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.CheckboxDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.composableFunctions.activities.CircularProgressIndicatorDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.CircularProgressIndicatorDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.ColumnDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.ColumnDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.IconButtonDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.IconButtonDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.composableFunctions.activities.IconDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.IconDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.ModalNavigationDrawerDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.ModalNavigationDrawerDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.TopBarDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.TopBarDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.ImageDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.ImageDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.LazyColumnDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.LazyColumnDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.LazyColumnBasicDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.LazyColumnBasicDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.LazyColumnWithPaginationDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.LazyColumnWithPaginationDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.composableFunctions.activities.LazyColumnWithSearchDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.LazyColumnWithSearchDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.LazyColumnWithSelectionDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.LazyColumnWithSelectionDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.LazyRowDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.LazyRowDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.LazyRowBasicDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.LazyRowBasicDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.LazyRowWithSelectionDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.LazyRowWithSelectionDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.LazyRowWithSearchDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.LazyRowWithSearchDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.LinearProgressIndicatorDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.LinearProgressIndicatorDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.ListItemDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.ListItemDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.ModifierDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.ModifierDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.OutlinedButtonDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.OutlinedButtonDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.OutlinedTextFieldDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.OutlinedTextFieldDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.RadioButtonDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.RadioButtonDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.composableFunctions.activities.RowDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.RowDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.ScaffoldDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.ScaffoldDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.SnackbarDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.SnackbarDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.SwitchDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.SwitchDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.TextButtonDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.TextButtonDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.TextFieldDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.TextFieldDemoActivity"
             android:exported="false"
             android:theme="@style/Theme.ChildApplicationTheme" />
         <activity
-            android:name=".composable.activities.TextDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.TextDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".composable.activities.DropDownMenuDemoActivity"
+            android:name=".presentation.ui.composableFunctions.activities.DropDownMenuDemoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.MainActivity"
+            android:name=".app.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.HomeApplicationTheme">

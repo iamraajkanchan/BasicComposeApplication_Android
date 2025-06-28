@@ -1,6 +1,6 @@
 package com.chinky.family.data.repository
 
-import com.chinky.family.data.model.User
+import com.chinky.family.domain.model.User
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE

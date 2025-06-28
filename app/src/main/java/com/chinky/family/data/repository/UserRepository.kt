@@ -1,7 +1,7 @@
 package com.chinky.family.data.repository
 
 import com.chinky.family.data.db.UserDao
-import com.chinky.family.data.model.User
+import com.chinky.family.domain.model.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
