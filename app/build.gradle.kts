@@ -93,4 +93,7 @@ dependencies {
 
     // Gson
     implementation(libs.gson)
+
+    // Compose LiveData
+    implementation(libs.androidx.runtime.livedata)
 }

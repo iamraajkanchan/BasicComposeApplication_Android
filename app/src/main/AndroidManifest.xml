@@ -16,6 +16,9 @@
         android:theme="@style/Theme.HomeApplicationTheme"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.networkCall.NetworkCallDemoActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.services.activities.BackgroundServiceDemoActivity"
             android:exported="false" />
 

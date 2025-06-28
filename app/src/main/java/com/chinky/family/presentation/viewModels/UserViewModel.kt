@@ -62,16 +62,19 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
         }
     }
 
-    fun deleteUser(user: User) {
+    fun deleteUser(id: Int) {
         viewModelScope.launch {
             try {
-                _isLoading.value = true
-                userRepository.deleteUser(user)
-                loadUsers()
+                val success = userRepository.deleteUser(id)
+                if (success) {
+                    // Update the local list immediately for better UX
+                    _users.value = _users.value?.filter { it.id != id }
+                    _error.value = null
+                } else {
+                    _error.value = "Failed to delete user"
+                }
             } catch (e: Exception) {
-                _error.value = "Exception: ${e.message}"
-            } finally {
-                _isLoading.value = false
+                _error.value = e.message
             }
         }
     }

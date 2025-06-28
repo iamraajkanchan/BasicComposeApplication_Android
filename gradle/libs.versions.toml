@@ -24,9 +24,11 @@ navigationCompose = "2.9.0"
 paging = "3.3.6"
 constraintlayoutVersion = "2.2.1"
 retrofit = "2.9.0"
+composeLiveData = "1.8.3"
 # Do not update room version. Wasted 12 hours to fix the gradle issue.
 #noinspection GradleDependency
 roomKtx = "2.6.1"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -65,6 +67,7 @@ glide-compose = { group = "com.github.bumptech.glide", name = "compose", version
 pagination-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayoutVersion" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+androidx-runtime-livedata = { module = "androidx.compose.runtime:runtime-livedata", version.ref = "composeLiveData" }
 
 
 [plugins]

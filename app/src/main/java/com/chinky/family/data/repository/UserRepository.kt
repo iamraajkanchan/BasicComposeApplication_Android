@@ -75,11 +75,11 @@ class UserRepository @Inject constructor(
         }
     }
 
-    suspend fun deleteUser(user: User): Boolean {
+    suspend fun deleteUser(id: Int): Boolean {
         return try {
-            val response = apiService.deleteUser(user.id)
+            val response = apiService.deleteUser(id)
             if (response.isSuccessful) {
-                userDao.deleteUser(user)
+                userDao.deleteUser(id)
                 true
             } else {
                 false

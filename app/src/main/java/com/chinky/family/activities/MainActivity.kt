@@ -21,6 +21,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.chinky.family.presentation.composableFunctions.activities.ComposableMenuActivity
+import com.chinky.family.presentation.networkCall.NetworkCallDemoActivity
 import com.chinky.family.presentation.services.activities.ServiceMenuActivity
 import com.chinky.family.presentation.stateManagements.activities.StateManagementDemoActivity
 import com.chinky.family.presentation.ui.theme.ApplicationTheme
@@ -72,6 +73,12 @@ class MainActivity : ComponentActivity() {
                     Text("Services")
                 }
                 Spacer(modifier = Modifier.width(20.dp))
+                Button(onClick = {
+                    val intent = Intent(this@MainActivity, NetworkCallDemoActivity::class.java)
+                    startActivity(intent)
+                }) {
+                    Text("Network Call")
+                }
             }
         }
     }
