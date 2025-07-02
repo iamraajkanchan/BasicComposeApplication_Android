@@ -21,7 +21,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -43,30 +42,41 @@ class NavigationDemoActivity : ComponentActivity() {
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = "user_info") {
             composable(route = "user_info") {
-                UserInfoScreen(padding) {
-                    navController.navigate("user_about/$it")
+                UserInfoScreen(padding) { email, userName ->
+                    navController.navigate("user_about/$email/$userName")
                 }
             }
-            composable(route = "user_about/{email}", arguments = listOf(
-                navArgument("email") {
+            composable(route = "user_about/{userEmail}/{userName}", arguments = listOf(
+                navArgument("userEmail") {
+                    type = NavType.StringType
+                },
+                navArgument("userName") {
                     type = NavType.StringType
                 }
             )) {
-                val email = it.arguments?.getString("email")
-                UserAboutScreen(padding, email!!)
+                val userName = it.arguments?.getString("userName")
+                val email = it.arguments?.getString("userEmail")
+                UserAboutScreen(padding, userName!!, email!!)
             }
         }
     }
 
     @Composable
-    fun UserInfoScreen(padding: PaddingValues, onClick: (email: String) -> Unit) {
+    fun UserInfoScreen(padding: PaddingValues, onClick: (email: String, userName: String) -> Unit) {
         var userEmail by rememberSaveable { mutableStateOf("") }
+        var userName by rememberSaveable { mutableStateOf("") }
         Column(
             modifier = Modifier
                 .padding(padding)
                 .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Spacer(modifier = Modifier.height(20.dp))
+            Text("UserName")
+            Spacer(modifier = Modifier.height(20.dp))
+            TextField(value = userName, onValueChange = {
+                userName = it
+            })
             Spacer(modifier = Modifier.height(20.dp))
             Text("Email")
             Spacer(modifier = Modifier.height(20.dp))
@@ -78,7 +88,7 @@ class NavigationDemoActivity : ComponentActivity() {
             Spacer(modifier = Modifier.height(20.dp))
             Button(
                 onClick = {
-                    onClick(userEmail)
+                    onClick(userEmail, userName)
                 }
             ) {
                 Text("Get Detail")
@@ -87,12 +97,14 @@ class NavigationDemoActivity : ComponentActivity() {
     }
 
     @Composable
-    fun UserAboutScreen(padding: PaddingValues, email: String) {
+    fun UserAboutScreen(padding: PaddingValues, userName: String, email: String) {
         Column(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(padding),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Hello $email!")
+            Text("Hello $userName your email address is $email!")
         }
     }
 
