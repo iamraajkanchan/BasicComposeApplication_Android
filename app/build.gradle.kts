@@ -96,4 +96,5 @@ dependencies {
 
     // Compose LiveData
     implementation(libs.androidx.runtime.livedata)
+
 }
