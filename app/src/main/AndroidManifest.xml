@@ -19,6 +19,12 @@
         android:theme="@style/Theme.HomeApplicationTheme"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.ui.composableFunctions.activities.BottomNavigationDemoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.composableFunctions.activities.ViewpagerDemoActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.ui.locations.LocationInfoDemoActivity"
             android:exported="false" />
         <activity

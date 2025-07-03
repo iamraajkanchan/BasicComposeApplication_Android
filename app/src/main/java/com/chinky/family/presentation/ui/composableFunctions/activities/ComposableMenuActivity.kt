@@ -340,7 +340,10 @@ class ComposableMenuActivity : ComponentActivity() {
                     modifier = leftButtonModifier,
                     onClick = {
                         val textActivityIntent =
-                            Intent(this@ComposableMenuActivity, ModalNavigationDrawerDemoActivity::class.java)
+                            Intent(
+                                this@ComposableMenuActivity,
+                                ModalNavigationDrawerDemoActivity::class.java
+                            )
                         startActivity(textActivityIntent)
                     }
                 ) {
@@ -358,6 +361,34 @@ class ComposableMenuActivity : ComponentActivity() {
                     }
                 ) {
                     Text("TopBar")
+                }
+            }
+            Row {
+                Button(
+                    modifier = leftButtonModifier,
+                    onClick = {
+                        val textActivityIntent =
+                            Intent(
+                                this@ComposableMenuActivity,
+                                BottomNavigationDemoActivity::class.java
+                            )
+                        startActivity(textActivityIntent)
+                    }
+                ) {
+                    Text("Bottom Navigation")
+                }
+                Button(
+                    modifier = leftButtonModifier,
+                    onClick = {
+                        val textActivityIntent =
+                            Intent(
+                                this@ComposableMenuActivity,
+                                ViewpagerDemoActivity::class.java
+                            )
+                        startActivity(textActivityIntent)
+                    }
+                ) {
+                    Text("ViewPager")
                 }
             }
         }
