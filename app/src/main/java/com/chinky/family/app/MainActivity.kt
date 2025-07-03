@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.chinky.family.presentation.ui.activityLifecycle.ActivityLifecycleInComposeDemo
 import com.chinky.family.presentation.ui.composableFunctions.activities.ComposableMenuActivity
+import com.chinky.family.presentation.ui.locations.LocationInfoDemoActivity
 import com.chinky.family.presentation.ui.navigationDemo.NavigationWithObjectArgumentActivity
 import com.chinky.family.presentation.ui.navigationDemo.NavigationWithStringArgumentActivity
 import com.chinky.family.presentation.ui.networkCall.NetworkCallDemoActivity
@@ -59,7 +60,7 @@ class MainActivity : ComponentActivity() {
                     startActivity(intent)
                 },
             ) {
-                Text("Composables")
+                Text("Composable Functions")
             }
             Button(
                 onClick = {
@@ -112,6 +113,12 @@ class MainActivity : ComponentActivity() {
                 },
             ) {
                 Text("Activity Lifecycle in Compose")
+            }
+            Button(onClick = {
+                val intent = Intent(context, LocationInfoDemoActivity::class.java)
+                startActivity(intent)
+            }) {
+                Text("Location Into")
             }
         }
     }

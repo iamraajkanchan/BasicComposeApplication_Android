@@ -100,4 +100,9 @@ dependencies {
     // Compose LiveData
     implementation(libs.androidx.runtime.livedata)
 
+    // Permissions
+    implementation(libs.accompanist.permissions)
+
+    // Location
+    implementation (libs.play.services.location)
 }
