@@ -27,7 +27,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 
-class NavigationDemoActivity : ComponentActivity() {
+class NavigationWithStringArgumentActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -42,8 +42,8 @@ class NavigationDemoActivity : ComponentActivity() {
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = "user_info") {
             composable(route = "user_info") {
-                UserInfoScreen(padding) { email, userName ->
-                    navController.navigate("user_about/$email/$userName")
+                UserInfoScreen(padding) { userEmail, userName ->
+                    navController.navigate("user_about/$userEmail/$userName")
                 }
             }
             composable(route = "user_about/{userEmail}/{userName}", arguments = listOf(
@@ -62,7 +62,7 @@ class NavigationDemoActivity : ComponentActivity() {
     }
 
     @Composable
-    fun UserInfoScreen(padding: PaddingValues, onClick: (email: String, userName: String) -> Unit) {
+    fun UserInfoScreen(padding: PaddingValues, onClick: (userEmail: String, userName: String) -> Unit) {
         var userEmail by rememberSaveable { mutableStateOf("") }
         var userName by rememberSaveable { mutableStateOf("") }
         Column(
