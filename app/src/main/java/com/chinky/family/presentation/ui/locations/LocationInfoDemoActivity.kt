@@ -22,6 +22,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import com.chinky.family.domain.utils.LocationManager
+import com.chinky.family.domain.state.LocationState
 import com.chinky.family.presentation.ui.theme.ApplicationTheme
 
 class LocationInfoDemoActivity : ComponentActivity() {

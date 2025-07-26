@@ -1,4 +1,4 @@
-package com.chinky.family.presentation.ui.locations
+package com.chinky.family.domain.state
 
 sealed class LocationState {
     data object Loading : LocationState()

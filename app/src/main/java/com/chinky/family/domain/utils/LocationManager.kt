@@ -1,4 +1,4 @@
-package com.chinky.family.presentation.ui.locations
+package com.chinky.family.domain.utils
 
 import android.Manifest
 import android.content.Context
@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.core.app.ActivityCompat
+import com.chinky.family.domain.state.LocationState
 import com.google.android.gms.location.LocationServices
 
 class LocationManager(private val context: Context) {
