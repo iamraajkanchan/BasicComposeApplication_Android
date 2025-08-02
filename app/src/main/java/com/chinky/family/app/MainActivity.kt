@@ -25,6 +25,7 @@ import com.chinky.family.presentation.ui.locations.LocationInfoDemoActivity
 import com.chinky.family.presentation.ui.navigationDemo.NavigationWithObjectArgumentActivity
 import com.chinky.family.presentation.ui.navigationDemo.NavigationWithStringArgumentActivity
 import com.chinky.family.presentation.ui.networkCall.NetworkCallDemoActivity
+import com.chinky.family.presentation.ui.permissionsDemo.PermissionsMenuActivity
 import com.chinky.family.presentation.ui.security.SecurityMenuActivity
 import com.chinky.family.presentation.ui.services.activities.ServiceMenuActivity
 import com.chinky.family.presentation.ui.stateManagements.activities.StateManagementDemoActivity
@@ -126,6 +127,12 @@ class MainActivity : ComponentActivity() {
                 startActivity(intent)
             }) {
                 Text("Security Demo")
+            }
+            Button(onClick = {
+                val intent = Intent(context, PermissionsMenuActivity::class.java)
+                startActivity(intent)
+            }) {
+                Text("Permissions Demo")
             }
         }
     }
