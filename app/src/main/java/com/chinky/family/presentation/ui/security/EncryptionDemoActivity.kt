@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -32,7 +33,7 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class EncryptionDemoActivity : ComponentActivity() {
-
+    val viewModel by viewModels<AESEncryptionViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -46,9 +47,8 @@ class EncryptionDemoActivity : ComponentActivity() {
 
     @Composable
     private fun EncryptionScreen(paddingValues: PaddingValues) {
-        val viewModel by viewModels<AESEncryptionViewModel>()
         var encryptionString by remember { mutableStateOf("") }
-        var decryptedString by remember { mutableStateOf("Decrypted String") }
+        var decryptedString by remember { mutableStateOf("Evaluation String") }
         var encryptedByteArray by remember { mutableStateOf(byteArrayOf()) }
         Column(
             modifier = Modifier.padding(paddingValues).fillMaxWidth(),
@@ -63,10 +63,12 @@ class EncryptionDemoActivity : ComponentActivity() {
                 Button(onClick = {
                     lifecycleScope.launch {
                         encryptedByteArray = viewModel.encryptStringUsingAES(encryptionString, "ChinkyMinky")
+                        decryptedString = String(encryptedByteArray, Charsets.UTF_8)
                     }
                 }) {
                     Text("Encrypt")
                 }
+                Spacer(modifier = Modifier.width(20.dp))
                 Button(onClick = {
                     lifecycleScope.launch {
                         decryptedString = viewModel.decryptStringUsingAES(encryptedByteArray, "ChinkyMinky")
@@ -76,9 +78,7 @@ class EncryptionDemoActivity : ComponentActivity() {
                 }
             }
             Spacer(modifier = Modifier.height(20.dp))
-            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                Text(text = decryptedString)
-            }
+            Text(text = decryptedString)
         }
     }
 }
