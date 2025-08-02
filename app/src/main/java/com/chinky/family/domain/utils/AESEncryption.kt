@@ -1,11 +1,8 @@
 package com.chinky.family.domain.utils
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.util.Base64
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
@@ -16,24 +13,26 @@ class AESEncryption {
 
     private val encryptionScope = CoroutineScope(Dispatchers.Default)
 
-    suspend fun encryptAES(data: ByteArray, secretKey: SecretKey): ByteArray {
+    suspend fun encryptAES(inputString: String, secretKey: SecretKey) : ByteArray {
         val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
         val iv = IvParameterSpec(ByteArray(16)) // Use a secure random IV in production
-        val resultingCipher = encryptionScope.async {
+        val encryptJob = encryptionScope.async {
             cipher.apply {
                 init(Cipher.ENCRYPT_MODE, secretKey, iv)
             }
+            cipher.doFinal(inputString.toByteArray())
         }
-        return resultingCipher.await().doFinal(data)
+        return encryptJob.await()
     }
 
-    suspend fun decryptAES(encryptedData: ByteArray, secretKey: SecretKey): ByteArray {
+    suspend fun decryptAES(encryptedData: ByteArray, secretKey: SecretKey): String {
         val cipher = Cipher.getInstance("AES/CBC/PKCS5Padding")
         val iv = IvParameterSpec(ByteArray(16)) // Use the same IV used for encryption
-        encryptionScope.launch {
+        val decryptJob = encryptionScope.async {
             cipher.init(Cipher.DECRYPT_MODE, secretKey, iv)
+            String(cipher.doFinal(encryptedData), Charsets.UTF_8)
         }
-        return cipher.doFinal(encryptedData)
+        return decryptJob.await()
     }
 
     fun encryptAES128(plainText: String, secretKey: String): String {
