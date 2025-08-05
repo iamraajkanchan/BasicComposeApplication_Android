@@ -1538,13 +1538,14 @@
         - Handle SecurityException in authorized apps when attempting to access the secured Content Provider, as the system may deny access if permissions are not granted or signatures do not match.
         - Optionally, use Binder.getCallingUid() within your Content Provider’s methods to verify the identity of calling apps, allowing further restrictions based on app-specific criteria.
 6. Can you explain the role of the 'ContentResolver' in Android Content Providers? How does it enable communication between applications?
-    - ContentResolver acts as an intermediary between applications and Content Providers, enabling data sharing and communication. It abstracts the underlying data storage, allowing apps to access data without knowing its implementation details.
+    - ContentResolver acts as an intermediary channel between applications and Content Providers, which enables data sharing and communication. It abstracts the underlying data storage, allowing apps to access data without knowing its implementation details.
     - When an app requests data from a Content Provider, it uses the ContentResolver’s methods (query, insert, update, delete) to perform operations on the provider’s URI. The ContentResolver then communicates with the corresponding ContentProvider using these URIs, which represent specific data sets within the provider.
     - ContentResolver also handles permissions, ensuring that only authorized apps can access the requested data. This ensures security and privacy of shared data across different applications.
 7. What are the four major CRUD operations available in Android Content Providers and how are they implemented using ContentResolver?
     - Android Content Providers support four major CRUD operations: Create, Read, Update, and Delete. These operations are implemented using the ContentResolver class.
         - Create: To insert data into a content provider, use the insert() method of ContentResolver. It takes two arguments – the URI of the content provider and ContentValues containing key-value pairs for the data to be inserted.
-          `ContentValues values = new ContentValues();values.put("column_name", "value");getContentResolver().insert(uri, values);`
+          `ContentValues values = new ContentValues();values.put("column_name", "value");
+           getContentResolver().insert(uri, values);`
         - Read: Querying data from a content provider is done using the query() method of ContentResolver. It accepts various parameters like URI, projection (columns), selection criteria, and sorting order.
           `Cursor cursor = getContentResolver().query(uri, projection, selection, selectionArgs, sortOrder);`
         - Update: Updating existing data in a content provider requires the update() method of ContentResolver. It takes similar arguments as query(), along with ContentValues holding updated data.
