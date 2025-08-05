@@ -2,7 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -11,7 +14,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
-
+    <uses-permission android:name="com.chinky.family.CAT_PERMISSION" />
 
     <application
         android:name=".app.MyApplication"
@@ -24,6 +27,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HomeApplicationTheme"
         tools:targetApi="31">
+        <activity
+            android:name=".presentation.ui.permissionsDemo.CustomPermissionDemoActivity"
+            android:exported="true"
+            android:permission="com.chinky.family.CAT_PERMISSION"
+            >
+            <!--
+            <intent-filter>
+                <action android:name="com.chinky.family.ACTION_MEOW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+            -->
+        </activity>
         <activity
             android:name=".presentation.ui.permissionsDemo.CameraAndStoragePermissionActivity"
             android:exported="false" />
@@ -200,10 +215,11 @@
             android:theme="@style/Theme.HomeApplicationTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
+
+    <permission android:name="com.chinky.family.CAT_PERMISSION" android:protectionLevel="dangerous" android:label="Access your cat features" android:description="Allows the app to interact with your cat-related functionality like meowing or purring"/>
 
 </manifest>

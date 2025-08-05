@@ -46,6 +46,12 @@ class PermissionsMenuActivity : ComponentActivity() {
             }) {
                 Text("Camera && Storage Permission")
             }
+            Button(onClick = {
+                val intent = Intent(this@PermissionsMenuActivity, CustomPermissionDemoActivity::class.java)
+                startActivity(intent)
+            }) {
+                Text("Custom Permission")
+            }
         }
     }
 }

@@ -1717,7 +1717,38 @@
     - Advantages include simplicity, native support, and automatic indexing. However, it may increase storage requirements due to additional index tables.
     - Externally indexed search involves maintaining a separate index structure mapping terms to document IDs. Popular libraries like Lucene or Elasticsearch can be used. Indexing is performed outside of SQLite, requiring synchronization between the main database and the external index. This approach offers more advanced features such as ranking, faceting, and filtering but adds complexity and potential performance overhead.
     - Choose the appropriate method based on your application’s requirements and constraints.
-
+26. Give an example of Custom ContentProvider
+    - `
+    class MyContentProvider : ContentProvider() {
+      override fun onCreate(): Boolean {
+      // Initialize database or other resources
+      return true
+      }
+    override fun query(...): Cursor? { /*...*/ }
+    override fun insert(...): Uri? { /*...*/ }
+    override fun update(...): Int { /*...*/ }
+    override fun delete(...): Int { /*...*/ }
+    override fun getType(...): String? { /*...*/ }
+    }
+    `
+27. Best practices for Managing ContentProvider Lifecycle
+    - Keep onCreate() lightweight
+    - Use Application Context gracefully.
+    - Thread Safety: Use synchronize methods or synchronize blocks to avoid get inaccurate data.
+    - Avoid long running tasks in a ContentProvider
+    - Handle error gracefully.
+    - Security and Permissions
+      - `
+      <provider
+        android:name=".SecureProvider"
+        android:authorities="com.example.secure"
+        android:exported="true"
+        android:readPermission="com.example.READ"
+        android:writePermission="com.example.WRITE" />
+      `
+    - Use URI matching efficiently: Use methods like UriMatcher and avoid hardcoded paths. If you use a hardcoded path, it will raise a fatal exception and crash the application. (This is my personal experience.)
+    - Close resource properly
+28. 
 
 # Permissions
 1. What are permissions in Android, and why are they needed?
