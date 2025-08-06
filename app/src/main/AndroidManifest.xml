@@ -16,6 +16,8 @@
     <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
     <uses-permission android:name="com.chinky.family.CAT_PERMISSION" />
 
+    <permission android:name="com.chinky.family.CAT_PERMISSION" android:protectionLevel="dangerous"/>
+
     <application
         android:name=".app.MyApplication"
         android:allowBackup="true"
@@ -219,7 +221,5 @@
             </intent-filter>
         </activity>
     </application>
-
-    <permission android:name="com.chinky.family.CAT_PERMISSION" android:protectionLevel="dangerous" android:label="Access your cat features" android:description="Allows the app to interact with your cat-related functionality like meowing or purring"/>
 
 </manifest>
