@@ -3,6 +3,7 @@ package com.chinky.family.di
 import com.chinky.family.data.db.UserDao
 import com.chinky.family.data.repository.ApiService
 import com.chinky.family.data.repository.UserRepository
+import com.chinky.family.domain.usecase.HandleUserUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -58,5 +59,9 @@ object NetworkModule {
     fun provideUserRepository(apiService: ApiService, userDao: UserDao): UserRepository {
         return UserRepository(apiService, userDao)
     }
+
+    @Provides
+    @Singleton
+    fun provideHandleUserUseCase(userRepository: UserRepository): HandleUserUseCase = HandleUserUseCase(userRepository)
 
 }

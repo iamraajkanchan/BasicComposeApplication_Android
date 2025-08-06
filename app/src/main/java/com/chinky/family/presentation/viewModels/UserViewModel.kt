@@ -5,13 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chinky.family.domain.model.User
-import com.chinky.family.data.repository.UserRepository
+import com.chinky.family.domain.usecase.HandleUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class UserViewModel @Inject constructor(private val userRepository: UserRepository) : ViewModel() {
+class UserViewModel @Inject constructor(private val userUseCase: HandleUserUseCase) : ViewModel() {
     private val _users = MutableLiveData<List<User>>()
     val users: LiveData<List<User>> = _users
     private val _isLoading = MutableLiveData<Boolean>()
@@ -23,7 +23,7 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
         viewModelScope.launch {
             try {
                 _isLoading.value = true
-                val userList = userRepository.getUsers()
+                val userList = userUseCase.getUsers()
                 _users.value = userList
                 _error.value = null
             } catch (e: Exception) {
@@ -38,7 +38,7 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
         viewModelScope.launch {
             try {
                 _isLoading.value = true
-                userRepository.createUser(user)
+                userUseCase.createUser(user)
                 loadUsers()
             } catch (e: Exception) {
                 _error.value = "Exception: ${e.message}"
@@ -52,7 +52,7 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
         viewModelScope.launch {
             try {
                 _isLoading.value = true
-                userRepository.updateUser(user)
+                userUseCase.updateUser(user)
                 loadUsers()
             } catch (e: Exception) {
                 _error.value = "Exception: ${e.message}"
@@ -65,7 +65,7 @@ class UserViewModel @Inject constructor(private val userRepository: UserReposito
     fun deleteUser(id: Int) {
         viewModelScope.launch {
             try {
-                val success = userRepository.deleteUser(id)
+                val success = userUseCase.deleteUser(id)
                 if (success) {
                     // Update the local list immediately for better UX
                     _users.value = _users.value?.filter { it.id != id }
