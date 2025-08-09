@@ -107,4 +107,10 @@ dependencies {
 
     // Location
     implementation (libs.play.services.location)
+
+    // BioMetric
+    implementation(libs.androidx.biometric)
+    
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockito.kotlin)
 }
