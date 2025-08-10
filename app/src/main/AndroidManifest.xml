@@ -16,7 +16,9 @@
     <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
     <uses-permission android:name="com.chinky.family.CAT_PERMISSION" />
 
-    <permission android:name="com.chinky.family.CAT_PERMISSION" android:protectionLevel="dangerous"/>
+    <permission
+        android:name="com.chinky.family.CAT_PERMISSION"
+        android:protectionLevel="dangerous" />
 
     <application
         android:name=".app.MyApplication"
@@ -30,10 +32,13 @@
         android:theme="@style/Theme.HomeApplicationTheme"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.ui.cameraXDemo.CameraXDemoActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.ui.permissionsDemo.CustomPermissionDemoActivity"
             android:exported="true"
-            android:permission="com.chinky.family.CAT_PERMISSION"
-            >
+            android:permission="com.chinky.family.CAT_PERMISSION">
+
             <!--
             <intent-filter>
                 <action android:name="com.chinky.family.ACTION_MEOW"/>
@@ -217,6 +222,7 @@
             android:theme="@style/Theme.HomeApplicationTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

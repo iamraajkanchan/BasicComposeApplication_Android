@@ -32,6 +32,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
 import com.chinky.family.domain.utils.printLogcat
 import com.chinky.family.presentation.ui.activityLifecycle.ActivityLifecycleInComposeDemo
+import com.chinky.family.presentation.ui.cameraXDemo.CameraXDemoActivity
 import com.chinky.family.presentation.ui.composableFunctions.activities.ComposableMenuActivity
 import com.chinky.family.presentation.ui.locations.LocationInfoDemoActivity
 import com.chinky.family.presentation.ui.navigationDemo.NavigationWithObjectArgumentActivity
@@ -231,6 +232,12 @@ class MainActivity : FragmentActivity() {
                 startActivity(intent)
             }) {
                 Text("Permissions Demo")
+            }
+            Button(onClick = {
+                val intent = Intent(context, CameraXDemoActivity::class.java)
+                startActivity(intent)
+            }) {
+                Text("CameraX Demo")
             }
         }
     }

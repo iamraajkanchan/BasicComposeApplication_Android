@@ -110,7 +110,18 @@ dependencies {
 
     // BioMetric
     implementation(libs.androidx.biometric)
-    
+
+    // CameraX Core library
+    implementation(libs.androidx.camera.core)
+    // CameraX Camera2 implementation
+    implementation(libs.androidx.camera.camera2)
+    // CameraX Lifecycle library
+    implementation(libs.androidx.camera.lifecycle)
+    // CameraX View library (contains PreviewView)
+    implementation(libs.androidx.camera.view)
+    // CameraX Extensions library (for advanced features like HDR, Night mode)
+    implementation(libs.androidx.camera.extensions)
+
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockito.kotlin)
 }
