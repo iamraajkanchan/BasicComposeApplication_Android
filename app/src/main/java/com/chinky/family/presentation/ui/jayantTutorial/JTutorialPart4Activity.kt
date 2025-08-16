@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import com.chinky.family.presentation.ui.common.AppTopBar
 import com.chinky.family.presentation.ui.theme.ApplicationColor
@@ -48,7 +50,7 @@ class JTutorialPart4Activity : ComponentActivity() {
         val username = remember { mutableStateOf("") }
         val password = remember { mutableStateOf("") }
         val usernameFocusRequester = remember { FocusRequester() }
-        val usernameBorderColor = remember { mutableStateOf(ApplicationColor.Orange) }
+        val outlinedBorderColor = remember { mutableStateOf(ApplicationColor.Orange) }
         val context = LocalContext.current
         Column(
             modifier = Modifier.padding(paddingValues).fillMaxWidth(),
@@ -57,29 +59,40 @@ class JTutorialPart4Activity : ComponentActivity() {
                 value = username.value,
                 onValueChange = { username.value = it },
                 label = { Text("Username") },
-                modifier = Modifier.focusRequester(usernameFocusRequester)
+                modifier = Modifier.focusRequester(usernameFocusRequester),
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedBorderColor = outlinedBorderColor.value,
+                    focusedBorderColor = outlinedBorderColor.value
+                )
             )
             OutlinedTextField(
                 value = password.value,
                 onValueChange = { password.value = it },
-                label = { Text("Password") }
+                label = { Text("Password") },
+                colors = OutlinedTextFieldDefaults.colors(
+                    unfocusedBorderColor = outlinedBorderColor.value,
+                    focusedBorderColor = outlinedBorderColor.value
+                )
             )
-            OutlinedButton(onClick = {login(username, password, usernameFocusRequester,context)}) { Text("Login") }
+            OutlinedButton(onClick = {login(username, password, usernameFocusRequester, outlinedBorderColor, context)}) { Text("Login") }
         }
     }
 
-    private fun login(username: MutableState<String>, password: MutableState<String>, usernameFocusRequester : FocusRequester ,context: Context) {
+    private fun login(username: MutableState<String>, password: MutableState<String>, usernameFocusRequester : FocusRequester, outlinedBorderColor: MutableState<Color>, context: Context) {
         if (username.value.isNotEmpty() && password.value.isNotEmpty()) {
             if (username.value == "chinky" && password.value.equals("minky")) {
                 Toast.makeText(context, "Login Successful", Toast.LENGTH_SHORT).show()
                 username.value = ""
                 password.value = ""
                 usernameFocusRequester.requestFocus()
+                outlinedBorderColor.value = ApplicationColor.Green
             } else {
                 Toast.makeText(context, "Login Failed", Toast.LENGTH_SHORT).show()
+                outlinedBorderColor.value = ApplicationColor.Red
             }
         } else {
             Toast.makeText(context, "Please enter username and password", Toast.LENGTH_SHORT).show()
+            outlinedBorderColor.value = ApplicationColor.Red
         }
     }
 }
