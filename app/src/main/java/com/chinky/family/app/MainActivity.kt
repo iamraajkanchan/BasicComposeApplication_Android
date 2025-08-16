@@ -34,6 +34,7 @@ import com.chinky.family.domain.utils.printLogcat
 import com.chinky.family.presentation.ui.activityLifecycle.ActivityLifecycleInComposeDemo
 import com.chinky.family.presentation.ui.cameraXDemo.CameraXDemoActivity
 import com.chinky.family.presentation.ui.composableFunctions.activities.ComposableMenuActivity
+import com.chinky.family.presentation.ui.jayantTutorial.JTutorialMenuActivity
 import com.chinky.family.presentation.ui.locations.LocationInfoDemoActivity
 import com.chinky.family.presentation.ui.navigationDemo.NavigationWithObjectArgumentActivity
 import com.chinky.family.presentation.ui.navigationDemo.NavigationWithStringArgumentActivity
@@ -238,6 +239,12 @@ class MainActivity : FragmentActivity() {
                 startActivity(intent)
             }) {
                 Text("CameraX Demo")
+            }
+            Button(onClick = {
+                val intent = Intent(context, JTutorialMenuActivity::class.java)
+                startActivity(intent)
+            }) {
+                Text("J YouTube Tutorial")
             }
         }
     }

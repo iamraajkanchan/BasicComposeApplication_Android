@@ -32,6 +32,18 @@
         android:theme="@style/Theme.HomeApplicationTheme"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.ui.jayantTutorial.JTutorialPart4Activity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.jayantTutorial.JTutorialPart3Activity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.jayantTutorial.JTutorialPart2Activity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.ui.jayantTutorial.JTutorialMenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.ui.cameraXDemo.CameraXDemoActivity"
             android:exported="false" />
         <activity

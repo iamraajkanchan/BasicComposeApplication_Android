@@ -1896,6 +1896,7 @@
         `
 15. How does Retrofit integrate with coroutines or RxJava?
     - Retrofit supports coroutines via suspend functions and RxJava via CallAdapterFactory
+
 # Websocket
 1. What is WebSocket?
    - WebSocket is a communication protocol that provides full-duplex, bidirectional communication over a single TCP connection - ideal for real-time apps like chat or live updates.
@@ -1925,6 +1926,7 @@
     - They define a specific protocol layered on top of WebSocket. They're negotiated during the handshake.
 12. How do you handle binary data in WebSocket?
     - Use ByteString in OkHttp or ByteBuffer in Java-Websocket to send/receive binary payloads.
+
 # Jetpack Compose
 1. What is Jetpack Compose?
     - Jetpack Compose is Android's modern, declarative UI toolkit that allows developers to build UIs using Kotlin code instead of XML.
@@ -1994,3 +1996,131 @@
     - These are part of the new Modifier system. Modifier.Node allows for more efficient modifier chaining and lifecycle-aware behavior.
 30. How do you debug recomposition issues in Compose?
     - Use tools like Recomposition Highlighter in Android Studio, LogCompositions, and Modifier.debugInspectorInfo to trace recomposition paths and identify unnecessary recompositions.
+
+# Firebase ML KIT
+1. What is Firebase ML Kit and how does it differ from other ML platforms?
+   - Firebase ML Kit is a mobile SDK (Software Development Kit) that gives Google's machine learning capabilities in Android and iOS applications. 
+   - It offers both on-device APIs and cloud-based APIs. 
+   - When it provides on-device APIs the operation is fast and offline inference. When it provides cloud-based APIs the operation is robust and powerful.
+   - Google ML Kit is optimized for mobile use cases and integrates seamlessly with Firebase services.
+2. What are the key on-device APIs provided by Firebase ML Kit?
+   - Text Recognition: Detects and extracts text from images.
+   - Face Detection: Identifies faces and facial landmarks.
+   - Barcode Scanning: Supports multiple barcode formats.
+   - Image Labelling: Tags objects in images with predefined labels.
+   - Object Detection and Tracking: Tags objects in images with predefined labels.
+   - OCR Detection: 
+3. How do you integrate Firebase ML Kit into an Android app?
+   - Add Firebase dependencies in build.gradle
+   - Initialize Firebase in your Application class.
+   - Use ML Kit APIs like TextRecognition, FaceDetector, etc.
+   - For custom models, use FirebaseModelInterpreter or CustomModel.
+4. What are the advantages of on-device ML vs cloud-based ML in Firebase?
+   - On-Device ML: Fast, works offline, low latency.
+   - Cloud-based ML: More accurate, supports complex models, but requires internet and incurs latency.
+5. How do you deploy on custom TensorFlow Lite model using Firebase ML?
+   - Upload the .tflite model to Firebase Console under ML Kit?
+   - Use FirebaseModelManager to download and manage the model.
+   - Load the model using Interpreter and run inference.
+6. What is FirebaseModelDownloadConditions used for?
+   - It defines conditions under which the model should be downloaded, such as:
+     - Only on Wi-Fi.
+     - Only when charging.
+     - Only when idle
+   - This helps optimize battery and data usage.
+7. How do you optimize performance for real-time image processing?
+   - Use on-device APIs for low-latency tasks.
+   - Resize input images to reduce processing time.
+   - Use background threads for ML inference.
+   - Avoid redundant calls by caching results when possible.
+8. How do you ensure secure model delivery and usage?
+   - Use FirebaseModelDownloadConditions to control downloads.
+   - Store models in Firebase with access control.
+   - Avoid sending sensitive data to cloud APIs unless encrypted.
+9. What are the limitations of Firebase ML Kit when working with large models or real-time inference?
+10. How do you optimize performance when using ML Kit for real-time image processing?
+11. What are the best practices for handling sensitive data (e.g. faces, text) processed by ML Kit?
+    - 
+12. How do you monitor and debug ML Kit behaviour in production apps?
+    - Firebase Crashlytics
+    - Custom Logging
+    - Remote Config
+    - Analytics Events
+    - Model Versioning
+13. What are the advantages of using ML Kit over TensorFlow Lite directly?
+    - Simplified API for common ML Tasks
+    - Built-in support for on-device and cloud models
+    - Automatic hardware acceleration
+    - Easy integration with Firebase
+    - No need to manage low-level model loading or inference.
+14. How do you integrate a custom model with ML Kit?
+    - Tran and convert your model to TensorFlow Lite format.
+    - Add the .tflite file to your application or host it via Firebase.
+    - Use CustomModelInterpreter or ModelInterpreter to run inference.
+    - Configure input/output formats and run predictions.
+15. What's the difference between on-device and cloud-based APIs in ML Kit?
+# CameraX
+1. What is CameraX and why is it preferred over Camera1/Camera2 APIs?
+    - CameraX is a JetPack support library that simplifies camera app development. It provides a consistent API across Android versions and abstracts away device specific quirks. Unlike Camera2, its easier to use, lifecycle-aware, and integrates well with JetPack components.
+2. What are the main use cases supported by CameraX?
+   - Preview - Display camera feed on screen
+   - ImageCapture - Take high-quality still photos
+   - ImageAnalysis - Process frames in real-time
+   - VideoCapture - Video capturing is stable in recent versions.
+3. How does CameraX handle lifecycle management?
+    - CameraX is lifecycle-aware, meaning it automatically starts and stops sessions based on the lifecycle of the LifecycleOwner (Activity or Fragment). This prevents memory leaks and crashes due to improper camera release.
+4. How do you bind use cases to a lifecycle in CameraX?
+   `
+   val cameraProviderFuture = ProcessCameraProvider.getInstance(context)
+   cameraProviderFuture.addListener({
+   val cameraProvider = cameraProviderFuture.get()
+   val preview = Preview.Builder().build().also {
+   it.setSurfaceProvider(viewFinder.surfaceProvider)
+   }
+   val imageCapture = ImageCapture.Builder().build()
+   val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+   cameraProvider.bindToLifecycle(lifecycleOwner, cameraSelector, preview, imageCapture)
+   }, ContextCompat.getMainExecutor(context))
+   `
+5. How do you implement real-time frame analysis using CameraX?
+   `
+    val imageAnalyzer = ImageAnalysis.Builder()
+    .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+    .build()
+    .also {
+        it.setAnalyzer(executor, { imageProxy ->
+            // Process imageProxy here
+            imageProxy.close()
+        })
+    }
+   `
+6. What is the role of CameraSelector in CameraX?
+   - CameraSelector lets you choose between front and back cameras. You can also filter by lens facing or camera capabilities.
+   `
+   val cameraSelector = CameraSelector.Builder()
+    .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+    .build()
+   `
+7. How do you handle device-specific quirks in CameraX?
+   - CameraX internally uses a Quirks system to handle device-specific issues. Developers can also use CameraInfo and CameraCharacteristics to query capabilities and apply conditional logic.
+8. How do you capture a photo using CameraX?
+   `
+   val outputOptions = ImageCapture.OutputFileOptions.Builder(file).build()
+   imageCapture.takePicture(outputOptions, executor, object : ImageCapture.OnImageSavedCallback {
+   override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+   // Handle success
+   }
+   override fun onError(exception: ImageCaptureException) {
+   // Handle error
+   }
+   })
+   `
+9. How do you capture a video using CameraX?
+10. How does CameraX support ML Integration?
+ - CameraX works seamlessly with ML Kit or custom TensorFlow Lite models via ImageAnalysis. You can process frames in real time and feed them into your ML pipeline.
+11. What are some performance tips when using CameraX?
+ - Use STRATEGY_KEEP_ONLY_LATEST for analysis.
+ - Close ImageProxy after processing
+ - Use background threads for ML inference.
+ - Avoid blocking the main thread.
+ - Profile with Android Profiler or Firebase Performance Monitoring. 
