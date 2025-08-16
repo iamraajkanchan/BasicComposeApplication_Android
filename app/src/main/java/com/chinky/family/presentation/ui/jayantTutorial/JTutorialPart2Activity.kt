@@ -20,7 +20,8 @@ import androidx.compose.material3.TopAppBar
 import com.chinky.family.presentation.ui.theme.ApplicationTheme
 
 /**
- * In this tutorial we are going to learn, how to define a Top
+ * In this tutorial we are going to learn, how to define a Customized Top Bar,
+ * with actions, navigationIcons and floatingActionButton.
  * */
 class JTutorialPart2Activity : ComponentActivity() {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -30,7 +31,7 @@ class JTutorialPart2Activity : ComponentActivity() {
             ApplicationTheme.HomeApplicationTheme {
                 Scaffold(topBar = {
                     TopAppBar(
-                        title = { Text("Jayant Part 2 Tutorial") },
+                        title = { Text("Part 2 Tutorial") },
                         navigationIcon = {
                             IconButton(onClick = {}) {
                                 Icon(imageVector = Icons.Filled.Menu, contentDescription = "Menu")

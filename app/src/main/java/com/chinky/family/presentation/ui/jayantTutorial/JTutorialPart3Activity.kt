@@ -28,7 +28,7 @@ class JTutorialPart3Activity : ComponentActivity() {
         setContent {
             ApplicationTheme.HomeApplicationTheme {
                 Scaffold(topBar = {
-                    AppTopBar("Jayant Part 3 Tutorial", this)
+                    AppTopBar("Part 3 Tutorial", this)
                 })
                 {paddingValues ->
                     ShowSwitch(paddingValues)

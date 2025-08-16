@@ -29,7 +29,7 @@ import com.chinky.family.presentation.ui.theme.ApplicationColor
 import com.chinky.family.presentation.ui.theme.ApplicationTheme
 
 /**
- * In this tutorial we are going to learn, how to define a Top
+ * In this tutorial we are going to design a Simple Login Screen.
  * */
 class JTutorialPart4Activity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,7 +37,7 @@ class JTutorialPart4Activity : ComponentActivity() {
         setContent {
             ApplicationTheme.HomeApplicationTheme {
                 Scaffold(topBar = {
-                    AppTopBar("Jayant Part 4 Tutorial", this)
+                    AppTopBar("Part 4 Tutorial", this)
                 })
                 {paddingValues ->
                     ShowLoginScreen(paddingValues)

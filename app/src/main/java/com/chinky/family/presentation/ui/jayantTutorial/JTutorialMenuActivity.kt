@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.chinky.family.presentation.ui.common.AppActivityButton
 import com.chinky.family.presentation.ui.common.AppTopBar
 import com.chinky.family.presentation.ui.theme.ApplicationTheme
 
@@ -39,23 +40,17 @@ class JTutorialMenuActivity : ComponentActivity() {
     @Composable
     fun DisplayJTutorialMenu(padding: PaddingValues) {
         Column(modifier = Modifier.padding(padding).fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = {
-                val part1Intent = Intent(this@JTutorialMenuActivity, JTutorialPart2Activity::class.java)
-                startActivity(part1Intent)
-            }) {
+            AppActivityButton(this@JTutorialMenuActivity, JTutorialPart2Activity::class.java) {
                 Text("Part 2")
             }
-            Button(onClick = {
-                val part1Intent = Intent(this@JTutorialMenuActivity, JTutorialPart3Activity::class.java)
-                startActivity(part1Intent)
-            }) {
+            AppActivityButton(this@JTutorialMenuActivity, JTutorialPart3Activity::class.java) {
                 Text("Part 3")
             }
-            Button(onClick = {
-                val part1Intent = Intent(this@JTutorialMenuActivity, JTutorialPart4Activity::class.java)
-                startActivity(part1Intent)
-            }) {
+            AppActivityButton(this@JTutorialMenuActivity, JTutorialPart4Activity::class.java) {
                 Text("Part 4")
+            }
+            AppActivityButton(this@JTutorialMenuActivity, JTutorialPart5Activity::class.java) {
+                Text("Part 5")
             }
         }
     }
