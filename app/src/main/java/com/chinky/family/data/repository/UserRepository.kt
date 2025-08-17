@@ -75,17 +75,23 @@ class UserRepository @Inject constructor(
         }
     }
 
-    suspend fun deleteUser(id: Int): Boolean {
+    suspend fun deleteUser(id: Int): Flow<List<User>> {
         return try {
             val response = apiService.deleteUser(id)
             if (response.isSuccessful) {
                 userDao.deleteUser(id)
-                true
+                flow {
+                    emit(userDao.getAllUsers())
+                }
             } else {
-                false
+                flow {
+                    emit(emptyList<User>())
+                }
             }
         } catch (e: Exception) {
-            false
+            flow {
+                emit(emptyList<User>())
+            }
         }
     }
 

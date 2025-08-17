@@ -1,35 +1,35 @@
 package com.chinky.family.presentation.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.chinky.family.domain.model.User
 import com.chinky.family.domain.usecase.HandleUserUseCase
+import com.chinky.family.presentation.ui.networkCall.ApiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class UserViewModel @Inject constructor(private val userUseCase: HandleUserUseCase) : ViewModel() {
-    private val _users = MutableLiveData<List<User>>()
-    val users: LiveData<List<User>> = _users
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
-    private val _error = MutableLiveData<String?>()
-    val error: LiveData<String?> = _error
+    private val _users: MutableState<ApiState> = mutableStateOf(ApiState.Empty)
+    val users: State<ApiState> = _users
+    private val _isLoading: MutableState<Boolean> = mutableStateOf(false)
+    val isLoading: State<Boolean> = _isLoading
+    private val _error : MutableState<ApiState> = mutableStateOf(ApiState.Empty)
+    val error: State<ApiState> = _error
 
     fun loadUsers() {
         viewModelScope.launch {
+            _users.value = ApiState.Loading
             try {
-                _isLoading.value = true
                 val userList = userUseCase.getUsers()
-                _users.value = userList
-                _error.value = null
+                _users.value = ApiState.Success(userList)
             } catch (e: Exception) {
-                _error.value = "Exception: ${e.message}"
-            } finally {
-                _isLoading.value = false
+                _users.value = ApiState.Failure(e)
             }
         }
     }
@@ -41,7 +41,7 @@ class UserViewModel @Inject constructor(private val userUseCase: HandleUserUseCa
                 userUseCase.createUser(user)
                 loadUsers()
             } catch (e: Exception) {
-                _error.value = "Exception: ${e.message}"
+                _error.value = ApiState.Failure(e)
             } finally {
                 _isLoading.value = false
             }
@@ -55,7 +55,7 @@ class UserViewModel @Inject constructor(private val userUseCase: HandleUserUseCa
                 userUseCase.updateUser(user)
                 loadUsers()
             } catch (e: Exception) {
-                _error.value = "Exception: ${e.message}"
+                _error.value = ApiState.Failure(e)
             } finally {
                 _isLoading.value = false
             }
@@ -65,16 +65,13 @@ class UserViewModel @Inject constructor(private val userUseCase: HandleUserUseCa
     fun deleteUser(id: Int) {
         viewModelScope.launch {
             try {
-                val success = userUseCase.deleteUser(id)
-                if (success) {
-                    // Update the local list immediately for better UX
-                    _users.value = _users.value?.filter { it.id != id }
-                    _error.value = null
-                } else {
-                    _error.value = "Failed to delete user"
+                userUseCase.deleteUser(id).collectLatest { updatedUsers ->
+                    _users.value = ApiState.Success(updatedUsers)
+                    // Correctly indicate a successful operation with no error
+                    _error.value = ApiState.Failure(null)
                 }
             } catch (e: Exception) {
-                _error.value = e.message
+                _error.value = ApiState.Failure(e)
             }
         }
     }
