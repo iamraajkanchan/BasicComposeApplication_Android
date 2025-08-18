@@ -2,7 +2,7 @@ package com.chinky.family.di
 
 import android.content.Context
 import android.net.ConnectivityManager
-import com.chinky.family.data.db.UserDao
+import com.chinky.family.data.db.AppDao
 import com.chinky.family.data.repository.ApiService
 import com.chinky.family.data.repository.UserRepository
 import com.chinky.family.domain.usecase.HandleUserUseCase
@@ -59,8 +59,8 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(apiService: ApiService, userDao: UserDao, connectivityManager: ConnectivityManager): UserRepository {
-        return UserRepository(apiService, userDao, connectivityManager)
+    fun provideUserRepository(apiService: ApiService, appDao: AppDao, connectivityManager: ConnectivityManager): UserRepository {
+        return UserRepository(apiService, appDao, connectivityManager)
     }
 
     @Provides

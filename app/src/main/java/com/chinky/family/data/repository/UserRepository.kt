@@ -1,9 +1,7 @@
 package com.chinky.family.data.repository
 
-import android.Manifest
 import android.net.ConnectivityManager
-import androidx.annotation.RequiresPermission
-import com.chinky.family.data.db.UserDao
+import com.chinky.family.data.db.AppDao
 import com.chinky.family.domain.model.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -13,7 +11,7 @@ import javax.inject.Singleton
 @Singleton
 class UserRepository @Inject constructor(
     private val apiService: ApiService,
-    private val userDao: UserDao,
+    private val appDao: AppDao,
     private val connectivityManager: ConnectivityManager
 ) {
 
@@ -28,16 +26,16 @@ class UserRepository @Inject constructor(
             if (isNetworkAvailable()) {
                 if (response.isSuccessful) {
                     val users = response.body() ?: emptyList()
-                    userDao.insertUsers(users)
+                    appDao.insertUsers(users)
                     users
                 } else {
-                    userDao.getAllUsers()
+                    appDao.getAllUsers()
                 }
             } else {
-                userDao.getAllUsers()
+                appDao.getAllUsers()
             }
         } catch (e: Exception) {
-            userDao.getAllUsers()
+            appDao.getAllUsers()
         }
     }
 
@@ -47,14 +45,14 @@ class UserRepository @Inject constructor(
             if (response.isSuccessful) {
                 val user = response.body()
                 user?.let {
-                    userDao.insertUser(it)
+                    appDao.insertUser(it)
                 }
                 user
             } else {
-                userDao.getUserById(id)
+                appDao.getUserById(id)
             }
         } catch (e: Exception) {
-            userDao.getUserById(id)
+            appDao.getUserById(id)
         }
     }
 
@@ -64,7 +62,7 @@ class UserRepository @Inject constructor(
             if (response.isSuccessful) {
                 val createdUser = response.body()
                 createdUser?.let {
-                    userDao.insertUser(it)
+                    appDao.insertUser(it)
                 }
                 createdUser
             } else {
@@ -79,7 +77,7 @@ class UserRepository @Inject constructor(
         return try {
             val response = apiService.updateUser(user.id, user)
             if (response.isSuccessful) {
-                userDao.updateUser(user)
+                appDao.updateUser(user)
                 response.body()
             } else {
                 null
@@ -93,9 +91,9 @@ class UserRepository @Inject constructor(
         return try {
             val response = apiService.deleteUser(id)
             if (response.isSuccessful) {
-                userDao.deleteUser(id)
+                appDao.deleteUser(id)
                 flow {
-                    emit(userDao.getAllUsers())
+                    emit(appDao.getAllUsers())
                 }
             } else {
                 flow {
@@ -111,7 +109,7 @@ class UserRepository @Inject constructor(
 
     fun getUsersFromLocalDatabase(): Flow<List<User>> =
         flow {
-            emit(userDao.getAllUsers())
+            emit(appDao.getAllUsers())
         }
 
 }
