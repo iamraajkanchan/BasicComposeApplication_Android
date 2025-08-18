@@ -36,9 +36,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.chinky.family.domain.model.User
+import com.chinky.family.domain.state.UserApiState
 import com.chinky.family.domain.utils.printLogcat
 import com.chinky.family.presentation.ui.common.AppTopBar
-import com.chinky.family.presentation.ui.networkCall.ApiState
 import com.chinky.family.presentation.ui.theme.ApplicationTheme
 import com.chinky.family.presentation.viewModels.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,19 +67,19 @@ class JTutorialPart5Activity : ComponentActivity() {
         val userState = viewModel.users.value
         JTutorialPart5Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "userState :  + ${userState}")
         when(userState) {
-            is ApiState.Success -> {
+            is UserApiState.Success -> {
                 JTutorialPart5Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "Data Size :  + ${userState.data.size}")
                 users = userState.data
             }
-            is ApiState.Failure -> {
+            is UserApiState.Failure -> {
                 JTutorialPart5Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "Error :  + ${userState.error?.message}")
                 Toast.makeText(LocalContext.current, userState.error.toString(), Toast.LENGTH_SHORT).show()
             }
-            is ApiState.Loading -> {
+            is UserApiState.Loading -> {
                 JTutorialPart5Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "Loading")
                 Toast.makeText(LocalContext.current, "Loading", Toast.LENGTH_SHORT).show()
             }
-            ApiState.Empty -> {}
+            UserApiState.Empty -> {}
         }
         LazyColumn(
             modifier = Modifier.padding(paddingValues),

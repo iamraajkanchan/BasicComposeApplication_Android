@@ -9,15 +9,22 @@ import com.chinky.family.domain.model.User
 
 @Database(
     entities = [User::class, ToDoItem::class],
-    version = 1,
+    version = 2,
     exportSchema = false,
 )
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun userDao(): AppDao
+    abstract fun appDao(): AppDao
     companion object {
         val migration_1_2: Migration = object : Migration(1, 2) {
             override fun migrate(db: SupportSQLiteDatabase) {
-                db.execSQL("ALTER TABLE User ADD COLUMN age INTEGER DEFAULT 0 NOT NULL")
+                db.execSQL("""
+            CREATE TABLE IF NOT EXISTS ToDoTable (
+                todoID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                title TEXT NOT NULL,
+                description TEXT NOT NULL,
+                date TEXT NOT NULL
+            )
+        """.trimIndent())
             }
         }
     }

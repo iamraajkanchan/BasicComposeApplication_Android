@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.chinky.family.presentation.ui.networkCall.ApiState
+import com.chinky.family.domain.state.UserApiState
 import com.chinky.family.presentation.viewModels.UserViewModel
 
 @Composable
@@ -29,13 +29,13 @@ fun DisplayUserList(viewModel: UserViewModel = hiltViewModel()) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         when (userState) {
-            is ApiState.Loading -> CircularProgressIndicator()
-            is ApiState.Failure -> Text(
+            is UserApiState.Loading -> CircularProgressIndicator()
+            is UserApiState.Failure -> Text(
                 text = userState.error?.message ?: "No Data Found",
                 color = MaterialTheme.colorScheme.error,
                 modifier = Modifier.padding(8.dp)
             )
-            is ApiState.Success -> LazyColumn {
+            is UserApiState.Success -> LazyColumn {
                 items(userState.data.size) { index ->
                     UserItem(
                         user = userState.data[index],
@@ -43,7 +43,7 @@ fun DisplayUserList(viewModel: UserViewModel = hiltViewModel()) {
                     )
                 }
             }
-            ApiState.Empty -> Text(text = "No users available")
+            UserApiState.Empty -> Text(text = "No users available")
         }
     }
 }

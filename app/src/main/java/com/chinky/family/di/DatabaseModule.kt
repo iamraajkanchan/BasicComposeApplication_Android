@@ -21,10 +21,10 @@ object DatabaseModule {
             .databaseBuilder(context,
                 AppDatabase::class.java,
                 "app_database")
-            // .addMigrations(AppDatabase.migration_1_2)
+            .addMigrations(AppDatabase.migration_1_2)
             .build()
     }
 
     @Provides
-    fun provideUserDao(appDatabase: AppDatabase) = appDatabase.userDao()
+    fun provideAppDao(appDatabase: AppDatabase) = appDatabase.appDao()
 }

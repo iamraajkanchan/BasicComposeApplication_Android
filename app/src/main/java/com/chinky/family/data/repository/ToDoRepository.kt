@@ -2,6 +2,8 @@ package com.chinky.family.data.repository
 
 import com.chinky.family.data.db.AppDao
 import com.chinky.family.domain.model.ToDoItem
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class ToDoRepository @Inject constructor(private val appDao: AppDao) {
@@ -10,8 +12,8 @@ class ToDoRepository @Inject constructor(private val appDao: AppDao) {
         appDao.insertTodo(todo)
     }
 
-    suspend fun getAllTodos(): List<ToDoItem> {
-        return appDao.getAllTodos()
+    fun getAllTodos(): Flow<List<ToDoItem>> = flow {
+        appDao.getAllTodos()
     }
 
     suspend fun getTodoById(id: Int): ToDoItem? {

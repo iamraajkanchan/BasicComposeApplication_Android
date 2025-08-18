@@ -37,9 +37,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.chinky.family.domain.model.User
+import com.chinky.family.domain.state.UserApiState
 import com.chinky.family.domain.utils.printLogcat
 import com.chinky.family.presentation.ui.common.AppTopBar
-import com.chinky.family.presentation.ui.networkCall.ApiState
 import com.chinky.family.presentation.ui.theme.ApplicationTheme
 import com.chinky.family.presentation.viewModels.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -68,19 +68,19 @@ class JTutorialPart6Activity : ComponentActivity() {
         val userState = viewModel.users.value
         JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "userState :  + ${userState}")
         when(userState) {
-            is ApiState.Success -> {
+            is UserApiState.Success -> {
                 JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "Data Size :  + ${userState.data.size}")
                 users = userState.data
             }
-            is ApiState.Failure -> {
+            is UserApiState.Failure -> {
                 JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "Error :  + ${userState.error?.message}")
                 Toast.makeText(LocalContext.current, userState.error.toString(), Toast.LENGTH_SHORT).show()
             }
-            is ApiState.Loading -> {
+            is UserApiState.Loading -> {
                 JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "Loading")
                 Toast.makeText(LocalContext.current, "Loading", Toast.LENGTH_SHORT).show()
             }
-            ApiState.Empty -> {}
+            UserApiState.Empty -> {}
         }
         LazyColumn(
             modifier = Modifier.padding(paddingValues),
@@ -145,7 +145,7 @@ class JTutorialPart6Activity : ComponentActivity() {
 
     private fun sendEmail(context: Context, email: String) {
         val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
-            Intent.setData = Uri.parse("mailto:")
+            data = Uri.parse("mailto:")
             putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
         }
         if (emailIntent.resolveActivity(context.packageManager) != null) {
@@ -157,7 +157,7 @@ class JTutorialPart6Activity : ComponentActivity() {
 
     private fun dialPhone(context: Context, phone: String) {
         val phoneIntent = Intent(Intent.ACTION_DIAL).apply {
-            Intent.setData = Uri.parse("tel:$phone")
+            data = Uri.parse("mailto:")
         }
         if (phoneIntent.resolveActivity(context.packageManager) != null) {
             context.startActivity(phoneIntent)
