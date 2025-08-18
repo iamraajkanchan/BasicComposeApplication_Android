@@ -1,5 +1,7 @@
 package com.chinky.family.di
 
+import android.content.Context
+import android.net.ConnectivityManager
 import com.chinky.family.data.db.UserDao
 import com.chinky.family.data.repository.ApiService
 import com.chinky.family.data.repository.UserRepository
@@ -7,6 +9,7 @@ import com.chinky.family.domain.usecase.HandleUserUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -56,12 +59,17 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideUserRepository(apiService: ApiService, userDao: UserDao): UserRepository {
-        return UserRepository(apiService, userDao)
+    fun provideUserRepository(apiService: ApiService, userDao: UserDao, connectivityManager: ConnectivityManager): UserRepository {
+        return UserRepository(apiService, userDao, connectivityManager)
     }
 
     @Provides
     @Singleton
     fun provideHandleUserUseCase(userRepository: UserRepository): HandleUserUseCase = HandleUserUseCase(userRepository)
 
+    @Provides
+    @Singleton
+    fun provideConnectivityManager(@ApplicationContext context: Context) : ConnectivityManager = context.run {
+        getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    }
 }

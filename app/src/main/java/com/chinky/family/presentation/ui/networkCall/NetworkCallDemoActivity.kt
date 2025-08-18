@@ -1,5 +1,8 @@
 package com.chinky.family.presentation.ui.networkCall
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.Network
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,6 +25,7 @@ class NetworkCallDemoActivity : ComponentActivity() {
                 color = MaterialTheme.colorScheme.background
             ) {
                 DisplayUserList()
+                val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             }
         }
     }

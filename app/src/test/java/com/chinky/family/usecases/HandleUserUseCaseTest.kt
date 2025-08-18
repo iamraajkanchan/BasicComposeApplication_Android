@@ -8,7 +8,6 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
 import org.mockito.kotlin.whenever
 import retrofit2.Response
 
@@ -26,7 +25,7 @@ class HandleUserUseCaseTest {
     fun shouldGetUserFromAPI() = runTest {
         // Arrange
         val expectedUsers = emptyList<User>()
-        val expectedResponse: List<User> = Response.success(expectedUsers)
+        val expectedResponse: List<User>? = Response.success(expectedUsers) as List<User>?
 
         // Correctly mock the suspend function to return Response<List<User>>
         whenever(userRepository.getUsers()).thenReturn(expectedResponse)

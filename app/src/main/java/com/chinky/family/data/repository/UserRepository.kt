@@ -1,5 +1,8 @@
 package com.chinky.family.data.repository
 
+import android.Manifest
+import android.net.ConnectivityManager
+import androidx.annotation.RequiresPermission
 import com.chinky.family.data.db.UserDao
 import com.chinky.family.domain.model.User
 import kotlinx.coroutines.flow.Flow
@@ -10,15 +13,26 @@ import javax.inject.Singleton
 @Singleton
 class UserRepository @Inject constructor(
     private val apiService: ApiService,
-    private val userDao: UserDao
+    private val userDao: UserDao,
+    private val connectivityManager: ConnectivityManager
 ) {
+
+    fun isNetworkAvailable(): Boolean {
+        val activeNetworkInfo = connectivityManager.activeNetworkInfo
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected
+    }
+
     suspend fun getUsers(): List<User> {
         return try {
             val response = apiService.getUsers()
-            if (response.isSuccessful) {
-                val users = response.body() ?: emptyList()
-                userDao.insertUsers(users)
-                users
+            if (isNetworkAvailable()) {
+                if (response.isSuccessful) {
+                    val users = response.body() ?: emptyList()
+                    userDao.insertUsers(users)
+                    users
+                } else {
+                    userDao.getAllUsers()
+                }
             } else {
                 userDao.getAllUsers()
             }
