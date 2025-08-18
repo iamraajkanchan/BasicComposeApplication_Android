@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +27,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -40,6 +42,7 @@ import com.chinky.family.domain.model.User
 import com.chinky.family.domain.state.UserApiState
 import com.chinky.family.domain.utils.printLogcat
 import com.chinky.family.presentation.ui.common.AppTopBar
+import com.chinky.family.presentation.ui.theme.ApplicationColor
 import com.chinky.family.presentation.ui.theme.ApplicationTheme
 import com.chinky.family.presentation.viewModels.UserViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -51,7 +54,7 @@ class JTutorialPart6Activity : ComponentActivity() {
         setContent {
             ApplicationTheme.HomeApplicationTheme {
                 Scaffold(
-                    topBar = { AppTopBar("Part 5 Tutorial", this) }
+                    topBar = { AppTopBar("Part 6 Tutorial", this) }
                 ) {
                     ShowTodoList(it)
                 }
@@ -66,30 +69,41 @@ class JTutorialPart6Activity : ComponentActivity() {
         }
         var users: List<User> = emptyList()
         val userState = viewModel.users.value
-        JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "userState :  + ${userState}")
-        when(userState) {
-            is UserApiState.Success -> {
-                JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "Data Size :  + ${userState.data.size}")
-                users = userState.data
-            }
-            is UserApiState.Failure -> {
-                JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "Error :  + ${userState.error?.message}")
-                Toast.makeText(LocalContext.current, userState.error.toString(), Toast.LENGTH_SHORT).show()
-            }
-            is UserApiState.Loading -> {
-                JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "Loading")
-                Toast.makeText(LocalContext.current, "Loading", Toast.LENGTH_SHORT).show()
-            }
-            UserApiState.Empty -> {}
-        }
-        LazyColumn(
-            modifier = Modifier.padding(paddingValues),
-            content = {
-                items(users.size) {
-                    ListRow(users[it])
+        JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "userState :  + $userState")
+        Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
+            when(userState) {
+                is UserApiState.Success -> {
+                    JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "Data Size :  + ${userState.data.size}")
+                    users = userState.data
+                    LazyColumn(
+                        modifier = Modifier.padding(paddingValues).background(color = ApplicationColor.Red),
+                        content = {
+                            items(users.size) {
+                                ListRow(users[it])
+                            }
+                        }
+                    )
+                }
+                is UserApiState.Failure -> {
+                    JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "Error :  + ${userState.error?.message}")
+                    Toast.makeText(LocalContext.current, userState.error.toString(), Toast.LENGTH_SHORT).show()
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Text("No Data Found")
+                    }
+                }
+                is UserApiState.Loading -> {
+                    JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "Loading")
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        CircularProgressIndicator()
+                    }
+                }
+                UserApiState.Empty -> {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                        Text("No Data Found")
+                    }
                 }
             }
-        )
+        }
     }
 
     @Composable

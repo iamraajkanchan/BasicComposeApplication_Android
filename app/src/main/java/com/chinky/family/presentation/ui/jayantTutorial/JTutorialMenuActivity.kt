@@ -50,6 +50,9 @@ class JTutorialMenuActivity : ComponentActivity() {
             AppActivityButton(this@JTutorialMenuActivity, JTutorialPart5Activity::class.java) {
                 Text("Part 5")
             }
+            AppActivityButton(this@JTutorialMenuActivity, JTutorialPart6Activity::class.java) {
+                Text("Part 6")
+            }
         }
     }
 }

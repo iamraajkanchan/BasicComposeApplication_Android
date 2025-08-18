@@ -25,7 +25,6 @@ class NetworkCallDemoActivity : ComponentActivity() {
                 color = MaterialTheme.colorScheme.background
             ) {
                 DisplayUserList()
-                val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             }
         }
     }
