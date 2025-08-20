@@ -3,103 +3,131 @@ package com.chinky.family.presentation.ui.jayantTutorial
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
+import android.graphics.Outline
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DatePicker
+import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DateRangePicker
+import androidx.compose.material3.DisplayMode
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.rememberDatePickerState
+import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.chinky.family.domain.model.User
-import com.chinky.family.domain.state.UserApiState
+import com.chinky.family.domain.model.ToDoItem
+import com.chinky.family.domain.state.ToDoState
 import com.chinky.family.domain.utils.printLogcat
 import com.chinky.family.presentation.ui.common.AppTopBar
 import com.chinky.family.presentation.ui.theme.ApplicationColor
 import com.chinky.family.presentation.ui.theme.ApplicationTheme
-import com.chinky.family.presentation.viewModels.UserViewModel
+import com.chinky.family.presentation.viewModels.TodoViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 @AndroidEntryPoint
 class JTutorialPart6Activity : ComponentActivity() {
+    private var viewModel : TodoViewModel? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            var addTodo by remember { mutableStateOf(false) }
             ApplicationTheme.HomeApplicationTheme {
+                viewModel = hiltViewModel()
                 Scaffold(
-                    topBar = { AppTopBar("Part 6 Tutorial", this) }
+                    topBar = { AppTopBar("Part 6 Tutorial", this) },
+                    floatingActionButton = {
+                        IconButton(onClick = {
+                            addTodo = true
+                        }) {
+                            Icon(imageVector = Icons.Filled.Add, contentDescription = "Add")
+                        }
+                    }
                 ) {
                     ShowTodoList(it)
                 }
+            }
+            if (addTodo) {
+                ShowTodoDialog { addTodo = false }
             }
         }
     }
 
     @Composable
-    fun ShowTodoList(paddingValues: PaddingValues, viewModel : UserViewModel = hiltViewModel()) {
+    fun ShowTodoList(paddingValues: PaddingValues) {
         LaunchedEffect(Unit) {
-            viewModel.loadUsers()
+            viewModel?.loadTodos()
         }
-        var users: List<User> = emptyList()
-        val userState = viewModel.users.value
+        var todos: List<ToDoItem> = emptyList()
+        val userState = viewModel?.todos?.value
         JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "userState :  + $userState")
         Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
             when(userState) {
-                is UserApiState.Success -> {
+                is ToDoState.Success -> {
                     JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "Data Size :  + ${userState.data.size}")
-                    users = userState.data
+                    todos = userState.data
                     LazyColumn(
                         modifier = Modifier.padding(paddingValues).background(color = ApplicationColor.Red),
                         content = {
-                            items(users.size) {
-                                ListRow(users[it])
+                            items(todos.size) {
+                                ListRow(todos[it])
                             }
                         }
                     )
                 }
-                is UserApiState.Failure -> {
+                is ToDoState.Error -> {
                     JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "Error :  + ${userState.error?.message}")
                     Toast.makeText(LocalContext.current, userState.error.toString(), Toast.LENGTH_SHORT).show()
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         Text("No Data Found")
                     }
                 }
-                is UserApiState.Loading -> {
-                    JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "Loading")
+                is ToDoState.Loading -> {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         CircularProgressIndicator()
-                    }
-                }
-                UserApiState.Empty -> {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text("No Data Found")
                     }
                 }
             }
@@ -107,7 +135,7 @@ class JTutorialPart6Activity : ComponentActivity() {
     }
 
     @Composable
-    fun ListRow(user: User) {
+    fun ListRow(todoItem: ToDoItem) {
         val context = LocalContext.current
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Card(
@@ -118,35 +146,119 @@ class JTutorialPart6Activity : ComponentActivity() {
                 shape = RoundedCornerShape(2.dp),
                 elevation = CardDefaults.cardElevation(2.dp)
             ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Image(
-                        imageVector = Icons.Filled.Person ,
-                        contentDescription = "Person",
-                        modifier = Modifier
-                            .height(100.dp)
-                            .width(100.dp)
-                    )
-                    Column {
-                        Row(modifier = Modifier
-                            .padding(4.dp)
-                            .clickable { copyUser(context, user.name) }) {
-                            Text("Name: ")
-                            Text(user.name)
-                        }
-                        Row(modifier = Modifier
-                            .padding(4.dp)
-                            .clickable { sendEmail(context, user.email) }) {
-                            Text("Email: ")
-                            Text(user.email)
-                        }
-                        Row(modifier = Modifier
-                            .padding(4.dp)
-                            .clickable { dialPhone(context, user.phone) }) {
-                            Text("Phone: ")
-                            Text(user.phone)
-                        }
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Row(modifier = Modifier
+                        .padding(4.dp)
+                        ) {
+                        Text("Date: ")
+                        Text(todoItem.date)
+                    }
+                    Row(modifier = Modifier
+                        .padding(4.dp)
+                        .clickable { copyUser(context, todoItem.title) }) {
+                        Text("Title: ")
+                        Text(todoItem.title)
+                    }
+                    Row(modifier = Modifier
+                        .padding(4.dp)
+                        .clickable { copyUser(context, todoItem.description) }) {
+                        Text("Description: ")
+                        Text(todoItem.description)
                     }
                 }
+            }
+        }
+    }
+
+    @Composable
+    private fun ShowTodoDialog(onDismiss: () -> Unit) {
+        var title by remember { mutableStateOf("") }
+        var description by remember { mutableStateOf("") }
+        var selectedDate by remember { mutableStateOf("") }
+        var showDateDialog by remember { mutableStateOf(false) }
+        AlertDialog(
+           onDismissRequest = { onDismiss },
+            title = { Text("Add a Todo!")},
+            text = {
+                Column(modifier = Modifier.fillMaxWidth()) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        OutlinedTextField(
+                            value = selectedDate,
+                            onValueChange = { selectedDate = it },
+                            label = { Text("Date") },
+                            modifier = Modifier.weight(1f)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp)) // Optional spacing
+                        IconButton(
+                            onClick = { showDateDialog = true },
+                            modifier = Modifier.size(48.dp) // Ensures visibility
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.DateRange,
+                                contentDescription = "Date"
+                            )
+                        }
+                    }
+                    OutlinedTextField(
+                        value = title,
+                        onValueChange = { title = it },
+                        label = {Text("Title")}
+                    )
+                    OutlinedTextField(
+                        value = description,
+                        onValueChange = {description = it},
+                        label = { Text("Description")}
+                    )
+                }
+            },
+            confirmButton = { onDismiss },
+            dismissButton = { onDismiss }
+        )
+        JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "showDateDialog $showDateDialog")
+        if (showDateDialog) {
+            ReactiveDatePicker()
+        }
+    }
+
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    fun ReactiveDatePicker() {
+        var showDialog by remember { mutableStateOf(true) }
+        var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
+        val datePickerState = rememberDatePickerState()
+        if (showDialog) {
+            DatePickerDialog(
+                onDismissRequest = { showDialog = false },
+                confirmButton = {
+                    TextButton(onClick = {
+                        showDialog = false
+                        datePickerState.selectedDateMillis?.let { millis ->
+                            selectedDate = Instant.ofEpochMilli(millis)
+                                .atZone(ZoneId.systemDefault())
+                                .toLocalDate()
+                        }
+                    }) {
+                        Text("OK")
+                    }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showDialog = false }) {
+                        Text("Cancel")
+                    }
+                }
+            ) {
+                DatePicker(state = datePickerState)
+            }
+        }
+
+        Column(modifier = Modifier.padding(16.dp)) {
+            Button(onClick = { showDialog = true }) {
+                Text("Pick a Date")
+            }
+            selectedDate?.let {
+                Text("Selected Date: ${it.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))}")
             }
         }
     }
@@ -155,28 +267,5 @@ class JTutorialPart6Activity : ComponentActivity() {
         val clipboardManager = context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
         val clipData = ClipData.newPlainText("user", userName)
         clipboardManager.setPrimaryClip(clipData)
-    }
-
-    private fun sendEmail(context: Context, email: String) {
-        val emailIntent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:")
-            putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
-        }
-        if (emailIntent.resolveActivity(context.packageManager) != null) {
-            context.startActivity(emailIntent)
-        } else {
-            Toast.makeText(context, "No email app found", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun dialPhone(context: Context, phone: String) {
-        val phoneIntent = Intent(Intent.ACTION_DIAL).apply {
-            data = Uri.parse("mailto:")
-        }
-        if (phoneIntent.resolveActivity(context.packageManager) != null) {
-            context.startActivity(phoneIntent)
-        } else {
-            Toast.makeText(context, "No phone app found", Toast.LENGTH_SHORT).show()
-        }
     }
 }
