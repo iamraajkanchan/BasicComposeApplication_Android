@@ -1994,7 +1994,30 @@
     - Use BackHandler from androidx.activity.compose. It allows you to intercept the back press and perform custom logic within a composable.
 29. What are Modifier.Node and Modifier.Element?
     - These are part of the new Modifier system. Modifier.Node allows for more efficient modifier chaining and lifecycle-aware behavior.
-30. How do you debug recomposition issues in Compose?
+30. Why Jetpack Compose is introduced compared to XML layouts?
+    - 
+31. What are the advantages of using Jetpack Compose?
+32. What are the rules of Composable functions?
+33. What are the differences between remember and rememberSaveeable?
+34. How do you handle state in Compose?
+35. Difference between State, MutableState, StateFlow, LiveData?
+36. How would you show a list from ViewModel in Compose using collectAsState()
+37. What triggers recomposition?
+38. How do you avoid unnecessary recomposition?
+39. What are the differences between LaunchedEffect, SideEffect, DisposableEffect?
+40. When would you use LaunchedEffect(Unit)?
+41. What is a Modifier in Compose?
+42. How does Modifier.fillMaxSize() vs Modifier.wrapContentSize() differ?
+43. Difference between Row, Column and Box?
+44. Difference between LazyColumn and Column?
+45. How does item recycling differ from RecyclerView?
+46. How do you navigate between screens in Compose?
+47. How to pass arguments in Compose Navigation?
+48. How to use a View inside Compose?
+49. How to use a Composable inside an existing XML layout?
+50. How do you set MaterialTheme?
+51. What is the difference between MaterialTheme.colorScheme and MaterialTheme.typography?
+52. How do you debug recomposition issues in Compose?
     - Use tools like Recomposition Highlighter in Android Studio, LogCompositions, and Modifier.debugInspectorInfo to trace recomposition paths and identify unnecessary recompositions.
 
 # Firebase ML KIT
