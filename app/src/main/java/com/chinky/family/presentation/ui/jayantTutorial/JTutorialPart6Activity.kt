@@ -92,7 +92,7 @@ class JTutorialPart6Activity : ComponentActivity() {
             }
             if (addTodo) {
                 ShowTodoDialog {
-                    printActivityLog(Thread.currentThread().stackTrace[2], "addTodo :  + $addTodo")
+                    JTutorialPart6Activity::class.java.printLogcat("addTodo :  + $addTodo")
                     addTodo = false
                 }
             }
@@ -106,11 +106,11 @@ class JTutorialPart6Activity : ComponentActivity() {
         }
         var todos: List<ToDoItem> = emptyList()
         val userState = viewModel?.todos?.value
-        printActivityLog(Thread.currentThread().stackTrace[2], "userState :  + $userState")
+        JTutorialPart6Activity::class.java.printLogcat("userState :  + $userState")
         Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
             when(userState) {
                 is ToDoState.Success -> {
-                    printActivityLog(Thread.currentThread().stackTrace[2], "Data Size :  + ${userState.data.size}")
+                    JTutorialPart6Activity::class.java.printLogcat("Data Size :  + ${userState.data.size}")
                     todos = userState.data
                     LazyColumn(
                         modifier = Modifier.padding(paddingValues).background(color = ApplicationColor.Red),
@@ -122,7 +122,7 @@ class JTutorialPart6Activity : ComponentActivity() {
                     )
                 }
                 is ToDoState.Error -> {
-                    printActivityLog(Thread.currentThread().stackTrace[2], "Error :  + ${userState.error?.message}")
+                    JTutorialPart6Activity::class.java.printLogcat("Error :  + ${userState.error?.message}")
                     Toast.makeText(LocalContext.current, userState.error.toString(), Toast.LENGTH_SHORT).show()
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         Text("No Data Found")
@@ -230,7 +230,7 @@ class JTutorialPart6Activity : ComponentActivity() {
             confirmButton = { onDismiss.invoke() },
             dismissButton = { onDismiss.invoke() }
         )
-        printActivityLog(Thread.currentThread().stackTrace[2], "showDateDialog $showDateDialog")
+        JTutorialPart6Activity::class.java.printLogcat("showDateDialog $showDateDialog")
         if (showDateDialog) {
             ReactiveDatePicker()
         }
@@ -287,9 +287,5 @@ class JTutorialPart6Activity : ComponentActivity() {
         val clipboardManager = context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
         val clipData = ClipData.newPlainText("user", userName)
         clipboardManager.setPrimaryClip(clipData)
-    }
-
-    private fun printActivityLog(element: StackTraceElement, message: String) {
-        JTutorialPart6Activity::class.java.printLogcat(element, message)
     }
 }

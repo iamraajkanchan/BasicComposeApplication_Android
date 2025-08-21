@@ -85,22 +85,22 @@ class MainActivity : FragmentActivity() {
                         override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                             isAuthenticated = true
                             hasAuthenticated = true
-                            MainActivity::class.java.printLogcat("hasAuthenticated : $hasAuthenticated") { Thread.currentThread().stackTrace[2] }
-                            MainActivity::class.java.printLogcat("isAuthenticated : $isAuthenticated") { Thread.currentThread().stackTrace[2] }
+                            MainActivity::class.java.printLogcat("hasAuthenticated : $hasAuthenticated")
+                            MainActivity::class.java.printLogcat("isAuthenticated : $isAuthenticated")
                         }
 
                         override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                             isAuthenticated = false
                             hasAuthenticated = true
-                            MainActivity::class.java.printLogcat("hasAuthenticated : $hasAuthenticated") { Thread.currentThread().stackTrace[2] }
-                            MainActivity::class.java.printLogcat("isAuthenticated : $isAuthenticated") { Thread.currentThread().stackTrace[2] }
+                            MainActivity::class.java.printLogcat("hasAuthenticated : $hasAuthenticated")
+                            MainActivity::class.java.printLogcat("isAuthenticated : $isAuthenticated")
                         }
 
                         override fun onAuthenticationFailed() {
                             isAuthenticated = false
                             hasAuthenticated = false
-                            MainActivity::class.java.printLogcat("hasAuthenticated : $hasAuthenticated") { Thread.currentThread().stackTrace[2] }
-                            MainActivity::class.java.printLogcat("isAuthenticated : $isAuthenticated") { Thread.currentThread().stackTrace[2] }
+                            MainActivity::class.java.printLogcat("hasAuthenticated : $hasAuthenticated")
+                            MainActivity::class.java.printLogcat("isAuthenticated : $isAuthenticated")
                         }
                     }
                 )
@@ -116,12 +116,12 @@ class MainActivity : FragmentActivity() {
                 // Biometric not available, handle fallback
                 isAuthenticated = true
                 hasAuthenticated = true
-                MainActivity::class.java.printLogcat("hasAuthenticated : $hasAuthenticated"){ Thread.currentThread().stackTrace[2] }
-                MainActivity::class.java.printLogcat("isAuthenticated : $isAuthenticated") { Thread.currentThread().stackTrace[2] }
+                MainActivity::class.java.printLogcat("hasAuthenticated : $hasAuthenticated")
+                MainActivity::class.java.printLogcat("isAuthenticated : $isAuthenticated")
             }
         }
-        MainActivity::class.java.printLogcat("hasAuthenticated : $hasAuthenticated") { Thread.currentThread().stackTrace[2] }
-        MainActivity::class.java.printLogcat("isAuthenticated : $isAuthenticated") { Thread.currentThread().stackTrace[2] }
+        MainActivity::class.java.printLogcat("hasAuthenticated : $hasAuthenticated")
+        MainActivity::class.java.printLogcat("isAuthenticated : $isAuthenticated")
         if (hasAuthenticated) {
             if (isAuthenticated) {
                 DisplayMenuButtons(padding, context)

@@ -5,24 +5,17 @@ import android.content.Intent
 import android.os.IBinder
 import com.chinky.family.domain.utils.ApplicationConstant
 import com.chinky.family.domain.utils.Utility
+import com.chinky.family.domain.utils.printLogcat
 
 class DemoBackgroundService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        Utility.printLog(
-            DemoBackgroundService::class.java,
-            Thread.currentThread().stackTrace[2],
-            "onCreate"
-        )
+        DemoBackgroundService::class.java.printLogcat("onCreate")
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Utility.printLog(
-            DemoBackgroundService::class.java,
-            Thread.currentThread().stackTrace[2],
-            "onStartCommand"
-        )
+        DemoBackgroundService::class.java.printLogcat("onStartCommand")
         printLogFromService(intent)
         return START_STICKY
     }
@@ -32,26 +25,18 @@ class DemoBackgroundService : Service() {
             val intentString =
                 i.getStringExtra(ApplicationConstant.ARGUMENT_DEMO_BACKGROUND_SERVICE_MAIN_DATA)
             for (j in 1..10) {
-                Utility.printLog(DemoBackgroundService::class.java, Thread.currentThread().stackTrace[2], "$j : $intentString")
+                DemoBackgroundService::class.java.printLogcat("$j : $intentString")
             }
         }
     }
 
     override fun onBind(intent: Intent?): IBinder? {
-        Utility.printLog(
-            DemoBackgroundService::class.java,
-            Thread.currentThread().stackTrace[2],
-            "onBind"
-        )
+        DemoBackgroundService::class.java.printLogcat("onBind")
         return null
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Utility.printLog(
-            DemoBackgroundService::class.java,
-            Thread.currentThread().stackTrace[2],
-            "onDestroy"
-        )
+        DemoBackgroundService::class.java.printLogcat("onDestroy")
     }
 }

@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.dp
 import com.chinky.family.presentation.ui.theme.ApplicationColor
 import com.chinky.family.presentation.ui.theme.ApplicationTheme
 import com.chinky.family.domain.utils.Utility
+import com.chinky.family.domain.utils.printLogcat
 
 class RadioButtonDemoActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,51 +82,22 @@ class RadioButtonDemoActivity : ComponentActivity() {
                 interactionSource.interactions.collect {
                     (when (it) {
                         is FocusInteraction.Focus -> {
-                            Utility.printLog(
-                                RadioButtonDemoActivity::class.java,
-                                Thread.currentThread().stackTrace[2],
-                                "is RadioButton got Focus!"
-                            )
+                            RadioButtonDemoActivity::class.java.printLogcat("is RadioButton got Focus!")
                         }
-
                         is FocusInteraction.Unfocus -> {
-                            Utility.printLog(
-                                RadioButtonDemoActivity::class.java,
-                                Thread.currentThread().stackTrace[2],
-                                "is RadioButton lost Focus!"
-                            )
+                            RadioButtonDemoActivity::class.java.printLogcat("is RadioButton lost Focus!")
                         }
-
                         is PressInteraction.Press -> {
-                            Utility.printLog(
-                                RadioButtonDemoActivity::class.java,
-                                Thread.currentThread().stackTrace[2],
-                                "is RadioButton is pressed!"
-                            )
+                            RadioButtonDemoActivity::class.java.printLogcat("is RadioButton is pressed!")
                         }
-
                         is PressInteraction.Release -> {
-                            Utility.printLog(
-                                RadioButtonDemoActivity::class.java,
-                                Thread.currentThread().stackTrace[2],
-                                "is RadiButton is released!"
-                            )
+                            RadioButtonDemoActivity::class.java.printLogcat("is RadiButton is released!")
                         }
-
                         is PressInteraction.Cancel -> {
-                            Utility.printLog(
-                                RadioButtonDemoActivity::class.java,
-                                Thread.currentThread().stackTrace[2],
-                                "is RadioButton is cancelled!"
-                            )
+                            RadioButtonDemoActivity::class.java.printLogcat("is RadioButton is cancelled!")
                         }
-
                         else -> {
-                            Utility.printLog(
-                                RadioButtonDemoActivity::class.java,
-                                Thread.currentThread().stackTrace[2],
-                                "is RadioButton got some other interaction!"
-                            )
+                            RadioButtonDemoActivity::class.java.printLogcat("is RadioButton got some other interaction!")
                         }
                     })
                 }

@@ -67,7 +67,7 @@ class CameraXDemoActivity : ComponentActivity() {
                 }
             }
         }
-        CameraXDemoActivity::class.java.printLogcat(Thread.currentThread().stackTrace[2], null)
+        CameraXDemoActivity::class.java.printLogcat(null)
     }
 
     @Composable
@@ -145,7 +145,7 @@ class CameraXDemoActivity : ComponentActivity() {
                             )
 
                         } catch (exc: Exception) {
-                            CameraXDemoActivity::class.java.printLogcat(Thread.currentThread().stackTrace[2],"CameraXApp Use case binding failed $exc")
+                            CameraXDemoActivity::class.java.printLogcat("CameraXApp Use case binding failed $exc")
                             Toast.makeText(ctx, "Camera setup failed: ${exc.message}", Toast.LENGTH_LONG).show()
                         }
                     }, ContextCompat.getMainExecutor(ctx))
@@ -213,7 +213,7 @@ class CameraXDemoActivity : ComponentActivity() {
             cameraExecutor,
             object : ImageCapture.OnImageSavedCallback {
                 override fun onError(exc: ImageCaptureException) {
-                    CameraXDemoActivity::class.java.printLogcat (Thread.currentThread().stackTrace[2],"CameraXApp :: Photo capture failed: ${exc.message}")
+                    CameraXDemoActivity::class.java.printLogcat("CameraXApp :: Photo capture failed: ${exc.message}")
                     Toast.makeText(context, "Photo capture failed: ${exc.message}", Toast.LENGTH_SHORT).show()
                 }
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {

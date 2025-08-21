@@ -13,7 +13,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.chinky.family.domain.utils.Utility
 import com.chinky.family.domain.utils.printLogcat
 import com.chinky.family.presentation.ui.theme.ApplicationColor
 import com.chinky.family.presentation.ui.theme.ApplicationTheme
@@ -39,9 +38,7 @@ class ActivityLifecycleInComposeDemo : ComponentActivity() {
     private fun DisplayLifecycleState(paddingValues: PaddingValues) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             LaunchedEffect(key1 = lifecycleState) {
-                ActivityLifecycleInComposeDemo::class.java.printLogcat(Thread.currentThread().stackTrace[2],
-                    "key1 : ${lifecycleState.value}"
-                )
+                ActivityLifecycleInComposeDemo::class.java.printLogcat("key1 : ${lifecycleState.value}")
             }
             Text(lifecycleState.value, color = ApplicationColor.Orange)
         }
@@ -49,10 +46,7 @@ class ActivityLifecycleInComposeDemo : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
-        ActivityLifecycleInComposeDemo::class.java.printLogcat(
-            Thread.currentThread().stackTrace[2],
-            "onStart"
-        )
+        ActivityLifecycleInComposeDemo::class.java.printLogcat("onStart")
         lifecycleState.value = "onStart"
     }
 
@@ -62,29 +56,19 @@ class ActivityLifecycleInComposeDemo : ComponentActivity() {
     }
 
     override fun onPause() {
-        ActivityLifecycleInComposeDemo::class.java.printLogcat(
-            Thread.currentThread().stackTrace[2],
-            "onPause"
-        )
+        ActivityLifecycleInComposeDemo::class.java.printLogcat("onPause")
         lifecycleState.value = "onPause"
         super.onPause()
     }
 
     override fun onStop() {
-        ActivityLifecycleInComposeDemo::class.java.printLogcat(
-            Thread.currentThread().stackTrace[2],
-            "onStop"
-        )
+        ActivityLifecycleInComposeDemo::class.java.printLogcat("onStop")
         lifecycleState.value = "onStop"
         super.onStop()
     }
 
     override fun onDestroy() {
-        Utility.printLog(
-            ActivityLifecycleInComposeDemo::class.java,
-            Thread.currentThread().stackTrace[2],
-            "onDestroy"
-        )
+        ActivityLifecycleInComposeDemo::class.java.printLogcat("onDestroy")
         lifecycleState.value = "onDestroy"
         super.onDestroy()
     }

@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import com.chinky.family.R
 import com.chinky.family.presentation.ui.theme.ApplicationTheme
 import com.chinky.family.domain.utils.Utility
+import com.chinky.family.domain.utils.printLogcat
 
 
 /**
@@ -84,11 +85,7 @@ class TextFieldDemoActivity : ComponentActivity() {
             TextField(
                 value = emailAddressText,
                 onValueChange = { newText ->
-                    Utility.printLog(
-                        TextFieldDemoActivity::class.java,
-                        Thread.currentThread().stackTrace[2],
-                        "length of newText in emailTextField: ${newText.length}"
-                    )
+                    TextFieldDemoActivity::class.java.printLogcat("length of newText in emailTextField: ${newText.length}")
                     emailAddressText = newText
                 },
                 keyboardOptions = KeyboardOptions(
@@ -105,11 +102,7 @@ class TextFieldDemoActivity : ComponentActivity() {
             TextField(
                 value = passwordText,
                 onValueChange = { newText ->
-                    Utility.printLog(
-                        TextFieldDemoActivity::class.java,
-                        Thread.currentThread().stackTrace[2],
-                        "length of newText in passwordTextField: ${newText.length}"
-                    )
+                    TextFieldDemoActivity::class.java.printLogcat("length of newText in passwordTextField: ${newText.length}")
                     passwordText = newText
                 },
                 keyboardOptions = KeyboardOptions(

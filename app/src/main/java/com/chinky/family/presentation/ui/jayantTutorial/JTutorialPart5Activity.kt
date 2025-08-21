@@ -68,11 +68,11 @@ class JTutorialPart5Activity : ComponentActivity() {
         }
         var users: List<User> = emptyList()
         val userState = viewModel.users.value
-        printActivityLog(Thread.currentThread().stackTrace[2], "userState :  + $userState")
+        JTutorialPart5Activity::class.java.printLogcat("userState :  + $userState")
         Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
             when(userState) {
                 is UserApiState.Success -> {
-                    printActivityLog(Thread.currentThread().stackTrace[2], "Data Size :  + ${userState.data.size}")
+                    JTutorialPart5Activity::class.java.printLogcat("Data Size :  + ${userState.data.size}")
                     users = userState.data
                     LazyColumn(
                         modifier = Modifier.padding(paddingValues).background(color = ApplicationColor.Red),
@@ -84,14 +84,14 @@ class JTutorialPart5Activity : ComponentActivity() {
                     )
                 }
                 is UserApiState.Failure -> {
-                    printActivityLog(Thread.currentThread().stackTrace[2], "Error :  + ${userState.error?.message}")
+                    JTutorialPart5Activity::class.java.printLogcat("Error :  + ${userState.error?.message}")
                     Toast.makeText(LocalContext.current, userState.error.toString(), Toast.LENGTH_SHORT).show()
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         Text("No Data Found")
                     }
                 }
                 is UserApiState.Loading -> {
-                    printActivityLog(Thread.currentThread().stackTrace[2], "Loading")
+                    JTutorialPart5Activity::class.java.printLogcat("Loading")
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         CircularProgressIndicator()
                     }
@@ -177,8 +177,5 @@ class JTutorialPart5Activity : ComponentActivity() {
         } else {
             Toast.makeText(context, "No phone app found", Toast.LENGTH_SHORT).show()
         }
-    }
-    private fun printActivityLog(element: StackTraceElement, message: String) {
-        JTutorialPart5Activity::class.java.printLogcat(element, message)
     }
 }
