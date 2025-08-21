@@ -14,8 +14,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.chinky.family.domain.utils.Utility
+import com.chinky.family.domain.utils.printLogcat
 import com.chinky.family.presentation.ui.theme.ApplicationColor
 import com.chinky.family.presentation.ui.theme.ApplicationTheme
+import kotlin.jvm.java
 
 class ActivityLifecycleInComposeDemo : ComponentActivity() {
 
@@ -37,9 +39,7 @@ class ActivityLifecycleInComposeDemo : ComponentActivity() {
     private fun DisplayLifecycleState(paddingValues: PaddingValues) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             LaunchedEffect(key1 = lifecycleState) {
-                Utility.printLog(
-                    ActivityLifecycleInComposeDemo::class.java,
-                    Thread.currentThread().stackTrace[2],
+                ActivityLifecycleInComposeDemo::class.java.printLogcat(Thread.currentThread().stackTrace[2],
                     "key1 : ${lifecycleState.value}"
                 )
             }
@@ -49,8 +49,7 @@ class ActivityLifecycleInComposeDemo : ComponentActivity() {
 
     override fun onStart() {
         super.onStart()
-        Utility.printLog(
-            ActivityLifecycleInComposeDemo::class.java,
+        ActivityLifecycleInComposeDemo::class.java.printLogcat(
             Thread.currentThread().stackTrace[2],
             "onStart"
         )
@@ -63,8 +62,7 @@ class ActivityLifecycleInComposeDemo : ComponentActivity() {
     }
 
     override fun onPause() {
-        Utility.printLog(
-            ActivityLifecycleInComposeDemo::class.java,
+        ActivityLifecycleInComposeDemo::class.java.printLogcat(
             Thread.currentThread().stackTrace[2],
             "onPause"
         )
@@ -73,8 +71,7 @@ class ActivityLifecycleInComposeDemo : ComponentActivity() {
     }
 
     override fun onStop() {
-        Utility.printLog(
-            ActivityLifecycleInComposeDemo::class.java,
+        ActivityLifecycleInComposeDemo::class.java.printLogcat(
             Thread.currentThread().stackTrace[2],
             "onStop"
         )

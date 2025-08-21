@@ -3,7 +3,6 @@ package com.chinky.family.presentation.ui.jayantTutorial
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.graphics.Outline
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -17,6 +16,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -32,8 +32,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
-import androidx.compose.material3.DateRangePicker
-import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -42,12 +40,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
-import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -55,6 +53,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.lifecycleScope
 import com.chinky.family.domain.model.ToDoItem
 import com.chinky.family.domain.state.ToDoState
 import com.chinky.family.domain.utils.printLogcat
@@ -63,6 +62,7 @@ import com.chinky.family.presentation.ui.theme.ApplicationColor
 import com.chinky.family.presentation.ui.theme.ApplicationTheme
 import com.chinky.family.presentation.viewModels.TodoViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -74,7 +74,7 @@ class JTutorialPart6Activity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            var addTodo by remember { mutableStateOf(false) }
+            var addTodo by rememberSaveable { mutableStateOf(false) }
             ApplicationTheme.HomeApplicationTheme {
                 viewModel = hiltViewModel()
                 Scaffold(
@@ -91,7 +91,10 @@ class JTutorialPart6Activity : ComponentActivity() {
                 }
             }
             if (addTodo) {
-                ShowTodoDialog { addTodo = false }
+                ShowTodoDialog {
+                    printActivityLog(Thread.currentThread().stackTrace[2], "addTodo :  + $addTodo")
+                    addTodo = false
+                }
             }
         }
     }
@@ -103,11 +106,11 @@ class JTutorialPart6Activity : ComponentActivity() {
         }
         var todos: List<ToDoItem> = emptyList()
         val userState = viewModel?.todos?.value
-        JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "userState :  + $userState")
+        printActivityLog(Thread.currentThread().stackTrace[2], "userState :  + $userState")
         Column(modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
             when(userState) {
                 is ToDoState.Success -> {
-                    JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "Data Size :  + ${userState.data.size}")
+                    printActivityLog(Thread.currentThread().stackTrace[2], "Data Size :  + ${userState.data.size}")
                     todos = userState.data
                     LazyColumn(
                         modifier = Modifier.padding(paddingValues).background(color = ApplicationColor.Red),
@@ -119,7 +122,7 @@ class JTutorialPart6Activity : ComponentActivity() {
                     )
                 }
                 is ToDoState.Error -> {
-                    JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "Error :  + ${userState.error?.message}")
+                    printActivityLog(Thread.currentThread().stackTrace[2], "Error :  + ${userState.error?.message}")
                     Toast.makeText(LocalContext.current, userState.error.toString(), Toast.LENGTH_SHORT).show()
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         Text("No Data Found")
@@ -211,12 +214,23 @@ class JTutorialPart6Activity : ComponentActivity() {
                         onValueChange = {description = it},
                         label = { Text("Description")}
                     )
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Row {
+                        Button(onClick = {
+                            addTodo(ToDoItem(title = title, description = description, date = selectedDate))
+                            onDismiss.invoke()
+                        }) { Text("Submit") }
+                        Button(onClick = {
+
+                            onDismiss.invoke()
+                        }) { Text("Cancel") }
+                    }
                 }
             },
-            confirmButton = { onDismiss },
-            dismissButton = { onDismiss }
+            confirmButton = { onDismiss.invoke() },
+            dismissButton = { onDismiss.invoke() }
         )
-        JTutorialPart6Activity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "showDateDialog $showDateDialog")
+        printActivityLog(Thread.currentThread().stackTrace[2], "showDateDialog $showDateDialog")
         if (showDateDialog) {
             ReactiveDatePicker()
         }
@@ -263,9 +277,19 @@ class JTutorialPart6Activity : ComponentActivity() {
         }
     }
 
+    private fun addTodo(todoItem: ToDoItem) {
+        lifecycleScope.launch {
+            viewModel?.insertTodo(todoItem)
+        }
+    }
+
     private fun copyUser(context : Context, userName: String) {
         val clipboardManager = context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
         val clipData = ClipData.newPlainText("user", userName)
         clipboardManager.setPrimaryClip(clipData)
+    }
+
+    private fun printActivityLog(element: StackTraceElement, message: String) {
+        JTutorialPart6Activity::class.java.printLogcat(element, message)
     }
 }

@@ -35,6 +35,7 @@ import com.chinky.family.presentation.ui.activityLifecycle.ActivityLifecycleInCo
 import com.chinky.family.presentation.ui.cameraXDemo.CameraXDemoActivity
 import com.chinky.family.presentation.ui.composableFunctions.activities.ComposableMenuActivity
 import com.chinky.family.presentation.ui.jayantTutorial.JTutorialMenuActivity
+import com.chinky.family.presentation.ui.jayantTutorial.JTutorialPart6Activity
 import com.chinky.family.presentation.ui.locations.LocationInfoDemoActivity
 import com.chinky.family.presentation.ui.navigationDemo.NavigationWithObjectArgumentActivity
 import com.chinky.family.presentation.ui.navigationDemo.NavigationWithStringArgumentActivity
@@ -85,22 +86,22 @@ class MainActivity : FragmentActivity() {
                         override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                             isAuthenticated = true
                             hasAuthenticated = true
-                            MainActivity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "hasAuthenticated : $hasAuthenticated")
-                            MainActivity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "isAuthenticated : $isAuthenticated")
+                            MainActivity::class.java.printLogcat("hasAuthenticated : $hasAuthenticated")
+                            MainActivity::class.java.printLogcat("isAuthenticated : $isAuthenticated")
                         }
 
                         override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                             isAuthenticated = false
                             hasAuthenticated = true
-                            MainActivity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "hasAuthenticated : $hasAuthenticated")
-                            MainActivity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "isAuthenticated : $isAuthenticated")
+                            MainActivity::class.java.printLogcat("hasAuthenticated : $hasAuthenticated")
+                            MainActivity::class.java.printLogcat("isAuthenticated : $isAuthenticated")
                         }
 
                         override fun onAuthenticationFailed() {
                             isAuthenticated = false
                             hasAuthenticated = false
-                            MainActivity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "hasAuthenticated : $hasAuthenticated")
-                            MainActivity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "isAuthenticated : $isAuthenticated")
+                            MainActivity::class.java.printLogcat("hasAuthenticated : $hasAuthenticated")
+                            MainActivity::class.java.printLogcat("isAuthenticated : $isAuthenticated")
                         }
                     }
                 )
@@ -116,12 +117,12 @@ class MainActivity : FragmentActivity() {
                 // Biometric not available, handle fallback
                 isAuthenticated = true
                 hasAuthenticated = true
-                MainActivity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "hasAuthenticated : $hasAuthenticated")
-                MainActivity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "isAuthenticated : $isAuthenticated")
+                MainActivity::class.java.printLogcat("hasAuthenticated : $hasAuthenticated")
+                MainActivity::class.java.printLogcat("isAuthenticated : $isAuthenticated")
             }
         }
-        MainActivity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "hasAuthenticated : $hasAuthenticated")
-        MainActivity::class.java.printLogcat(Thread.currentThread().stackTrace[2], "isAuthenticated : $isAuthenticated")
+        MainActivity::class.java.printLogcat("hasAuthenticated : $hasAuthenticated")
+        MainActivity::class.java.printLogcat("isAuthenticated : $isAuthenticated")
         if (hasAuthenticated) {
             if (isAuthenticated) {
                 DisplayMenuButtons(padding, context)
