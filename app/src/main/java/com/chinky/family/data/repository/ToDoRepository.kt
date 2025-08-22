@@ -13,7 +13,7 @@ class ToDoRepository @Inject constructor(private val appDao: AppDao) {
     }
 
     fun getAllTodos(): Flow<List<ToDoItem>> = flow {
-        appDao.getAllTodos()
+        emit(appDao.getAllTodos())
     }
 
     suspend fun getTodoById(id: Int): ToDoItem? {

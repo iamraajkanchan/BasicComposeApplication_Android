@@ -74,14 +74,14 @@ class JTutorialPart6Activity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            var addTodo by rememberSaveable { mutableStateOf(false) }
+            var showAddTodoDialog by rememberSaveable { mutableStateOf(false) }
             ApplicationTheme.HomeApplicationTheme {
                 viewModel = hiltViewModel()
                 Scaffold(
                     topBar = { AppTopBar("Part 6 Tutorial", this) },
                     floatingActionButton = {
                         IconButton(onClick = {
-                            addTodo = true
+                            showAddTodoDialog = true
                         }) {
                             Icon(imageVector = Icons.Filled.Add, contentDescription = "Add")
                         }
@@ -90,10 +90,12 @@ class JTutorialPart6Activity : ComponentActivity() {
                     ShowTodoList(it)
                 }
             }
-            if (addTodo) {
+            JTutorialPart6Activity::class.java.printLogcat("showAddTodoDialog :  + $showAddTodoDialog")
+            if (showAddTodoDialog) {
                 ShowTodoDialog {
-                    JTutorialPart6Activity::class.java.printLogcat("addTodo :  + $addTodo")
-                    addTodo = false
+                    JTutorialPart6Activity::class.java.printLogcat("showAddTodoDialog :  + $showAddTodoDialog")
+                    viewModel?.loadTodos()
+                    showAddTodoDialog = false
                 }
             }
         }
@@ -113,7 +115,8 @@ class JTutorialPart6Activity : ComponentActivity() {
                     JTutorialPart6Activity::class.java.printLogcat("Data Size :  + ${userState.data.size}")
                     todos = userState.data
                     LazyColumn(
-                        modifier = Modifier.padding(paddingValues).background(color = ApplicationColor.Red),
+                        modifier = Modifier
+                            .padding(paddingValues),
                         content = {
                             items(todos.size) {
                                 ListRow(todos[it])
@@ -149,9 +152,9 @@ class JTutorialPart6Activity : ComponentActivity() {
                 shape = RoundedCornerShape(2.dp),
                 elevation = CardDefaults.cardElevation(2.dp)
             ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Column {
                     Row(modifier = Modifier
-                        .padding(4.dp)
+                        .padding(4.dp),
                         ) {
                         Text("Date: ")
                         Text(todoItem.date)
@@ -175,12 +178,12 @@ class JTutorialPart6Activity : ComponentActivity() {
 
     @Composable
     private fun ShowTodoDialog(onDismiss: () -> Unit) {
-        var title by remember { mutableStateOf("") }
-        var description by remember { mutableStateOf("") }
-        var selectedDate by remember { mutableStateOf("") }
-        var showDateDialog by remember { mutableStateOf(false) }
+        var title by rememberSaveable { mutableStateOf("") }
+        var description by rememberSaveable { mutableStateOf("") }
+        var selectedDate by rememberSaveable { mutableStateOf("") }
+        var showDatePicker by rememberSaveable { mutableStateOf(false) }
         AlertDialog(
-           onDismissRequest = { onDismiss },
+           onDismissRequest = { onDismiss() },
             title = { Text("Add a Todo!")},
             text = {
                 Column(modifier = Modifier.fillMaxWidth()) {
@@ -195,7 +198,7 @@ class JTutorialPart6Activity : ComponentActivity() {
                         )
                         Spacer(modifier = Modifier.width(8.dp)) // Optional spacing
                         IconButton(
-                            onClick = { showDateDialog = true },
+                            onClick = { showDatePicker = true },
                             modifier = Modifier.size(48.dp) // Ensures visibility
                         ) {
                             Icon(
@@ -221,26 +224,32 @@ class JTutorialPart6Activity : ComponentActivity() {
                             onDismiss.invoke()
                         }) { Text("Submit") }
                         Button(onClick = {
-
                             onDismiss.invoke()
                         }) { Text("Cancel") }
                     }
                 }
             },
-            confirmButton = { onDismiss.invoke() },
-            dismissButton = { onDismiss.invoke() }
+            confirmButton = { },
+            dismissButton = { }
         )
-        JTutorialPart6Activity::class.java.printLogcat("showDateDialog $showDateDialog")
-        if (showDateDialog) {
-            ReactiveDatePicker()
+        JTutorialPart6Activity::class.java.printLogcat("showDatePicker $showDatePicker")
+        if (showDatePicker) {
+            ShowDatePicker(
+                dateSelected = {
+                    showDatePicker = false
+                    JTutorialPart6Activity::class.java.printLogcat("showDatePicker $showDatePicker")
+                    JTutorialPart6Activity::class.java.printLogcat("selectedDate length ${selectedDate.length}")
+                    selectedDate
+                }
+            )
         }
     }
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun ReactiveDatePicker() {
-        var showDialog by remember { mutableStateOf(true) }
-        var selectedDate by remember { mutableStateOf<LocalDate?>(null) }
+    fun ShowDatePicker(dateSelected: () -> String?) {
+        var showDialog by rememberSaveable { mutableStateOf(true) }
+        var selectedDate by rememberSaveable { mutableStateOf<LocalDate?>(null) }
         val datePickerState = rememberDatePickerState()
         if (showDialog) {
             DatePickerDialog(
@@ -252,6 +261,9 @@ class JTutorialPart6Activity : ComponentActivity() {
                             selectedDate = Instant.ofEpochMilli(millis)
                                 .atZone(ZoneId.systemDefault())
                                 .toLocalDate()
+                            dateSelected.apply {
+                                { selectedDate.toString() }
+                            }
                         }
                     }) {
                         Text("OK")
@@ -266,13 +278,11 @@ class JTutorialPart6Activity : ComponentActivity() {
                 DatePicker(state = datePickerState)
             }
         }
-
         Column(modifier = Modifier.padding(16.dp)) {
-            Button(onClick = { showDialog = true }) {
-                Text("Pick a Date")
-            }
             selectedDate?.let {
-                Text("Selected Date: ${it.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))}")
+                val selectedDateString = "Selected Date: ${it.format(DateTimeFormatter.ofPattern("dd MMM yyyy"))}"
+                JTutorialPart6Activity::class.java.printLogcat("selectedDateString :  + $selectedDateString")
+                Text(selectedDateString)
             }
         }
     }
